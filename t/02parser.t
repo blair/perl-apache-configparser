@@ -36,7 +36,7 @@ is(@conf_files, 7, 'seven httpd\d+.conf files found');
 # This subroutine just modifies the passed string to make sure that
 # this string does not show up in particular output.
 sub post_transform_munge {
-  is(@_, 3, 'post_transform_munge passed 3 arguments');
+  is(@_, 5, 'post_transform_munge passed 5 arguments');
   my ($parser, $directive, $filename) = @_;
   "MUNGE $filename";
 }
@@ -62,7 +62,7 @@ for (my $i=0; $i<@conf_files; ++$i) {
   if ($conf_file eq 'httpd05.conf') {
     $opts_ref = {post_transform_path_sub => \&post_transform_path};
   } elsif ($conf_file eq 'httpd07.conf') {
-    $opts_ref = {post_transform_path_sub => \&post_transform_munge};
+    $opts_ref = {post_transform_path_sub => [\&post_transform_munge, 1, 2]};
   }
   if ($opts_ref) {
     $c = EmptySubclass->new($opts_ref, $conf_file);

@@ -1,3 +1,74 @@
+Fri Sep 14 21:44:24 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* Release version 0.02.
+
+Fri Sep 14 21:27:48 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* lib/Apache/ConfigParser.pm: Rename &relative_path_check to
+	  &directive_value_is_not_dev_null,
+	  &relative_path_check_for_pipe to
+	  &directive_value_is_not_dev_null_and_pipe and
+	  &relative_path_check_for_pipe_and_syslog to
+	  &directive_value_is_not_dev_null_and_pipe_and_syslog.
+	* lib/Apache/ConfigParser.pod: Ditto.
+
+Fri Sep 14 21:08:14 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* lib/Apache/ConfigParser.pm: Instead of checking if a file or
+	  directory is absolute to prepend the ServerRoot on just Unix
+	  and Windows sytems, use File::Spec->file_name_is_absolute
+	  which handles many more operating systems.  For the
+	  AccessConfig, Include and ResourceConfig directives, do not
+	  include the file or directory if the filename is equal to
+	  File::Spec->devnull.
+	* lib/Apache/ConfigParser.pm: Ditto.
+
+Fri Sep 14 20:51:14 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* lib/Apache/ConfigParser.pm: Rename %directive_takes_rel_path
+	  to %directive_takes_rel_path to have a more accurate name.
+	* lib/Apache/ConfigParser.pod: Ditto.
+
+Fri Sep 14 20:41:50 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* lib/Apache/ConfigParser.pm: Require File::Spec 0.82 which is
+	  now used to do file and directory path tests.
+	* lib/Apache/ConfigParser.pod: Ditto.
+	* Makefile.PL: Ditto.
+
+Fri Sep 14 19:39:26 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* lib/Apache/ConfigParser.pm: Allow either a single subroutine
+	  reference or an array reference that contains as its
+	  first element a subroutine reference followed by zero or
+	  more arbitrary elements to be passed as the arguments to
+	  new's pre_transform_path_sub and post_transform_path_sub
+	  options.
+	* lib/Apache/ConfigParser.pod: Ditto.
+	* t/02parser.t: Add tests to make sure that passing arguments to 
+	  pre_transform_path_sub and post_transform_path_sub work.
+	* t/httpd05.answer: Ditto.
+	* t/httpd07.answer: Ditto.
+
+Thu Sep 13 14:12:43 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* lib/Apache/ConfigParser.pm: When checking for an absolute
+	  path name on Windows, also check for upper case drive
+	  letters.
+	* lib/Apache/ConfigParser.pod: ditto.
+
+Thu Sep 13 12:58:58 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* lib/Apache/ConfigParser.pm: Update version number to 0.02.
+	* lib/Apache/ConfigParser.pod: Ditto.
+	* README: Ditto.
+
+Thu Sep 13 12:50:59 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* lib/Apache/ConfigParser.pm: Reformat a POD comment to make
+	  sure it formats to an 80 character width screen.
+	* lib/Apache/ConfigParser.pod: Ditto.
+
 Thu Sep  6 19:14:34 PDT 2001 <blair@orcaware.com> Blair Zajac
 
 	* Release version 0.01.

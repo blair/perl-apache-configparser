@@ -4,32 +4,31 @@ use strict;
 require 5.004_05;
 use ExtUtils::MakeMaker;
 
-$| = 1;
+$|                  = 1;
 my $missing_modules = 0;
+my $version;
 
-print "Checking for Tree::DAG_Node...";
-eval {
-  require Tree::DAG_Node;
-  Tree::DAG_Node->VERSION(1.04);
-};
+$version = 0.82;
+print "Checking for File::Spec $version...";
+eval "use File::Spec $version;";
 if ($@) {
   print " failed\n";
   ++$missing_modules;
   print <<EOT;
 $@
-The Tree::DAG_Node must be installed to set up a tree structure for
-the Apache configuration files.
+
+File::Spec must be installed for Apache configuration file directives
+that take file and directory path names to be parsed in an operating
+system independent manner.
 
 EOT
 } else {
   print " ok\n";
 }
 
-print "Checking for Test::More...";
-eval {
-  require Test::More;
-  Tree::DAG_Node->VERSION(0.19);
-};
+$version = 0.18;
+print "Checking for Test::More $version...";
+eval "use Test::More $version;";
 if ($@) {
   print " failed\n";
   ++$missing_modules;
@@ -42,7 +41,24 @@ EOT
   print " ok\n";
 }
 
+$version = 1.04;
+print "Checking for Tree::DAG_Node $version...";
+eval "use Tree::DAG_Node $version;";
+if ($@) {
+  print " failed\n";
+  ++$missing_modules;
+  print <<EOT;
+$@
+Tree::DAG_Node must be installed to set up a tree structure for the
+Apache configuration files.
+
+EOT
+} else {
+  print " ok\n";
+}
+
 print <<EOT if $missing_modules;
+
 The missing module can be obtained from CPAN.  Visit
   <URL:http://www.perl.com/CPAN/> to find a CPAN site near you.
 
