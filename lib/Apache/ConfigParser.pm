@@ -17,11 +17,14 @@ Apache::ConfigParser - Load Apache configuration files
   # Create a new empty parser.
   my $c1 = Apache::ConfigParser->new;
 
-  # Create a new parser and load a specific configuration file.
-  my $c2 = Apache::ConfigParser->new('/etc/httpd/conf/httpd.conf');
+  # Load an Apache configuration file.
+  my $rc = $c1->parse_file('/etc/httpd/conf/httpd.conf');
 
-  # Load a configuration file explicitly.
-  $c1->parse_file('/etc/httpd/conf/httpd.conf');
+  # If there is an error in parsing the configuration file, then $rc
+  # will be false and an error string will be available.
+  if (not $rc) {
+    print $c1->errstr, "\n";
+  }
 
   # Get the root of a tree that represents the configuration file.
   # This is an Apache::ConfigParser::Directive object.
@@ -73,7 +76,8 @@ Apache::ConfigParser - Load Apache configuration files
   # So to get the root node and add a new directive to it, it could be
   # done like this:
 
-  my $c                = Apache::ConfigParser->new('/etc/httpd.conf');
+  my $c                = Apache::ConfigParser->new;
+  my $rc               = $c->parse_file('/etc/httpd.conf');
   my $root             = $c->root;
   my $new_virtual_host = $root->new_daughter;
   $new_virtual_host->name('VirtualHost');
@@ -152,19 +156,9 @@ The following methods are available:
 
 =item $c = Apache::ConfigParser->new({options})
 
-=item $c = Apache::ConfigParser->new($filename)
-
-=item $c = Apache::ConfigParser->new({options}, $filename)
-
 Create a new C<Apache::ConfigParser> object that stores the content of
 an Apache configuration file.  The first optional argument is a
 reference to a hash that contains options to new.
-
-If C<$filename> is given, then the contents of C<$filename> will be
-loaded.  If C<$filename> cannot be be opened then $! will contain the
-error message for the failed open() and new will returns an empty list
-in a list content, an undefined value in a scalar context, or nothing
-in a void context.
 
 The currently recognized options are:
 
@@ -285,7 +279,7 @@ transformed so that the remote host can properly find them.
 =cut
 
 sub new {
-  unless (@_ < 4) {
+  unless (@_ < 3) {
     confess "$0: Apache::ConfigParser::new $INCORRECT_NUMBER_OF_ARGS";
   }
 
@@ -305,40 +299,36 @@ sub new {
     server_root             => '',
     post_transform_path_sub => '',
     pre_transform_path_sub  => '',
+    errstr                  => '',
   }, $class;
 
-  # If optional arguments were passed to new, then handle them now.
-  if (@_ and $_[0] and UNIVERSAL::isa($_[0], 'HASH')) {
-    my $options = shift;
-    foreach my $opt_name (qw(pre_transform_path_sub post_transform_path_sub)) {
-      if (my $opt_value = $options->{$opt_name}) {
-        if (UNIVERSAL::isa($opt_value, 'CODE')) {
-          $self->{$opt_name} = [$opt_value];
-        } elsif (UNIVERSAL::isa($opt_value, 'ARRAY')) {
-          if (@$opt_value and UNIVERSAL::isa($opt_value->[0], 'CODE')) {
-            $self->{$opt_name} = $opt_value;
-          } else {
-            warn "$0: Apache::ConfigParser::new passed an ARRAY reference ",
-                 "whose first element is not a CODE ref for '$opt_name'.\n";
-          }
+  return $self unless @_;
+
+  my $options = shift;
+  unless (defined $options and UNIVERSAL::isa($options, 'HASH')) {
+    confess "$0: Apache::ConfigParser::new not passed a HASH reference as ",
+            "its first argument.\n";
+  }
+
+  foreach my $opt_name (qw(pre_transform_path_sub post_transform_path_sub)) {
+    if (my $opt_value = $options->{$opt_name}) {
+      if (UNIVERSAL::isa($opt_value, 'CODE')) {
+        $self->{$opt_name} = [$opt_value];
+      } elsif (UNIVERSAL::isa($opt_value, 'ARRAY')) {
+        if (@$opt_value and UNIVERSAL::isa($opt_value->[0], 'CODE')) {
+          $self->{$opt_name} = $opt_value;
         } else {
-          warn "$0: Apache::ConfigParser::new not passed an ARRAY or CODE ",
-               "reference for '$opt_name'.\n";
+          confess "$0: Apache::ConfigParser::new passed an ARRAY reference ",
+                  "whose first element is not a CODE ref for '$opt_name'.\n";
         }
+      } else {
+        warn "$0: Apache::ConfigParser::new not passed an ARRAY or CODE ",
+             "reference for '$opt_name'.\n";
       }
     }
   }
 
-  # If a file was passed to the constructor, then load it now.
-  if (@_) {
-    if ($self->parse_file(shift)) {
-      return $self;
-    } else {
-      return;
-    }
-  }
-
-  $self;
+  return $self;
 }
 
 =item $c->DESTROY
@@ -359,9 +349,11 @@ configuration file inside the object.  If a previous Apache
 configuration file was loaded either with new or parse_file and the
 configuration file did not close all of its contexts, such as
 <VirtualHost>, then the new configuration directives and contexts in
-C<$filename> will be added to the existing context.  If C<$filename>
-could not be opened, then C<$!> will contain the reason for open's
-failure.
+C<$filename> will be added to the existing context.
+
+If there is a failure in parsing any portion of the configuration
+file, then this method returns undef and C<$c->errstr> will contain a
+string explaining the error.
 
 =cut
 
@@ -372,18 +364,23 @@ sub parse_file {
 
   my ($self, $file_or_dir_name) = @_;
 
-  my @lstat = lstat($file_or_dir_name);
-  unless (@lstat) {
+  my @stat = stat($file_or_dir_name);
+  unless (@stat) {
+    $self->{errstr} = "cannot stat '$file_or_dir_name': $!";
     return;
   }
 
   # If this is a real directory, than descend into it now.
   if (-d _) {
     unless (opendir(DIR, $file_or_dir_name)) {
+      $self->{errstr} = "cannot opendir '$file_or_dir_name': $!";
       return;
     }
     my @entries = sort grep { $_ !~ /^\.{1,2}$/ } readdir(DIR);
-    closedir(DIR);
+    unless (closedir(DIR)) {
+      $self->{errstr} = "closedir '$file_or_dir_name' failed: $!";
+      return;
+    }
 
     my $ok = 1;
     foreach my $entry (@entries) {
@@ -391,7 +388,11 @@ sub parse_file {
       next;
     }
 
-    return $ok ? $self : undef;
+    if ($ok) {
+      return $self;
+    } else {
+      return;
+    }
   }
 
   # Get the current node to add these configuration directives to.
@@ -400,6 +401,7 @@ sub parse_file {
   # Create a new file handle to open this file and open it.
   my $fd = gensym;
   unless (open($fd, $file_or_dir_name)) {
+    $self->{errstr} = "cannot open '$file_or_dir_name' for reading: $!";
     return;
   }
 
@@ -485,18 +487,19 @@ sub parse_file {
       # configuration file.
       my $mother = $current_node->mother;
       unless (defined $mother) {
-        warn "$0: '$file_or_dir_name' line $line_number ends context ",
-             "'$context' which was never started.\n";
-        next;
+        $self->{errstr} = "'$file_or_dir_name' line $line_number closes " .
+                          "context '$context' which was never started";
+        return;
       }
 
       # Check that the start and end contexts have the same name.
       $context               = lc($context);
       my $start_context_name = $current_node->name; 
       unless ($start_context_name eq $context) {
-        warn "$0: '$file_or_dir_name' line $line_number closes context ",
-             "'$context' that should close '$start_context_name'.\n";
-        next;
+        $self->{errstr} = "'$file_or_dir_name' line $line_number closes " .
+                          "context '$context' that should close context " .
+                          "'$start_context_name'";
+        return;
       }
 
       # Move the current node up to the mother node.
@@ -626,21 +629,43 @@ sub parse_file {
         next;
       }
 
-      my @lstat = lstat($values[0]);
-      unless (@lstat) {
-        next;
+      my $path = $values[0];
+
+      my @stat = stat($path);
+      unless (@stat) {
+        $self->{errstr} = "'$file_or_dir_name' line $line_number " .
+                          "'$directive $path': stat of '$path' failed: $!";
+
+        # Check if missing file errors should be ignored.  This checks
+        # an undocumented object variable which is normally only used
+        # by the test suite to test the normal aspects of all the
+        # directives without worrying about a missing file halting the
+        # tests early.
+        if ($self->{_include_file_ignore_missing_file}) {
+          next;
+        } else {
+          return;
+        }
       }
 
-      # Parse this if it is a real directory or points to a file.
-      if (-d _ or -f $values[0]) {
-        $self->parse_file($values[0]);
+      # Parse this if it is a directory or points to a file.
+      if (-d _ or -f _) {
+        unless ($self->parse_file($path)) {
+          return;
+        }
+      } else {
+        $self->{errstr} = "'$file_or_dir_name' line $line_number: cannot " .
+                          "open non-file and non-directory '$path'";
+        return;
       }
     }
     next;
   }
 
-  close($fd)
-    or warn "$0: cannot close '$file_or_dir_name' for reading: $!\n";
+  unless (close($fd)) {
+    $self->{errstr} = "cannot close '$file_or_dir_name' for reading: $!";
+    return;
+  }
 
   # Save the current node that directives were being added to.
   $self->{current_node} = $current_node;
@@ -835,6 +860,24 @@ sub find_siblings_and_up_directive_names {
   }
 
   @found;
+}
+
+=item $c->errstr
+
+Return the error string associated with the last failure of any
+C<Apache::ConfigParser> method.  The string returned is not emptied
+when any method calls succeed, so a non-zero length string returned
+does not necessarily mean that the last method call failed.
+
+=cut
+
+sub errstr {
+  unless (@_ == 1) {
+    confess "$0: Apache::ConfigParser::errstr $INCORRECT_NUMBER_OF_ARGS";
+  }
+
+  my $self = shift;
+  return $self->{errstr};
 }
 
 =item $c->dump

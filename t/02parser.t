@@ -3,7 +3,7 @@
 $| = 1;
 
 use strict;
-use Test::More tests => 102;
+use Test::More tests => 103;
 
 BEGIN { use_ok('Apache::ConfigParser'); }
 
@@ -20,17 +20,18 @@ package main;
 my @conf_files = glob('httpd[0-9][0-9].conf');
 is(@conf_files, 7, 'seven httpd\d+.conf files found');
 
-# A parser should be created when no arguments are passed in.
+# A parser should be created when no arguments are passed in.  An
+# error should be returned if an non-existent file is passed to
+# parse_file.
 {
   my $c = EmptySubclass->new;
   ok($c, 'Apache::ConfigParser created for no configuration file');
   isa_ok($c, 'EmptySubclass');
-}
-
-# A parser passed an non-existant file should not be created.
-{
-  my $c = EmptySubclass->new('non-existant file');
-  ok(!defined $c, 'Apache::ConfigParser for non-existant file is not created');
+  my $rc = $c->parse_file('non-existent file');
+  ok(!$rc, 'Apache::ConfigParser->parse_file fails for non-existent file');
+  my $regex = "cannot stat 'non-existent file':";
+  $rc = $c->errstr =~ /$regex/o;
+  ok($rc, "Apache::ConfigParser->errstr matches regex \"$regex\"");
 }
 
 # This subroutine just modifies the passed string to make sure that
@@ -78,12 +79,21 @@ for (my $i=0; $i<@conf_files; ++$i) {
     $opts_ref = {post_transform_path_sub => [\&post_transform_munge, 1, 2]};
   }
   if ($opts_ref) {
-    $c = EmptySubclass->new($opts_ref, $conf_file);
+    $c = EmptySubclass->new($opts_ref);
   } else {
-    $c = EmptySubclass->new($conf_file);
+    $c = EmptySubclass->new;
   }
-  ok($c, "loaded `$conf_file'");
   isa_ok($c, 'EmptySubclass');
+
+  # Set the undocumented variable that instructs parse_file to
+  # continue processing configuration files even when filenames given
+  # to the AccessConfig, Include and ResourceConfig directives are
+  # missing.  This lets the test suite test the normal aspects of all
+  # the directives without worrying about a missing file halting the
+  # tests early.
+  $c->{_include_file_ignore_missing_file} = 1;
+  ok($c->parse_file($conf_file), "loaded '$conf_file'");
+  delete $c->{_include_file_ignore_missing_file};
 
   # Check the number of LoadModule's in each configuration file.  This
   # array is indexed by the number of configuration file.
@@ -109,17 +119,17 @@ for (my $i=0; $i<@conf_files; ++$i) {
   # Data::Dumper does not sort the hash keys so different versions of
   # Perl generate the same object but different Data::Dumper::Dumper
   # outputs.  To work around this, recursively descend into the object
-  # and print the output ourselves.
+  # and print the output ourselves.  Also, the errstr object variable
+  # will sometimes be set and contain operating system specific error
+  # messages which will not compare identically with the error
+  # messages in the answer files, so modify them by removing the
+  # operating system specific part.
+  $c->{errstr} =~ s/:[^:]*$/: operating system specific error message/;
   my @result = $c->dump($c);
 
   # Read the answer file.
   my $answer_file =  $conf_file;
   $answer_file    =~ s/\.conf$/\.answer/;
-
-# if (open(ZANSWER, ">$answer_file.tmp")) {
-#   print ZANSWER join("\n", @result), "\n";
-#   close(ZANSWER);
-# }
 
   my $open_file = open(ANSWER, $answer_file);
   ok($open_file, "opened `$answer_file' for reading");
@@ -129,6 +139,14 @@ for (my $i=0; $i<@conf_files; ++$i) {
     @answer    = map { $_ =~ s/\r?\n$//; $_ } @answer;
     close(ANSWER);
 
-    ok(eq_array(\@answer, \@result), "internal structure is ok");
+    my $ok = eq_array(\@answer, \@result);
+    ok($ok, "internal structure is ok");
+
+    unless ($ok) {
+      if (open(ANSWER, ">$answer_file.tmp")) {
+        print ANSWER join("\n", @result), "\n";
+        close(ANSWER);
+      }
+    }
   }
 }
