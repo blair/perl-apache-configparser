@@ -1,0 +1,45 @@
+Package Apache::ConfigParser version 0.01
+
+This is the Apache::ConfigParser package.  This module provides for
+the parsing and manipulation of Apache configuration files.
+
+REQUIREMENTS
+
+   * Perl 5.004_04 or greater.
+
+AVAILABILITY
+
+The latest version of this package is available for download from a CPAN
+(Comprehensive Perl Archive Network) site near your at
+
+    http://www.perl.com/CPAN/authors/id/B/BZ/BZAJAC/
+
+INSTALLATION
+
+In order to use this package you will need Perl version 5.004_04 or
+better.  Once that is completed, you install Apache::ConfigParser as you
+would install any perl module library, by running these commands:
+
+    perl Makefile.PL
+    make
+    make test
+    make install
+
+If you want to install a private copy of this package in some other
+directory, then you should try to produce the initial Makefile with
+something like this command:
+
+    perl Makefile.PL LIB=~/perl
+
+DOCUMENTATION
+
+See the CHANGES file for a list of recent changes.  POD style
+documentation is included in all modules and scripts.  These are
+normally converted to manual pages end installed as part of the "make
+install" process.  You should also be able to use the 'perldoc'
+utility to extract documentation from the module files directly.
+
+AUTHOR, COMMENTS, AND BUGS
+
+I welcome all comments and bug reports.  Please email them to
+Blair Zajac <blair@orcaware.com>.
