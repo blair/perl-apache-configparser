@@ -3,7 +3,8 @@
 $| = 1;
 
 use strict;
-use Test::More tests => 41;
+use Test::More tests => 1162;
+use File::Spec;
 
 BEGIN { use_ok('Apache::ConfigParser::Directive'); }
 
@@ -100,3 +101,115 @@ is($d->value_array_ref, undef, 'value array ref is again undef');
 is(scalar $d->get_value_array, undef, 'getting value array returns undef');
 @value = $d->get_value_array;
 ok(eq_array(\@value, []), 'value array is empty');
+
+# Test the value_is_path, value_is_rel_path and value_is_abs_path.
+my $pipe     = '| pipe';
+my $syslog   = 'syslog:local7';
+my $abs_path = File::Spec->rel2abs('.');
+my $rel_path = File::Spec->catfile('some', 'relative', 'path'); 
+my $dev_null = File::Spec->devnull;
+
+# This array is grouped into sets of 13 elements.  The elements are:
+#  1) Directive name
+#  2) value_is_path($pipe)
+#  3) value_is_abs_path($pipe)
+#  4) value_is_rel_path($pipe)
+#  5) value_is_path($syslog)
+#  6) value_is_abs_path($syslog)
+#  7) value_is_rel_path($syslog)
+#  8) value_is_path($abs_path)
+#  9) value_is_abs_path($abs_path)
+# 10) value_is_rel_path($abs_path)
+# 11) value_is_path($rel_path)
+# 12) value_is_abs_path($rel_path)
+# 13) value_is_rel_path($rel_path);
+my @tests = qw(aaa               0 0 0 0 0 0 0 0 0 0 0 0
+               AccessConfig      1 0 1 1 0 1 1 1 0 1 0 1
+               AgentLog          0 0 0 1 0 0 1 1 0 1 0 0
+               AuthDBGroupFile   1 0 0 1 0 0 1 1 0 1 0 0
+               AuthDBMGroupFile  1 0 0 1 0 0 1 1 0 1 0 0
+               AuthDBMUserFile   1 0 0 1 0 0 1 1 0 1 0 0
+               AuthDBUserFile    1 0 0 1 0 0 1 1 0 1 0 0
+               AuthDigestFile    1 0 0 1 0 0 1 1 0 1 0 0
+               AuthGroupFile     1 0 1 1 0 1 1 1 0 1 0 1
+               AuthUserFile      1 0 1 1 0 1 1 1 0 1 0 1
+               CacheRoot         1 0 0 1 0 0 1 1 0 1 0 0
+               CookieLog         1 0 1 1 0 1 1 1 0 1 0 1
+               CoreDumpDirectory 1 0 0 1 0 0 1 1 0 1 0 0
+               CustomLog         0 0 0 1 0 1 1 1 0 1 0 1
+               Directory         1 0 0 1 0 0 1 1 0 1 0 0
+               DocumentRoot      1 0 0 1 0 0 1 1 0 1 0 0
+               ErrorLog          0 0 0 0 0 0 1 1 0 1 0 1
+               Include           1 0 1 1 0 1 1 1 0 1 0 1
+               LoadFile          1 0 1 1 0 1 1 1 0 1 0 1
+               LoadModule        1 0 1 1 0 1 1 1 0 1 0 1
+               LockFile          1 0 1 1 0 1 1 1 0 1 0 1
+               MimeMagicFile     1 0 1 1 0 1 1 1 0 1 0 1
+               MMapFile          1 0 0 1 0 0 1 1 0 1 0 0
+               PidFile           1 0 1 1 0 1 1 1 0 1 0 1
+               RefererLog        0 0 0 1 0 1 1 1 0 1 0 1
+               ResourceConfig    1 0 1 1 0 1 1 1 0 1 0 1
+               RewriteLock       1 0 0 1 0 0 1 1 0 1 0 0
+               ScoreBoardFile    1 0 1 1 0 1 1 1 0 1 0 1
+               ScriptLog         1 0 1 1 0 1 1 1 0 1 0 1
+               ServerRoot        1 0 0 1 0 0 1 1 0 1 0 0
+               TransferLog       0 0 0 1 0 1 1 1 0 1 0 1
+               TypesConfig       1 0 1 1 0 1 1 1 0 1 0 1);
+is(@tests % 13, 0, 'number of elements in @tests is a multiple of 13');
+while (@tests > 6) {
+  my ($dn, @a) = splice(@tests, 0, 13);
+
+  $d->name($dn);
+
+  # Check that a pipe is treated properly.
+  $d->value($pipe);
+  $d->orig_value($pipe);
+  is($d->value_is_path,          $a[0], "$dn $pipe value path");
+  is($d->value_is_abs_path,      $a[1], "$dn $pipe value abs path");
+  is($d->value_is_rel_path,      $a[2], "$dn $pipe value rel path");
+
+  is($d->orig_value_is_path,     $a[0], "$dn $pipe value path");
+  is($d->orig_value_is_abs_path, $a[1], "$dn $pipe value abs path");
+  is($d->orig_value_is_rel_path, $a[2], "$dn $pipe value rel path");
+
+  # Check that a syslog is treated properly.
+  is($d->value($syslog),      $pipe, "old value is $pipe");
+  is($d->orig_value($syslog), $pipe, "old orig value is $pipe");
+
+  is($d->value_is_path,          $a[3], "$dn $syslog value path");
+  is($d->value_is_abs_path,      $a[4], "$dn $syslog value abs path");
+  is($d->value_is_rel_path,      $a[5], "$dn $syslog value rel path");
+
+  is($d->orig_value_is_path,     $a[3], "$dn $syslog value path");
+  is($d->orig_value_is_abs_path, $a[4], "$dn $syslog value abs path");
+  is($d->orig_value_is_rel_path, $a[5], "$dn $syslog value rel path");
+
+  # Test setting to the /dev/null equivalent on this operating system.
+  is($d->value($dev_null),      $syslog, "old value is $syslog");
+  is($d->orig_value($dev_null), $syslog, "old orig value is $syslog");
+  is($d->value_is_path,     0, "$dn $dev_null is not a path");
+  is($d->value_is_abs_path, 0, "$dn $dev_null is not a abs path");
+  is($d->value_is_rel_path, 0, "$dn $dev_null is not a rel path");
+
+  is($d->value($abs_path),      $dev_null, "old value is $dev_null");
+  is($d->orig_value($abs_path), $dev_null, "old orig value is $dev_null");
+
+  is($d->value_is_path,          $a[6], "$dn $abs_path path value");
+  is($d->value_is_abs_path,      $a[7], "$dn $abs_path abs path value");
+  is($d->value_is_rel_path,      $a[8], "$dn $abs_path rel path value");
+
+  is($d->orig_value_is_path,     $a[6], "$dn $abs_path path orig value");
+  is($d->orig_value_is_abs_path, $a[7], "$dn $abs_path abs path orig value");
+  is($d->orig_value_is_rel_path, $a[8], "$dn $abs_path rel path orig value");
+
+  is($d->value($rel_path),       $abs_path, "old value is $abs_path");
+  is($d->orig_value($rel_path),  $abs_path, "old orig value is $abs_path");
+
+  is($d->value_is_path,          $a[9], " $dn $rel_path path value");
+  is($d->value_is_abs_path,      $a[10], "$dn $rel_path abs path value");
+  is($d->value_is_rel_path,      $a[11], "$dn $rel_path rel path value");
+
+  is($d->orig_value_is_path,     $a[9],  "$dn $rel_path path orig value");
+  is($d->orig_value_is_abs_path, $a[10], "$dn $rel_path abs path orig value");
+  is($d->orig_value_is_rel_path, $a[11], "$dn $rel_path rel path orig value");
+}

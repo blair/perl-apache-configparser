@@ -404,7 +404,7 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-10-2 ARRAY index 0
            `/etc/httpd'
       reference 1-1-2-9 Apache::ConfigParser::Directive=HASH key `value'
-         `"/etc/httpd"'
+         `/etc/httpd'
       reference 1-1-2-9 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-10-3 ARRAY with 1 elements
         reference 1-1-2-10-3 ARRAY index 0

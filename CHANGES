@@ -1,3 +1,66 @@
+Mon Sep 17 02:01:35 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* Release version 0.04.
+
+Mon Sep 17 01:17:00 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* lib/Apache/ConfigParser.pm: Move the setting of
+	  Apache::ConfigParser's ServerRoot hash value after the value
+	  array is set.  This removes any unnecessary quotes around
+	  the value.
+	* lib/Apache/ConfigParser.pod: Ditto.
+	* t/httpd02.answer: Update the answer file to reflect this
+	  change with ServerRoot.
+	* t/httpd04.answer: Ditto.
+	* lib/Apache/ConfigParser.pm: Move all of the code that
+	  checked if a particular directive's value is a path, a pipe
+	  or a syslog into lib/Apache/ConfigParser/Directive.pm since
+	  logically this code belongs with the directive and not with
+	  the user of the directive.  This meant moving the
+	  %directive_has_non_abs_path hash to the Directive module.
+	  Also rename the hash to %directive_value_takes_path to make
+	  the name more accurate.  Remove the declaration of
+	  @EXPORT_OK since the module does not export anything now.
+	* lib/Apache/ConfigParser.pod: Ditto.
+	* lib/Apache/ConfigParser.pm: Allow pre_transform_path_sub and
+	  post_transform_path_sub to operate on any file or directory
+	  path that is a hash key of %directive_value_takes_path but
+	  only prepend ServerRoot to directives that are a hash key of
+	  %directive_value_takes_rel_path that have relative files
+	  that are also not equal to File::Spec->devnull.  The new
+	  directives that can be transformed that previous would not
+	  be are: AgentLog, AuthDBGroupFile, AuthDBMGroupFile,
+	  AuthDBMUserFile, AuthDBUserFile, AuthDigestFile, CacheRoot,
+	  CoreDumpDirectory, Directory, DocumentRoot, MMapFile,
+	  RewriteLock and ServerRoot.
+	* lib/Apache/ConfigParser.pod: Ditto.
+	* lib/Apache/ConfigParser/Directive.pm: Add several new
+	  methods to Apache::ConfigParser::Directive to determine the
+	  file and directory properties of directives.  The new
+	  methods are:
+	    value_is_path and orig_value_is_path
+	      return true if the directive can take a file or
+	      directory path as its value array element 0 and that
+	      element is a file or directory path.
+	    value_is_abs_path and orig_value_is_abs_path
+	      Returns true if the directive can take either an
+	      absolute or relative file or directory path as its value
+	      array element 0 and that element is an absolute file or
+	      directory path.
+	    value_is_rel_path and orig_value_is_rel_path
+	      Returns true if C<$d>'s directive can take either an
+	      absolute or relative file or directory path as its value
+	      array element 0 and that element is a relative file or
+	      directory path.
+	* lib/Apache/ConfigParser/Directive.pod: Ditto.
+	* lib/Apache/ConfigParser/Directive.pm: Export via @EXPORT_OK
+	  the two hashes %directive_value_takes_path and
+	  %directive_value_takes_rel_path which are used by the new
+	  methods above and made available to other users of the
+	  module.
+	* t/01directive.t: Add tests to extensively test all of the
+	  new methods in Apache::ConfigParser::Directive.
+
 Sat Sep 15 23:00:54 PDT 2001 <blair@orcaware.com> Blair Zajac
 
 	* Release version 0.03.

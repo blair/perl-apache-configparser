@@ -3,7 +3,7 @@
 $| = 1;
 
 use strict;
-use Test::More tests => 97;
+use Test::More tests => 100;
 
 BEGIN { use_ok('Apache::ConfigParser'); }
 
@@ -34,18 +34,31 @@ is(@conf_files, 7, 'seven httpd\d+.conf files found');
 }
 
 # This subroutine just modifies the passed string to make sure that
-# this string does not show up in particular output.
+# this string does not show up in particular output.  Do not do this
+# to DocumentRoot and ServerRoot.
 sub post_transform_munge {
   is(@_, 5, 'post_transform_munge passed 5 arguments');
   my ($parser, $directive, $filename) = @_;
+
+  if ($directive eq 'documentroot' or $directive eq 'serverroot') {
+    return $filename;
+  }
+
   "MUNGE $filename";
 }
 
-# This is the subroutine that will modify any Include filenames.  Trim
-# off any directory names in the filename.
+# This is the subroutine that will modify any filenames.  Trim off any
+# directory names in the filename, except for DocumentRoot and
+# ServerRoot.
 sub post_transform_path {
   is(@_, 3, 'post_transform_path passed 3 arguments');
+
   my ($parser, $directive, $filename) = @_;
+
+  if ($directive eq 'documentroot' or $directive eq 'serverroot') {
+    return $filename;
+  }
+
   my @elements = split(m#/#, $filename);
   $elements[-1];
 }

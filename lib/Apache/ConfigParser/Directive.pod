@@ -5,6 +5,38 @@
 package Apache::ConfigParser::Directive;
 require 5.004_05;
 use strict;
+use Exporter;
+use Carp;
+use File::Spec     0.82;
+use Tree::DAG_Node 1.04;
+
+use vars qw(@EXPORT_OK @ISA $VERSION);
+@ISA     = qw(Tree::DAG_Node Exporter);
+$VERSION = sprintf '%d.%02d', '$Revision: 0.02 $' =~ /(\d+)\.(\d+)/;
+
+# Determine if the filenames are case sensitive.
+use constant CASE_SENSITIVE_PATH => (! File::Spec->case_tolerant);
+
+# This is a utility subroutine to determine if the specified path is
+# the /dev/null equivalent on this operating system.
+use constant DEV_NULL    =>    File::Spec->devnull;
+use constant DEV_NULL_LC => lc(File::Spec->devnull);
+sub is_dev_null {
+  if (CASE_SENSITIVE_PATH) {
+    return $_[0] eq DEV_NULL;
+  } else {
+    return lc($_[0]) eq DEV_NULL_LC;
+  }
+}
+
+# This constant is used throughout the module.
+my $INCORRECT_NUMBER_OF_ARGS = "passed incorrect number of arguments.\n";
+
+# These are declared now but defined and documented below.
+use vars         qw(%directive_value_takes_path
+                    %directive_value_takes_rel_path);
+push(@EXPORT_OK, qw(%directive_value_takes_path
+                    %directive_value_takes_rel_path));
 
 =head1 NAME
 
@@ -14,7 +46,7 @@ use strict;
 
   use Apache::ConfigParser::Directive;
 
-  # Create a new emtpy directive.
+  # Create a new empty directive.
   my $d = Apache::ConfigParser::Directive->new;
 
   # Make it a ServerRoot directive.
@@ -24,7 +56,7 @@ use strict;
 
   # A more complicated directive.  Value automatically splits the
   # argument into separate elements.  It treats elements in "'s as a
-  # single ement.
+  # single element.
   # LogFormat "%h %l %u %t \"%r\" %>s %b" common
   $d->name('LogFormat');
   $d->value('"%h %l %u %t \"%r\" %>s %b" common');
@@ -102,17 +134,6 @@ The following methods are available:
 =over
 
 =cut
-
-use Exporter;
-use Carp;
-use Tree::DAG_Node 1.04;
-
-use vars qw(@ISA $VERSION);
-@ISA     = qw(Tree::DAG_Node Exporter);
-$VERSION = sprintf '%d.%02d', '$Revision: 0.01 $' =~ /(\d+)\.(\d+)/;
-
-# This constant is used throughout the module.
-my $INCORRECT_NUMBER_OF_ARGS = "passed incorrect number of arguments.\n";
 
 =item $d = Apache::ConfigParser::Directive->new;
 
@@ -286,7 +307,7 @@ string returned from C<value> will not be consistent with the array.
 =item $d->orig_value_array_ref(\@array)
 
 Identical behavior as C<value_array_ref>, except that this applies to
-a the `original' value.
+the `original' value.
 
 =cut
 
@@ -441,11 +462,174 @@ sub set_orig_value_array {
   return _set_value_array(@_, 'orig_value');
 }
 
+=item $d->value_is_path
+
+Returns true if C<$d>'s directive can take a file or directory path as
+its value array element 0 and that element is a file or directory
+path.  Both the directive name and the argument is checked, because
+some directives such as ErrorLog, can take values that are not paths
+(i.e. piped command or syslog:facility).  The /dev/null equivalent for
+the operating system is not treated as a path, since on some operating
+systems the /dev/null equivalent is not a file, such as nul on
+Windows.
+
+The method actually does not check if its argument is a path, rather
+it checks if the argument does not match all of the other possible
+non-path values for the specific directive because different operating
+systems have different path formats, such as Unix, Windows and
+Macintosh.
+
+=cut
+
+# This is a function that does the work for value_is_path,
+# orig_value_is_path, value_is_abs_path, orig_value_is_abs_path,
+# value_is_rel_path and orig_value_is_rel_path.
+sub _value_is_path_or_abs_path_or_rel_path {
+  unless (@_ == 4) {
+    confess "$0: Apache::ConfigParser::Directive::_value_is_path_or_abs_path_or_rel_path $INCORRECT_NUMBER_OF_ARGS";
+  }
+
+  my ($self, $check_for_abs_path, $check_for_rel_path, $array_var_name) = @_;
+
+  my $array_ref = $self->{$array_var_name};
+
+  unless ($array_ref) {
+    return 0;
+  }
+
+  my $value_element_0 = $self->{$array_var_name}->[0];
+
+  unless (defined $value_element_0 and length $value_element_0) {
+    return 0;
+  }
+
+  if (is_dev_null($value_element_0)) {
+    return 0;
+  }
+
+  my $directive_name = $self->name;
+
+  unless (defined $directive_name and length $directive_name) {
+    return 0;
+  }
+
+  my $sub_ref;
+  if ($check_for_rel_path) {
+    $sub_ref = $directive_value_takes_rel_path{$directive_name};
+  } else {
+    $sub_ref = $directive_value_takes_path{$directive_name};
+  }
+
+  unless ($sub_ref) {
+    return 0;
+  }
+
+  my $result = &$sub_ref($value_element_0);
+  if ($result) {
+    if ($check_for_abs_path) {
+      return File::Spec->file_name_is_absolute($value_element_0) ? 1 : 0;
+    } elsif ($check_for_rel_path) {
+      return File::Spec->file_name_is_absolute($value_element_0) ? 0 : 1;
+    } else {
+      return $result ? 1 : 0;
+    }
+  } else {
+    return 0;
+  }
+}
+
+sub value_is_path {
+  _value_is_path_or_abs_path_or_rel_path($_[0], 0, 0, 'value_array');
+}
+
+=item $d->orig_value_is_path
+
+Returns true if C<$d>'s directive can take a file or directory path as
+its `original' value array element 0 and that element is a file or
+directory path.  This has the same semantics as C<value_is_path>.
+
+=cut
+
+sub orig_value_is_path {
+  _value_is_path_or_abs_path_or_rel_path($_[0], 0, 0, 'orig_value_array');
+}
+
+=item $d->value_is_abs_path
+
+Returns true if C<$d>'s directive can take either an absolute or
+relative file or directory path as its value array element 0 and that
+element is an absolute file or directory path.  Both the directive
+name and the argument is checked, because some directives such as
+ErrorLog, can take values that are not paths (i.e. piped command or
+syslog:facility).  The /dev/null equivalent for the operating system
+is not treated as a path, since on some operating systems the
+/dev/null equivalent is not a file, such as nul on Windows.
+
+Unlike C<value_is_path> and C<orig_value_is_path>, this method does
+check if the argument is in the format of a relative path that is used
+on the operating system running using this module.
+
+=cut
+
+sub value_is_abs_path {
+  _value_is_path_or_abs_path_or_rel_path($_[0], 1, 0, 'value_array');
+}
+
+=item $d->orig_value_is_abs_path
+
+Returns true if C<$d>'s directive can take either an absolute or
+relative file or directory path as its `original' value array element
+0 and that element is an absolute file or directory path.  Has the
+same semantics as C<value_is_abs_path>.
+
+=cut
+
+sub orig_value_is_abs_path {
+  _value_is_path_or_abs_path_or_rel_path($_[0], 1, 0, 'orig_value_array');
+}
+
+=item $d->value_is_rel_path
+
+Returns true if C<$d>'s directive can take either an absolute or
+relative file or directory path as its value array element 0 and that
+element is a relative file or directory path.  If a relative path name
+is given as a value to a directive that does not take relative file or
+directory names, such as AgentLog, then this subroutine will return 0
+even though the path is relative.  Both the directive name and the
+argument is checked, because some directives such as ErrorLog, can
+take values that are not paths (i.e. piped command or
+syslog:facility).  The /dev/null equivalent for the operating system
+is not treated as a path, since on some operating systems the
+/dev/null equivalent is not a file, such as nul on Windows.
+
+Unlike C<value_is_path> and C<orig_value_is_path>, this method does
+check if the argument is in the format of a relative path that is used
+on the operating system running using this module.
+
+=cut
+
+sub value_is_rel_path {
+  _value_is_path_or_abs_path_or_rel_path($_[0], 0, 1, 'value_array');
+}
+
+=item $d->orig_value_is_rel_path
+
+Returns true if C<$d>'s directive can take either an absolute or
+relative file or directory path as its `original' value array element
+0 and that element is a relative file or directory path.  Has the same
+semantics as C<value_is_rel_path>.
+
+=cut
+
+sub orig_value_is_rel_path {
+  _value_is_path_or_abs_path_or_rel_path($_[0], 0, 1, 'orig_value_array');
+}
+
 =item $d->filename
 
 =item $d->filename($filename)
 
-In the first form get the filename where this pariticular directive or
+In the first form get the filename where this particular directive or
 context appears.  In the second form set the new filename of the
 directive or context and return the original filename.
 
@@ -491,9 +675,236 @@ sub line_number {
   }
 }
 
-1;
+=back
+
+=head1 EXPORTED VARIABLES
+
+The following variables are exported via C<@EXPORT_OK>.
+
+=over 4
+
+=item %directive_value_takes_path
+
+This hash is keyed by the lowercase version of a directive name.  This
+hash is keyed by all directives that accept a file or directory path
+value as its first value array element. The hash value is a subroutine
+reference to pass the value array element containing the file,
+directory, pipe or syslog entry to.  If a hash entry exists for a
+particular entry, then the directive name can take either a relative
+or absolute path to either a file or directory.  The hash does not
+distinguish between directives that take only filenames, only
+directories or both, and it does not distinguish if the directive
+takes only absolute, only relative or both types of paths.
+
+The hash value for the lowercase directive name is a subroutine
+reference.  The subroutine returns 1 if its only argument is a path
+and 0 otherwise.  The /dev/null equivalent (C<File::Spec->devnull>)
+for the operating system being used is not counted as a path, since on
+some operating systems the /dev/null equivalent is not a filename,
+such as nul on Windows.
+
+The subroutine actually does not check if its argument is a path,
+rather it checks if the argument does not match one of the other
+possible non-path values for the specific directive because different
+operating systems have different path formats, such as Unix, Windows
+and Macintosh.  For example, ErrorLog can take a filename, such as
+
+  ErrorLog /var/log/httpd/error_log
+
+or a piped command, such as
+
+  ErrorLog "| cronolog /var/log/httpd/%Y/%m/%d/error.log"
+
+or a syslog entry of the two forms:
+
+  ErrorLog syslog
+  ErrorLog syslog:local7
+
+The particular subroutine for ErrorLog checks if the value is not
+equal to C<File::Spec->devnull>, does not begin with a | or does not
+match syslog(:[a-zA-Z0-9]+)?.
+
+These subroutines do not remove any "'s before checking on the type of
+value.
+
+This hash is used by C<value_is_path> and C<orig_value_is_path>.
+
+This is a list of directives and any special values to check for as of
+Apache 1.3.20.
+
+  AccessConfig
+  AgentLog          check for "| prog"
+  AuthDBGroupFile
+  AuthDBMGroupFile
+  AuthDBMUserFile
+  AuthDBUserFile
+  AuthDigestFile
+  AuthGroupFile
+  AuthUserFile
+  CacheRoot
+  CookieLog
+  CoreDumpDirectory
+  CustomLog         check for "| prog"
+  Directory
+  DocumentRoot
+  ErrorLog          check for "| prog", or syslog or syslog:facility
+  Include
+  LoadFile
+  LoadModule
+  LockFile
+  MimeMagicFile
+  MMapFile
+  PidFile
+  RefererLog        check for "| prog"
+  ResourceConfig
+  RewriteLock
+  ScoreBoardFile
+  ScriptLog
+  ServerRoot
+  TransferLog       check for "| prog"
+  TypesConfig
+
+=item %directive_value_takes_rel_path
+
+This hash is keyed by the lowercase version of a directive name.  This
+hash contains only those directive names that can accept both relative
+and absolute file or directory names.  The hash value is a subroutine
+reference to pass the value array element containing the file,
+directory, pipe or syslog entry to.  The hash does not distinguish
+between directives that take only filenames, only directories or both.
+
+The hash value for the lowercase directive name is a subroutine
+reference.  The subroutine returns 1 if its only argument is a path
+and 0 otherwise.  The /dev/null equivalent (C<File::Spec->devnull>)
+for the operating system being used is not counted as a path, since on
+some operating systems the /dev/null equivalent is not a filename,
+such as nul on Windows.
+
+The subroutine actually does not check if its argument is a path,
+rather it checks if the argument does not match one of the other
+possible non-path values for the specific directive because different
+operating systems have different path formats, such as Unix, Windows
+and Macintosh.  For example, ErrorLog can take a filename, such as
+
+  ErrorLog /var/log/httpd/error_log
+
+or a piped command, such as
+
+  ErrorLog "| cronolog /var/log/httpd/%Y/%m/%d/error.log"
+
+or a syslog entry of the two forms:
+
+  ErrorLog syslog
+  ErrorLog syslog:local7
+
+The particular subroutine for ErrorLog checks if the value is not
+equal to C<File::Spec->devnull>, does not begin with a | or does not
+match syslog(:[a-zA-Z0-9]+)?.
+
+These subroutines do not remove any "'s before checking on the type of
+value.
+
+This hash is used by C<value_is_rel_path> and
+C<orig_value_is_rel_path>.
+
+This is a list of directives and any special values to check for as of
+Apache 1.3.20.
+
+  AccessConfig
+  AuthGroupFile
+  AuthUserFile
+  CookieLog
+  CustomLog         check for "| prog"
+  ErrorLog          check for "| prog", or syslog or syslog:facility
+  Include
+  LoadFile
+  LoadModule
+  LockFile
+  MimeMagicFile
+  PidFile
+  RefererLog        check for "| prog"
+  ResourceConfig
+  ScoreBoardFile
+  ScriptLog
+  TransferLog       check for "| prog"
+  TypesConfig
 
 =back
+
+=cut
+
+sub directive_value_is_not_dev_null {
+  !is_dev_null($_[0]);
+}
+
+sub directive_value_is_not_dev_null_and_pipe {
+  if (is_dev_null($_[0])) {
+    return 0;
+  }
+
+  return $_[0] !~ /^\s*\|/;
+}
+
+sub directive_value_is_not_dev_null_and_pipe_and_syslog {
+  if (is_dev_null($_[0])) {
+    return 0;
+  }
+
+  return $_[0] !~ /^\s*(?:(?:\|)|(?:syslog(?::[a-zA-Z0-9]+)?))/;
+}
+
+%directive_value_takes_rel_path = (
+  AccessConfig   => \&directive_value_is_not_dev_null,
+  AuthGroupFile  => \&directive_value_is_not_dev_null,
+  AuthUserFile   => \&directive_value_is_not_dev_null,
+  CookieLog      => \&directive_value_is_not_dev_null,
+  CustomLog      => \&directive_value_is_not_dev_null_and_pipe,
+  ErrorLog       => \&directive_value_is_not_dev_null_and_pipe_and_syslog,
+  Include        => \&directive_value_is_not_dev_null,
+  LoadFile       => \&directive_value_is_not_dev_null,
+  LoadModule     => \&directive_value_is_not_dev_null,
+  LockFile       => \&directive_value_is_not_dev_null,
+  MimeMagicFile  => \&directive_value_is_not_dev_null,
+  PidFile        => \&directive_value_is_not_dev_null,
+  RefererLog     => \&directive_value_is_not_dev_null_and_pipe,
+  ResourceConfig => \&directive_value_is_not_dev_null,
+  ScoreBoardFile => \&directive_value_is_not_dev_null,
+  ScriptLog      => \&directive_value_is_not_dev_null,
+  TransferLog    => \&directive_value_is_not_dev_null_and_pipe,
+  TypesConfig    => \&directive_value_is_not_dev_null);
+
+# Make all of the %directive_value_takes_rel_path key names lowercase
+# and copy the same key/value pairs to %directive_value_takes_path.
+foreach my $key (keys %directive_value_takes_rel_path) {
+  my $value                             =
+    delete $directive_value_takes_rel_path{$key};
+  $key                                  = lc($key);
+  $directive_value_takes_rel_path{$key} = $value;
+  $directive_value_takes_path{$key}     = $value;
+}
+
+# Add these key/value pairs to %directive_value_takes_path;
+my %add_directive_value_takes_path = (
+  AgentLog          => \&directive_value_is_not_dev_null_and_pipe,
+  AuthDBGroupFile   => \&directive_value_is_not_dev_null,
+  AuthDBMGroupFile  => \&directive_value_is_not_dev_null,
+  AuthDBMUserFile   => \&directive_value_is_not_dev_null,
+  AuthDBUserFile    => \&directive_value_is_not_dev_null,
+  AuthDigestFile    => \&directive_value_is_not_dev_null,
+  CacheRoot         => \&directive_value_is_not_dev_null,
+  CoreDumpDirectory => \&directive_value_is_not_dev_null,
+  Directory         => \&directive_value_is_not_dev_null,
+  DocumentRoot      => \&directive_value_is_not_dev_null,
+  MMapFile          => \&directive_value_is_not_dev_null,
+  RewriteLock       => \&directive_value_is_not_dev_null,
+  ServerRoot        => \&directive_value_is_not_dev_null);
+
+# Make all of the %directive_value_takes_path key names lowercase.
+foreach my $key (keys %add_directive_value_takes_path) {
+  my $value                         = $add_directive_value_takes_path{$key};
+  $key                              = lc($key);
+  $directive_value_takes_path{$key} = $value;
+}
 
 =head1 SEE ALSO
 
@@ -508,3 +919,7 @@ Blair Zajac <blair@orcaware.com>.
 Copyright (C) 2001 Blair Zajac.  All rights reserved.  This program is
 free software; you can redistribute it and/or modify it under the same
 terms as Perl itself.
+
+=cut
+
+1;

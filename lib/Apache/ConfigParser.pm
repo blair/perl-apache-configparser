@@ -106,148 +106,15 @@ use Symbol;
 use File::Spec 0.82;
 use Apache::ConfigParser::Directive;
 
-use vars qw(@EXPORT_OK @ISA $VERSION);
+use vars qw(@ISA $VERSION);
 @ISA     = qw(Exporter);
-$VERSION = sprintf '%d.%02d', '$Revision: 0.03 $' =~ /(\d+)\.(\d+)/;
+$VERSION = sprintf '%d.%02d', '$Revision: 0.04 $' =~ /(\d+)\.(\d+)/;
 
 # This constant is used throughout the module.
 my $INCORRECT_NUMBER_OF_ARGS = "passed incorrect number of arguments.\n";
 
 # Determine if the filenames are case sensitive.
 use constant CASE_SENSITIVE_PATH => (! File::Spec->case_tolerant);
-
-=head1 EXPORTED VARIABLES
-
-The following variables are exported via C<@EXPORT_OK>.
-
-=over 4
-
-=item %directive_has_non_abs_path
-
-This hash is keyed by the lowercase version of a directive name.  The
-hash value is a subroutine reference.  If a hash entry exists for a
-particular entry, then the directive name can take a non absolute
-path, such as a relative path that may need to be made absolute, or a
-pipe to a command or an option to direct messages to syslog.  The
-subroutine reference stored in the hash takes a single variable which
-should be the potential file path entry.  It returns 1 if the
-potential filename does not match any strings that are valid non-file
-or non-directory values for the directive.  It does not check if the
-value is a valid file or directory path.  It also does not check if
-the path is absolute, C<File::Spec->file_name_is_absolute> can be used
-to check that in an operating system independent manner.
-
-For example, ErrorLog can take a filename, such as
-
-  ErrorLog /var/log/httpd/error_log
-
-or a piped command, such as
-
-  ErrorLog "| cronolog /var/log/httpd/%Y/%m/%d/error.log"
-
-or a syslog entry of the two forms:
-
-  ErrorLog syslog
-  ErrorLog syslog:local7
-
-The particular subroutine for ErrorLog checks if the value is not
-equal to C<File::Spec->devnull>, does not begin with a | or does not
-match syslog(:[a-zA-Z0-9]+)?.
-
-On all operating systems, these subroutines return 0 if the value is
-equal to C<File::Spec->devnull> in a case sensitive or case
-insensitive manner depending upon the operating system.
-
-These subroutines do not remove any "'s before checking on the type of
-value.
-
-This is a list of directives and any special values to check for as of
-Apache 1.3.20.
-
-  AccessConfig
-  AuthGroupFile
-  AuthUserFile
-  CookieLog
-  CustomLog       check for "| command"
-  ErrorLog        check for "| command", or syslog or syslog:facility
-  Include
-  LoadFile
-  LoadModule
-  LockFile
-  MimeMagicFile
-  PidFile
-  RefererLog      check for "| command"
-  ResourceConf
-  ScoreBoardFile
-  ScriptLog
-  TransferLog     check for "| command"
-  TypesConfig
-
-=back
-
-=cut
-
-use vars qw(%directive_has_non_abs_path);
-push(@EXPORT_OK, qw(%directive_has_non_abs_path));
-
-%directive_has_non_abs_path = (
-  AccessConfig   => \&directive_value_is_not_dev_null,
-  AuthGroupFile  => \&directive_value_is_not_dev_null,
-  AuthUserFile   => \&directive_value_is_not_dev_null,
-  CookieLog      => \&directive_value_is_not_dev_null,
-  CustomLog      => \&directive_value_is_not_dev_null_and_pipe,
-  ErrorLog       => \&directive_value_is_not_dev_null_and_pipe_and_syslog,
-  Include        => \&directive_value_is_not_dev_null,
-  LoadFile       => \&directive_value_is_not_dev_null,
-  LoadModule     => \&directive_value_is_not_dev_null,
-  LockFile       => \&directive_value_is_not_dev_null,
-  MimeMagicFile  => \&directive_value_is_not_dev_null,
-  PidFile        => \&directive_value_is_not_dev_null,
-  RefererLog     => \&directive_value_is_not_dev_null_and_pipe,
-  ResourceConfig => \&directive_value_is_not_dev_null,
-  ScoreBoardFile => \&directive_value_is_not_dev_null,
-  ScriptLog      => \&directive_value_is_not_dev_null,
-  TransferLog    => \&directive_value_is_not_dev_null_and_pipe,
-  TypesConfig    => \&directive_value_is_not_dev_null);
-
-# Make all of the hash key names lowercase.
-foreach my $key (keys %directive_has_non_abs_path) {
-  my $value                         = delete $directive_has_non_abs_path{$key};
-  $key                              = lc($key);
-  $directive_has_non_abs_path{$key} = $value;
-}
-
-# This is a utility subroutine to determine if the specified path is
-# the /dev/null equivalent on this operating system.
-use constant DEV_NULL    =>    File::Spec->devnull;
-use constant DEV_NULL_LC => lc(File::Spec->devnull);
-sub is_dev_null {
-  if (CASE_SENSITIVE_PATH) {
-    return $_[0] eq DEV_NULL;
-  } else {
-    return lc($_[0]) eq DEV_NULL_LC;
-  }
-}
-
-sub directive_value_is_not_dev_null {
-  !is_dev_null($_[0]);
-}
-
-sub directive_value_is_not_dev_null_and_pipe {
-  if (is_dev_null($_[0])) {
-    return 0;
-  }
-
-  return $_[0] !~ /^\s*\|/;
-}
-
-sub directive_value_is_not_dev_null_and_pipe_and_syslog {
-  if (is_dev_null($_[0])) {
-    return 0;
-  }
-
-  return $_[0] !~ /^\s*(?:(?:\|)|(?:syslog(?::[a-zA-Z0-9]+)?))/;
-}
 
 =head1 METHODS
 
@@ -285,9 +152,9 @@ This allows the file or directory name for any directive that takes
 either a filename or directory name to be transformed by an arbitrary
 subroutine before it is made absolute with ServerRoot.  This
 transformation is applied to any of the directives that appear in
-C<%directive_has_non_abs_path> that have a filename or directory value
-instead of a pipe or syslog value, i.e. "| cronolog" or
-"syslog:warning".
+C<%Apache::ConfigParser::Directive::directive_value_takes_path> that
+have a filename or directory value instead of a pipe or syslog value,
+i.e. "| cronolog" or "syslog:warning".
 
 If the second form of C<pre_transform_path_sub> is used with an array
 reference, then the first element of the array reference must be a
@@ -301,6 +168,14 @@ The subroutine is passed the following arguments:
   lowercase string of the configuration directive
   the file or directory name to transform
   @args
+
+NOTE: Be careful, because this subroutine will be applied to
+ServerRoot and DocumentRoot, among other directives.  See
+L<Apache::ConfigParser::Directive> for the complete list of directives
+that C<pre_transform_path_sub> is applied to.  If you do not want the
+transformation applied to any specific directives, make sure to check
+the directive name and if you do not want to modify the filename,
+return the subroutine's third argument.
 
 If the subroutine returns an undefined value or a value with 0 length,
 then it is replaced with <File::Spec->devnull> which is the
@@ -329,9 +204,9 @@ This allows the file or directory name for any directive that takes
 either a filename or directory name to be transformed by this
 subroutine after it is made absolute with ServerRoot.  This
 transformation is applied to any of the directives that appear in
-C<%directive_has_non_abs_path> that have a filename or directory
-value instead of a pipe or syslog value, i.e. "| cronolog" or
-"syslog:warning".
+C<%Apache::ConfigParser::Directive::directive_value_takes_path> that
+have a filename or directory value instead of a pipe or syslog value,
+i.e. "| cronolog" or "syslog:warning".
 
 If the second form of C<post_transform_path_sub> is used with an array
 reference, then the first element of the array reference must be a
@@ -345,6 +220,14 @@ The subroutine is passed the following arguments:
   lowercase version of the configuration directive
   the file or directory name to transform
   @args
+
+NOTE: Be careful, because this subroutine will be applied to
+ServerRoot and DocumentRoot, among other directives.  See
+L<Apache::ConfigParser::Directive> for the complete list of directives
+that C<post_transform_path_sub> is applied to.  If you do not want the
+transformation applied to any specific directives, make sure to check
+the directive name and if you do not want to modify the filename,
+return the subroutine's third argument.
 
 If the subroutine returns an undefined value or a value with 0 length,
 then it is replaced with <File::Spec->devnull> which is the
@@ -509,7 +392,7 @@ sub parse_file {
   #
   # http://httpd.apache.org/docs/configuring.html#syntax
   #
-  # In addition, use the schemantics from the function ap_cfg_getline
+  # In addition, use the semantics from the function ap_cfg_getline
   # in util.c
   # 1) Leading whitespace is first skipped.
   # 2) Configuration files are then parsed for line continuation.  The
@@ -632,64 +515,52 @@ sub parse_file {
 
     my @values = $new_node->get_value_array;
 
-    # If this option is ServerRoot and node is the parent node, then
-    # record it now because it is used to make other relative
-    # pathnames absolute.
-    if ($directive eq 'serverroot' and !$current_node->mother) {
-      $self->{server_root} = $values[0];
-      next;
-    }
-
-    # If this option is takes a relative file or directory path, then
-    # make sure the path is absolute.
-    my $directive_has_non_abs_path = $directive_has_non_abs_path{$directive};
-    if (defined $directive_has_non_abs_path) {
-      # If the hash value is a reference, then check if the specific
-      # directive value is a path.
-      if (ref $directive_has_non_abs_path) {
-        $directive_has_non_abs_path = &$directive_has_non_abs_path($values[0]);
+    # If this directive takes a path argument, then make sure the path
+    # is absolute.
+    if ($new_node->value_is_path) {
+      # If the path needs to be pre transformed, then do that now.
+      if (my $pre_transform_path_sub = $self->{pre_transform_path_sub}) {
+        my ($sub, @args) = @$pre_transform_path_sub;
+        my $new_path     = &$sub($self, $directive, $values[0], @args);
+        if (defined $new_path and length $new_path) {
+          $values[0] = $new_path;
+        } else {
+          $values[0] = File::Spec->devnull;
+        }
       }
 
-      if ($directive_has_non_abs_path) {
-        # If the path needs to be pre transformed, then do that now.
-        if (my $pre_transform_path_sub = $self->{pre_transform_path_sub}) {
-          my ($sub, @args) = @$pre_transform_path_sub;
-          my $new_path = &$sub($self, $directive, $values[0], @args);
-          if (defined $new_path and length $new_path) {
-            $values[0] = $new_path;
-          } else {
-            $values[0] = DEV_NULL;
-          }
-        }
+      # Determine if the file or directory path needs to have the
+      # ServerRoot prepended to it.  First check if the ServerRoot has
+      # been set then check if the file or directory path is relative
+      # for this operating system.
+      my $server_root = $self->{server_root};
+      if (defined $server_root and
+          length  $server_root and
+          $new_node->value_is_rel_path) {
+        $values[0] = "$server_root/$values[0]";
+      }
 
-        # Determine if the file or directory path needs to have the
-        # ServerRoot prepended to it.  First check if the ServerRoot
-        # has been set.  Then check if the file or directory path is
-        # equal to the /dev/null equivalent on this operating system.
-        # Finally, check if the filename is relative for this
-        # operating system.
-        my $server_root = $self->{server_root};
-        if (defined $server_root       and
-            length  $server_root       and
-            ! is_dev_null($values[0]) and
-            ! File::Spec->file_name_is_absolute($values[0])) {
-          $values[0] = "$server_root/$values[0]";
-        }
-
-        # If the path needs to be post transformed, then do that now.
-        if (my $post_transform_path_sub = $self->{post_transform_path_sub}) {
-          my ($sub, @args) = @$post_transform_path_sub;
-          my $new_path = &$sub($self, $directive, $values[0], @args);
-          if (defined $new_path and length $new_path) {
-            $values[0] = $new_path;
-          } else {
-            $values[0] = DEV_NULL;
-          }
+      # If the path needs to be post transformed, then do that now.
+      if (my $post_transform_path_sub = $self->{post_transform_path_sub}) {
+        my ($sub, @args) = @$post_transform_path_sub;
+        my $new_path     = &$sub($self, $directive, $values[0], @args);
+        if (defined $new_path and length $new_path) {
+          $values[0] = $new_path;
+        } else {
+          $values[0] = File::Spec->devnull;
         }
       }
     }
 
     $new_node->set_value_array(@values);
+
+    # If this directive is ServerRoot and node is the parent node,
+    # then record it now because it is used to make other relative
+    # pathnames absolute.
+    if ($directive eq 'serverroot' and !$current_node->mother) {
+      $self->{server_root} = $values[0];
+      next;
+    }
 
     # If this option is AccessConfig, Include or ResourceConfig, then
     # include the file indicated.  Support the Apache 1.3.13 behavior
@@ -698,7 +569,9 @@ sub parse_file {
     if ($directive eq 'accessconfig' or
         $directive eq 'include'      or
         $directive eq 'resourceconfig') {
-      next if is_dev_null($values[0]);
+      unless ($new_node->value_is_path) {
+        next;
+      }
 
       my @lstat = lstat($values[0]);
       unless (@lstat) {
