@@ -9,7 +9,7 @@
 
 package Apache::ConfigParser;
 
-require 5.005_03;
+require 5.004_05;
 
 use strict;
 
@@ -139,10 +139,10 @@ not continue the line.
 use Exporter;
 use Carp;
 use Symbol;
+use File::FnMatch                   0.01 qw(fnmatch);
 use File::Spec                      0.82;
 use Apache::ConfigParser::Directive      qw(DEV_NULL
                                             %directive_value_path_element_pos);
-use Text::Glob                      0.06 qw(glob_to_regex);
 
 use vars qw(@ISA $VERSION);
 @ISA     = qw(Exporter);
@@ -352,7 +352,7 @@ sub DESTROY {
 
 # Apache 1.3.27 and 2.0.41 check if the AccessConfig, Include or
 # ResourceConfig directives' value contains a glob.  Duplicate the
-# same check here.
+# exact same check here.
 sub path_has_apache_style_glob {
   unless (@_ == 1) {
     confess "$0: Apache::ConfigParser::path_has_apache_style_glob ",
@@ -432,11 +432,11 @@ sub _handle_include_directive {
       }
     }
 
-    my $glob_re = glob_to_regex($basename);
+    # The glob code Apache uses is fnmatch(3).
     foreach my $n (sort readdir(DIR)) {
       next if $n eq '.';
       next if $n eq '..';
-      if ($n =~ $glob_re) {
+      if (fnmatch($basename, $n)) {
         push(@paths, "$dirname/$n");
       }
     }

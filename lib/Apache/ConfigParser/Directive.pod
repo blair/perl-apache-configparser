@@ -9,7 +9,7 @@
 
 package Apache::ConfigParser::Directive;
 
-require 5.005_03;
+require 5.004_05;
 
 use strict;
 use Exporter;
