@@ -8,6 +8,22 @@ $|                  = 1;
 my $missing_modules = 0;
 my $version;
 
+$version = 0.01;
+print "Checking for File::FnMatch $version...";
+eval "use File::FnMatch $version;";
+if ($@) {
+  print " failed\n";
+  ++$missing_modules;
+  print <<EOT;
+$@
+
+File::FnMatch is used to find Apache configuration files that match a glob.
+
+EOT
+} else {
+  print " ok\n";
+}
+
 $version = 0.82;
 print "Checking for File::Spec $version...";
 eval "use File::Spec $version;";
@@ -36,22 +52,6 @@ if ($@) {
 $@
 
 Test::More is used to test the package.
-
-EOT
-} else {
-  print " ok\n";
-}
-
-$version = 0.01;
-print "Checking for File::FnMatch $version...";
-eval "use File::FnMatch $version;";
-if ($@) {
-  print " failed\n";
-  ++$missing_modules;
-  print <<EOT;
-$@
-
-File::FnMatch is used to find Apache configuration files that match a glob.
 
 EOT
 } else {
