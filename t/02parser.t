@@ -88,7 +88,7 @@ for (my $i=0; $i<@conf_files; ++$i) {
   # Check the number of LoadModule's in each configuration file.  This
   # array is indexed by the number of configuration file.
   my @load_modules = (0, 37, 0, 37, 18, 0, 1);
-  is($c->find_at_and_down_option_names('LoadModule'),
+  is($c->find_down_directive_names('LoadModule'),
      $load_modules[$i],
      "found $load_modules[$i] LoadModule's in the whole file");
 
@@ -96,12 +96,12 @@ for (my $i=0; $i<@conf_files; ++$i) {
   # Since some LoadModule's are inside <IfDefine> contexts, then this
   # will not find all of the LoadModules.
   @load_modules = (0, 26, 0, 26, 18, 0, 1);
-  is($c->find_in_siblings_option_names('LoadModule'),
+  is($c->find_siblings_directive_names('LoadModule'),
      $load_modules[$i],
      "found $load_modules[$i] LoadModule's at the top level");
 
   # This does a similar search but providing the start node.
-  is($c->find_in_siblings_option_names(($c->root->daughters)[-1],
+  is($c->find_siblings_directive_names(($c->root->daughters)[-1],
                                        'LoadModule'),
      $load_modules[$i],
      "found $load_modules[$i] LoadModule's one level down");

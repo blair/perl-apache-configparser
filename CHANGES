@@ -1,3 +1,24 @@
+Mon Sep 17 21:58:48 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* Release version 0.05.
+
+Mon Sep 17 21:47:46 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* lib/Apache/ConfigParser.pm: Shorten the find_* method
+	  names.  Rename find_at_and_down_directive_names to
+	  find_down_directive_names and find_in_* to find_*.
+	* lib/Apache/ConfigParser.pod: Ditto.
+	* t/02parser.t: Ditto.
+
+Mon Sep 17 12:25:41 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* lib/Apache/ConfigParser.pm: Rename all of the find_* methods
+	  to use the word directive instead of option.  Change all of
+	  the comments and POD documentation to use the word directive
+	  instead of option.
+	* lib/Apache/ConfigParser.pod: Ditto.
+	* t/02parser.t: Ditto.
+
 Mon Sep 17 02:01:35 PDT 2001 <blair@orcaware.com> Blair Zajac
 
 	* Release version 0.04.

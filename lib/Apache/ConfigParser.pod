@@ -41,7 +41,7 @@ Apache::ConfigParser - Load Apache configuration files
   my $d_line_number = $directives[0]->line_number;
 
   # Find all the CustomLog entries, regardless of context.
-  my @custom_logs = $c1->find_at_and_down_option_names('CustomLog');
+  my @custom_logs = $c1->find_down_directive_names('CustomLog');
 
   # Get the first CustomLog.
   my $custom_log = $custom_logs[0];
@@ -66,10 +66,11 @@ Apache::ConfigParser - Load Apache configuration files
 
 The C<Apache::ConfigParser> module is used to load an Apache
 configuration file to allow programs to determine Apache's
-configuration options.  The resulting object contains a tree based
-structure using the C<Apache::ConfigParser::Directive> class, which is
-a subclass of C<Tree::DAG_node>, so all of the methods that enable
-tree based searches and modifications.  The tree structure is used to
+configuration directives and contexts.  The resulting object contains
+a tree based structure using the C<Apache::ConfigParser::Directive>
+class, which is a subclass of C<Tree::DAG_node>, so all of the methods
+that enable tree based searches and modifications from
+C<Tree::DAG_Node> are also available.  The tree structure is used to
 represent the ability to nest sections, such as <VirtualHost>,
 <Directory>, etc.
 
@@ -84,8 +85,8 @@ for:
 
 The module checks if the start and end context names match.  If the
 end context name does not match the start context name, then it is
-ignored.  The module does not even check if the configuration options
-modules have valid names.
+ignored.  The module does not even check if the configuration contexts
+have valid names.
 
 =back
 
@@ -108,7 +109,7 @@ use Apache::ConfigParser::Directive;
 
 use vars qw(@ISA $VERSION);
 @ISA     = qw(Exporter);
-$VERSION = sprintf '%d.%02d', '$Revision: 0.04 $' =~ /(\d+)\.(\d+)/;
+$VERSION = sprintf '%d.%02d', '$Revision: 0.05 $' =~ /(\d+)\.(\d+)/;
 
 # This constant is used throughout the module.
 my $INCORRECT_NUMBER_OF_ARGS = "passed incorrect number of arguments.\n";
@@ -266,7 +267,7 @@ sub new {
   my $class = shift;
   $class    = ref($class) || $class;
 
-  # This is the root of the tree that holds all of the options and
+  # This is the root of the tree that holds all of the directives and
   # contexts in the Apache configuration file.  Also keep track of the
   # current node in the tree so that when options are parsed the code
   # knows the context to insert them.
@@ -332,9 +333,10 @@ This method takes a filename and adds it to the already loaded
 configuration file inside the object.  If a previous Apache
 configuration file was loaded either with new or parse_file and the
 configuration file did not close all of its contexts, such as
-<VirtualHost>, then the new configuration options in C<$filename> will
-be added to the existing context.  If $filename could not be opened,
-then $! will contain the reason for open's failure.
+<VirtualHost>, then the new configuration directives and contexts in
+C<$filename> will be added to the existing context.  If C<$filename>
+could not be opened, then C<$!> will contain the reason for open's
+failure.
 
 =cut
 
@@ -367,7 +369,7 @@ sub parse_file {
     return $ok ? $self : undef;
   }
 
-  # Get the current node to add these configuration options to.
+  # Get the current node to add these configuration directives to.
   my $current_node = $self->{current_node};
 
   # Create a new file handle to open this file and open it.
@@ -452,7 +454,7 @@ sub parse_file {
     # If there is nothing on the line, then skip it.
     next unless length $_;
 
-    # If the option begins with </, then it is ending a context.
+    # If the line begins with </, then it is ending a context.
     if (my ($context) = $_ =~ /^<\s*\/\s*([^\s>]+)/) {
       # Check if a end context was seen with no start context in the
       # configuration file.
@@ -483,7 +485,7 @@ sub parse_file {
     $new_node->filename($file_or_dir_name);
     $new_node->line_number($line_number);
 
-    # If the option begins with <, then it is a start context.
+    # If the line begins with <, then it is starting a context.
     if (my ($context, $value) = $_ =~ /^<\s*(\S+)\s+(.*)>$/) {
       $context =  lc($context);
       $value   =~ s/\s{2,}/ /g;
@@ -562,9 +564,9 @@ sub parse_file {
       next;
     }
 
-    # If this option is AccessConfig, Include or ResourceConfig, then
-    # include the file indicated.  Support the Apache 1.3.13 behavior
-    # where Include can be a directory name and Apache will
+    # If this directive is AccessConfig, Include or ResourceConfig,
+    # then include the indicated file.  Support the Apache 1.3.13
+    # behavior where Include can be a directory name and Apache will
     # recursively load all of the files in that directory.
     if ($directive eq 'accessconfig' or
         $directive eq 'include'      or
@@ -589,7 +591,7 @@ sub parse_file {
   close($fd) or
     warn "$0: cannot close `$file_or_dir_name' for reading: $!\n";
 
-  # Save the current node that options were being added to.
+  # Save the current node that directives were being added to.
   $self->{current_node} = $current_node;
 
   return $self;
@@ -622,31 +624,32 @@ sub root {
   $_[0]->{root}
 }
 
-=item $c->find_at_and_down_option_names('option', ...)
+=item $c->find_down_directive_names('directive', ...)
 
-=item $c->find_at_and_down_option_names($node, 'option', ...)
+=item $c->find_down_directive_names($node, 'directive', ...)
 
-In list context, returns the list all of $c options that match the
-option names listed at the level of C<$node> and below.  In scalar
-context, returns the number of such options.  The level here is in a
-tree sense, not in the sense that some options appear C<$node> in the
-configuration file.  If C<$node> is given, then the search is started
-at C<$node>, includes C<$node> and searches C<$node>'s children.  If
-C<$node> is not passed, then it starts at the top of the tree and
-searches the whole configuration file.
+In list context, returns the list all of C<$c>'s directives that match
+the directive names in C<$node> and C<$node>'s children.  In scalar
+context, returns the number of such directives.  The level here is in
+a tree sense, not in the sense that some directives appear before or
+after C<$node> in the configuration file.  If C<$node> is given, then
+the search searches C<$node> and C<$node>'s children.  If C<$node> is
+not passed as an argument, then the search starts at the top of the
+tree and searches the whole configuration file.
 
-All of the option names are made lowercase.
+The search for matching directive names is done without regards to
+case.
 
 This is useful if you want to find all of the CustomLog's in the
 configuration file:
 
-  my @logs = $c->find_at_and_down_option_names('CustomLog');
+  my @logs = $c->find_down_directive_names('CustomLog');
 
 =cut
 
-sub find_at_and_down_option_names {
+sub find_down_directive_names {
   unless (@_ > 1) {
-    confess "$0: Apache::ConfigParser::find_at_and_down_option_names $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::find_down_directive_names $INCORRECT_NUMBER_OF_ARGS";
   }
 
   my $self = shift;
@@ -674,25 +677,30 @@ sub find_at_and_down_option_names {
   @found;
 }
 
-=item $c->find_in_siblings_option_names('option', ...)
+=item $c->find_siblings_directive_names('directive', ...)
 
-=item $c->find_in_siblings_option_names($node, 'option', ...)
+=item $c->find_siblings_directive_names($node, 'directive', ...)
 
-In list context, returns the list of all $c options that match the
-option names at the same level of C<$node>, that is siblings of
-C<$node>.  In scalar context, returns the number of such options.  The
-level here is in a tree sense, not in the sense that some options
-appear C<$node> in the configuration file.  If C<$node> is not given
-or C<$node> is the passed and it is C<$c->tree>, then it will search
-through root's children.
+In list context, returns the list of all C<$c>'s directives that match
+the directive names at the same level of C<$node>, that is siblings of
+C<$node>.  In scalar context, returns the number of such directives.
+The level here is in a tree sense, not in the sense that some
+directives appear above or below C<$node> in the configuration file.
+If C<$node> is passed to the method and it is equal to C<$c-E<gt>tree>
+or if C<$node> is not given, then the method will search through
+root's children.
 
-All of the option names are made lowercase.
+This method will return C<$node> as one of the matches if C<$node>'s
+directive name is one of the directive names passed to the method.
+
+The search for matching directive names is done without regards to
+case.
 
 =cut
 
-sub find_in_siblings_option_names {
+sub find_siblings_directive_names {
   unless (@_ > 1) {
-    confess "$0: Apache::ConfigParser::find_in_siblings_option_names $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::find_siblings_directive_names $INCORRECT_NUMBER_OF_ARGS";
   }
 
   my $self = shift;
@@ -722,34 +730,38 @@ sub find_in_siblings_option_names {
   grep { $names{$_->name} } @siblings;
 }
 
-=item $c->find_in_siblings_and_up_option_names($node, 'option', ...)
+=item $c->find_siblings_and_up_directive_names($node, 'directive', ...)
 
-In list context, returns the list of all $c options that match the
-option names at the same level of C<$node>, that is siblings of
-C<$node>, and above C<$node>.  In scalar context, returns the number
-of such options.  The level here is in a tree sense, not in the sense
-that some options appear C<$node> in the configuration file.  In this
-method C<$node> is a required option, because it does not make sense
-to check the root node.
+In list context, returns the list of all C<$c>'s directives that match
+the directive names at the same level of C<$node>, that is siblings of
+C<$node> and above C<$node>.  In scalar context, returns the number of
+such directives.  The level here is in a tree sense, not in the sense
+that some directives appear before or after C<$node> in the
+configuration file.  In this method C<$node> is a required argument
+because it does not make sense to check the root node.  If C<$node>
+does not have a parent node, then no siblings will be found.  This
+method will return C<$node> as one of the matches if C<$node>'s
+directive name is one of the directive names passed to the method.
 
-All of the option names are made lowercase.
+The search for matching directive names is done without regards to
+case.
 
-This is useful when you find an option and you want to find an
-associated option.  For example, find all of the CustomLog's and find
-the associated ServerName.
+This is useful when you find an directive and you want to find an
+associated directive.  For example, find all of the CustomLog's and
+find the associated ServerName.
 
-  foreach my $log_node ($c->find_at_and_down_option_names('CustomLog')) {
+  foreach my $log_node ($c->find_down_directive_names('CustomLog')) {
     my $log_filename = $log_node->name;
-    my @server_names = $c->find_in_siblings_and_up_option_names($log_node);
+    my @server_names = $c->find_siblings_and_up_directive_names($log_node);
     my $server_name  = $server_names[0];
     print "ServerName for $log_filename is $server_name\n";
   }
 
 =cut
 
-sub find_in_siblings_and_up_option_names {
+sub find_siblings_and_up_directive_names {
   unless (@_ > 1) {
-    confess "$0: Apache::ConfigParser::find_in_siblings_and_up_option_names $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::find_siblings_and_up_directive_names $INCORRECT_NUMBER_OF_ARGS";
   }
 
   my $self = shift;
