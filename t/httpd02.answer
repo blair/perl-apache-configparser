@@ -4298,7 +4298,7 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-106 Apache::ConfigParser::Directive=HASH key `name'
          `files'
       reference 1-1-2-106 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `~ "^\.ht"'
+         `~  "^\.ht"'
       reference 1-1-2-106 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-107-2 ARRAY with 2 elements
         reference 1-1-2-107-2 ARRAY index 0
@@ -4306,7 +4306,7 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-107-2 ARRAY index 1
            `^\.ht'
       reference 1-1-2-106 Apache::ConfigParser::Directive=HASH key `value'
-         `~ "^\.ht"'
+         `~  "^\.ht"'
       reference 1-1-2-106 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-107-3 ARRAY with 2 elements
         reference 1-1-2-107-3 ARRAY index 0

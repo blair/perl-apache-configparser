@@ -480,8 +480,8 @@ sub parse_file {
     next unless length $_;
 
     # If the line begins with </, then it is ending a context.
-    if (my ($context) = $_ =~ /^<\s*\/\s*([^\s>]+)/) {
-      # Check if a end context was seen with no start context in the
+    if (my ($context) = $_ =~ m#^<\s*/\s*([^\s>]+)\s*>\s*$#) {
+      # Check if an end context was seen with no start context in the
       # configuration file.
       my $mother = $current_node->mother;
       unless (defined $mother) {
@@ -511,9 +511,13 @@ sub parse_file {
     $new_node->line_number($line_number);
 
     # If the line begins with <, then it is starting a context.
-    if (my ($context, $value) = $_ =~ /^<\s*(\S+)\s+(.*)>$/) {
+    if (my ($context, $value) = $_ =~ m#^<\s*(\S+)\s+(.*)>\s*$#) {
       $context =  lc($context);
-      $value   =~ s/\s{2,}/ /g;
+
+      # Remove any trailing whitespace in the context's value as the
+      # above regular expression will match all after the context's
+      # name to the >.  Do not modify any internal whitespace.
+      $value   =~ s/\s+$//;
 
       $new_node->name($context);
       $new_node->value($value);
