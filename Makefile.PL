@@ -1,7 +1,7 @@
 # This -*- perl -*- script writes the Makefile for this package.
 
 use strict;
-require 5.004_05;
+require 5.005_03;
 use ExtUtils::MakeMaker;
 
 $|                  = 1;
@@ -42,6 +42,22 @@ EOT
   print " ok\n";
 }
 
+$version = 0.06;
+print "Checking for Text::Glob $version...";
+eval "use Text::Glob $version;";
+if ($@) {
+  print " failed\n";
+  ++$missing_modules;
+  print <<EOT;
+$@
+
+Text::Glob is used to find Apache configuration files that match a glob.
+
+EOT
+} else {
+  print " ok\n";
+}
+
 $version = 1.04;
 print "Checking for Tree::DAG_Node $version...";
 eval "use Tree::DAG_Node $version;";
@@ -69,7 +85,8 @@ EOT
 WriteMakefile(
   'NAME'	 => 'Apache::ConfigParser',
   'VERSION_FROM' => 'lib/Apache/ConfigParser.pm', # finds $VERSION
-  'PREREQ_PM'    => { 'Tree::DAG_Node' => 1.04 },
+  'PREREQ_PM'    => { 'Text::Glob'     => 0.06,
+                      'Tree::DAG_Node' => 1.04 },
   'dist'         => { 'COMPRESS'       => 'gzip -9',
                       'SUFFIX'         => 'gz'
                     },

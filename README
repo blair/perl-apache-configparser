@@ -5,7 +5,7 @@ the parsing and manipulation of Apache configuration files.
 
 REQUIREMENTS
 
-   * Perl 5.004_04 or greater.
+   * Perl 5.005_03 or greater.
 
 AVAILABILITY
 
@@ -30,7 +30,7 @@ and for an overview of Subversion, see
 
 INSTALLATION
 
-In order to use this package you will need Perl version 5.004_04 or
+In order to use this package you will need Perl version 5.005_03 or
 better.  Once that is completed, you install Apache::ConfigParser as you
 would install any perl module library, by running these commands:
 

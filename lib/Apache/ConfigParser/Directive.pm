@@ -3,7 +3,9 @@
 # Copyright (C) 2001-2005 Blair Zajac.  All rights reserved.
 
 package Apache::ConfigParser::Directive;
-require 5.004_05;
+
+require 5.005_03;
+
 use strict;
 use Exporter;
 use Carp;
