@@ -1,6 +1,6 @@
 # Apache::ConfigParser::Directive: A single Apache directive or start context.
 #
-# Copyright (C) 2001-2002 Blair Zajac.  All rights reserved.
+# Copyright (C) 2001-2005 Blair Zajac.  All rights reserved.
 
 package Apache::ConfigParser::Directive;
 require 5.004_05;
@@ -1177,7 +1177,7 @@ Blair Zajac <blair@orcaware.com>.
 
 =head1 COPYRIGHT
 
-Copyright (C) 2001-2002 Blair Zajac.  All rights reserved.  This
+Copyright (C) 2001-2005 Blair Zajac.  All rights reserved.  This
 program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
 
