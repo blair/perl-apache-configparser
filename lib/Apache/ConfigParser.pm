@@ -137,6 +137,7 @@ use Symbol;
 use File::Spec                      0.82;
 use Apache::ConfigParser::Directive      qw(DEV_NULL
                                             %directive_value_path_element_pos);
+use Text::Glob                      0.06 qw(glob_to_regex);
 
 use vars qw(@ISA $VERSION);
 @ISA     = qw(Exporter);
@@ -342,6 +343,139 @@ tree, since it has cyclical references.
 
 sub DESTROY {
   $_[0]->{root}->delete_tree;
+}
+
+# Apache 1.3.27 and 2.0.41 check if the AccessConfig, Include or
+# ResourceConfig directives' value contains a glob.  Duplicate the
+# same check here.
+sub path_has_apache_style_glob {
+  unless (@_ == 1) {
+    confess "$0: Apache::ConfigParser::path_has_apache_style_glob ",
+            $INCORRECT_NUMBER_OF_ARGS;
+  }
+
+  my $path = shift;
+
+  # Apache 2.0.53 skips any \ protected characters in the path and
+  # then tests if the path is a glob by looking for ? or * characters
+  # or a [ ] pair.
+  $path =~ s/\\.//g;
+
+  return $path =~ /[?*]/ || $path =~ /\[.*\]/;
+}
+
+# Handle the AccessConfig, Include or ResourceConfig directives.
+# Support the Apache 1.3.13 behavior where if the path is a directory
+# then Apache will recursively load all of the files in that
+# directory.  Support the Apache 1.3.27 and 2.0.41 behavior where if
+# the path contains any glob characters, then load the files and
+# directories recursively that match the glob.
+sub _handle_include_directive {
+  unless (@_ == 5) {
+    confess "$0: Apache::ConfigParser::_handle_include_directive ",
+            $INCORRECT_NUMBER_OF_ARGS;
+  }
+
+  my ($self, $file_or_dir_name, $line_number, $directive, $path) = @_;
+
+  # Apache 2.0.53 tests if the path is a glob and does a glob search
+  # if it is.  Otherwise, it treats the path as a file or directory
+  # and opens it directly.
+  my @paths;
+  if (path_has_apache_style_glob($path)) {
+    # Apache splits the path into the dirname and basename portions
+    # and then checks that the dirname is not a glob and the basename
+    # is.  It then matches the files in the dirname against the glob
+    # in the basename and generates a list from that.  Duplicate this
+    # code here.
+    my ($dirname,
+        $separator,
+        $basename) = $path =~ m#(.*)([/\\])+([^\2]*)$#;
+    unless (defined $separator and length $separator) {
+      $self->{errstr} = "'$file_or_dir_name' line $line_number " .
+                        "'$directive $path': cannot split path into " .
+                        "dirname and basename";
+      return;
+    }
+    if (path_has_apache_style_glob($dirname)) {
+      $self->{errstr} = "'$file_or_dir_name' line $line_number " .
+                        "'$directive $path': dirname '$dirname' is a glob";
+      return;
+    }
+    unless (path_has_apache_style_glob($basename)) {
+      $self->{errstr} = "'$file_or_dir_name' line $line_number " .
+                        "'$directive $path': basename '$basename' is " .
+                        "not a glob";
+      return;
+    }
+    unless (opendir(DIR, $dirname)) {
+      $self->{errstr} = "'$file_or_dir_name' line $line_number " .
+                        "'$directive $path': opendir '$dirname' " .
+                        "failed: $!";
+      # Check if missing file or directory errors should be ignored.
+      # This checks an undocumented object variable which is normally
+      # only used by the test suite to test the normal aspects of all
+      # the directives without worrying about a missing file or
+      # directory halting the tests early.
+      if ($self->{_include_file_ignore_missing_file}) {
+        # If the directory cannot be opened, then there are no
+        # configuration files that could be opened for the directive,
+        # so leave the method now, but with a successful return code.
+        return 1;
+      } else {
+        return;
+      }
+    }
+
+    my $glob_re = glob_to_regex($basename);
+    foreach my $n (sort readdir(DIR)) {
+      next if $n eq '.';
+      next if $n eq '..';
+      if ($n =~ $glob_re) {
+        push(@paths, "$dirname/$n");
+      }
+    }
+    unless (closedir(DIR)) {
+      $self->{errstr} = "'$file_or_dir_name' line $line_number " .
+                        "'$directive $path': closedir '$dirname' " .
+                        "failed: $!";
+      return;
+    }
+  } else {
+    @paths = ($path);
+  }
+
+  foreach my $p (@paths) {
+    my @stat = stat($p);
+    unless (@stat) {
+      $self->{errstr} = "'$file_or_dir_name' line $line_number " .
+                        "'$directive $path': stat of '$path' failed: $!";
+      # Check if missing file or directory errors should be ignored.
+      # This checks an undocumented object variable which is normally
+      # only used by the test suite to test the normal aspects of all
+      # the directives without worrying about a missing file or
+      # directory halting the tests early.
+      if ($self->{_include_file_ignore_missing_file}) {
+        next;
+      } else {
+        return;
+      }
+    }
+
+    # Parse this if it is a directory or points to a file.
+    if (-d _ or -f _) {
+      unless ($self->parse_file($p)) {
+        return;
+      }
+    } else {
+      $self->{errstr} = "'$file_or_dir_name' line $line_number " .
+                        "'$directive $path': cannot open non-file and " .
+                        "non-directory '$p'";
+      return;
+    }
+  }
+
+  return 1;
 }
 
 =item $c->parse_file($filename)
@@ -621,46 +755,21 @@ sub parse_file {
     }
 
     # If this directive is AccessConfig, Include or ResourceConfig,
-    # then include the indicated file.  Support the Apache 1.3.13
-    # behavior where Include can be a directory name and Apache will
-    # recursively load all of the files in that directory.
+    # then include the indicated file(s) given by the path.
     if ($directive eq 'accessconfig' or
         $directive eq 'include'      or
         $directive eq 'resourceconfig') {
       unless ($new_node->value_is_path) {
         next;
       }
-
-      my $path = $values[0];
-
-      my @stat = stat($path);
-      unless (@stat) {
-        $self->{errstr} = "'$file_or_dir_name' line $line_number " .
-                          "'$directive $path': stat of '$path' failed: $!";
-
-        # Check if missing file errors should be ignored.  This checks
-        # an undocumented object variable which is normally only used
-        # by the test suite to test the normal aspects of all the
-        # directives without worrying about a missing file halting the
-        # tests early.
-        if ($self->{_include_file_ignore_missing_file}) {
-          next;
-        } else {
-          return;
-        }
-      }
-
-      # Parse this if it is a directory or points to a file.
-      if (-d _ or -f _) {
-        unless ($self->parse_file($path)) {
-          return;
-        }
-      } else {
-        $self->{errstr} = "'$file_or_dir_name' line $line_number: cannot " .
-                          "open non-file and non-directory '$path'";
+      unless ($self->_handle_include_directive($file_or_dir_name,
+                                               $line_number,
+                                               $directive,
+                                               $values[0])) {
         return;
       }
     }
+
     next;
   }
 

@@ -3,7 +3,7 @@
 $| = 1;
 
 use strict;
-use Test::More tests => 103;
+use Test::More tests => 110;
 
 BEGIN { use_ok('Apache::ConfigParser'); }
 
@@ -18,7 +18,7 @@ package main;
 
 # Find all of the httpd\d+.conf files.
 my @conf_files = glob('httpd[0-9][0-9].conf');
-is(@conf_files, 7, 'seven httpd\d+.conf files found');
+is(@conf_files, 8, 'eight httpd\d+.conf files found');
 
 # A parser should be created when no arguments are passed in.  An
 # error should be returned if an non-existent file is passed to
@@ -97,7 +97,7 @@ for (my $i=0; $i<@conf_files; ++$i) {
 
   # Check the number of LoadModule's in each configuration file.  This
   # array is indexed by the number of configuration file.
-  my @load_modules = (0, 37, 0, 37, 18, 0, 1);
+  my @load_modules = (0, 37, 0, 37, 18, 0, 1, 37);
   is($c->find_down_directive_names('LoadModule'),
      $load_modules[$i],
      "found $load_modules[$i] LoadModule's in the whole file");
@@ -105,7 +105,7 @@ for (my $i=0; $i<@conf_files; ++$i) {
   # Check that the search for siblings of a particular node works.
   # Since some LoadModule's are inside <IfDefine> contexts, then this
   # will not find all of the LoadModules.
-  @load_modules = (0, 26, 0, 26, 18, 0, 1);
+  @load_modules = (0, 26, 0, 26, 18, 0, 1, 26);
   is($c->find_siblings_directive_names('LoadModule'),
      $load_modules[$i],
      "found $load_modules[$i] LoadModule's at the top level");
