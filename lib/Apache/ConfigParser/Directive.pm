@@ -65,11 +65,11 @@ push(@EXPORT_OK, qw(%directive_value_takes_abs_path
   $d->value('"%h %l %u %t \"%r\" %>s %b" common');
 
   # Get a string form of the name.
-  # Prints `logformat'.
+  # Prints 'logformat'.
   print $d->name, "\n";
 
   # Get a string form of the value.
-  # Prints `"%h %l %u %t \"%r\" %>s %b" common'.
+  # Prints '"%h %l %u %t \"%r\" %>s %b" common'.
   print $d->value, "\n";
 
   # Get the values separated into individual elements.  Whitespace
@@ -90,7 +90,7 @@ push(@EXPORT_OK, qw(%directive_value_takes_abs_path
   $d->value('"%{Referer}i -> %U" referer');
 
   # There are also an equivalent pair of values that are called
-  # `original' that can be accessed via orig_value,
+  # 'original' that can be accessed via orig_value,
   # get_orig_value_array and set_orig_value_array.
   $d->orig_value('"%{User-agent}i" agent');
   $d->set_orig_value_array('%{User-agent}i', 'agent');
@@ -117,15 +117,15 @@ This module holds a directive or context:
   name
   value in string form
   value in array form
-  a separate value termed `original' in string form
-  a separate value termed `original' in array form
+  a separate value termed 'original' in string form
+  a separate value termed 'original' in array form
   the filename where the directive was set
   the line number in the filename where the directive was set
 
-The `original' value is separate from the non-`original' value and the
+The 'original' value is separate from the non-'original' value and the
 methods to operate on the two sets of values have distinct names.  The
-`original' value can be used to store the original value of a
-directive while the non-`directive' value can be a modified form, such
+'original' value can be used to store the original value of a
+directive while the non-'directive' value can be a modified form, such
 as changing the CustomLog filename to make it absolute.  The actual
 use of these two distinct values is up to the caller as this module
 does not link the two in any way.
@@ -216,13 +216,13 @@ honored to not begin or end a value element.
 =item $d->orig_value($value)
 
 Identical behavior as C<value>, except that this applies to a the
-`original' value.  Use C<orig_value_ref> or C<get_orig_value_array> to
+'original' value.  Use C<orig_value_ref> or C<get_orig_value_array> to
 get the value elements.
 
 =cut
 
 # This function manages getting and setting the string value for
-# either the `value' or `orig_value' hash keys.
+# either the 'value' or 'orig_value' hash keys.
 sub _get_set_value_string {
   unless (@_ > 1 and @_ < 4) {
     confess "$0: Apache::ConfigParser::Directive::_get_set_value_string ",
@@ -314,7 +314,7 @@ string returned from C<value> will not be consistent with the array.
 =item $d->orig_value_array_ref(\@array)
 
 Identical behavior as C<value_array_ref>, except that this applies to
-the `original' value.
+the 'original' value.
 
 =cut
 
@@ -413,7 +413,7 @@ nothing in a void context.
 =item $d->get_orig_value_array
 
 This has the same behavior of C<get_value_array> except that it
-operates on the `original' value.
+operates on the 'original' value.
 
 =cut
 
@@ -466,7 +466,7 @@ the value string.
 =item $d->set_orig_value_array(@values)
 
 This has the same behavior as C<set_value_array> except that it
-operates on the `original' value.
+operates on the 'original' value.
 
 =cut
 
@@ -507,13 +507,13 @@ These are the differences between the methods:
 
 =over 4
 
-1) The methods beginning with the string `value_is' apply to the
+1) The methods beginning with the string 'value_is' apply to the
 current value in the directive while the methods beginning with the
-string `orig_value_is' apply to the original value of the directive.
+string 'orig_value_is' apply to the original value of the directive.
 
-2) The methods `*value_is_path' test if the directive value is a path,
-either absolute or relative.  The methods `*value_is_abs_path' test if
-the path if an absolute path, and the methods `*value_is_rel_path'
+2) The methods '*value_is_path' test if the directive value is a path,
+either absolute or relative.  The methods '*value_is_abs_path' test if
+the path if an absolute path, and the methods '*value_is_rel_path'
 test if the path is not an absolute path.
 
 =back
@@ -566,13 +566,13 @@ sub _value_is_path_or_abs_path_or_rel_path {
           $check_type eq CHECK_TYPE_ABS_OR_REL) {
     confess "$0: Apache::ConfigParser::Directive::",
             "_value_is_path_or_abs_path_or_rel_path ",
-            "passed invalid check_type value `$check_type'.\n";
+            "passed invalid check_type value '$check_type'.\n";
   }
 
   if (defined $value_path_index and $value_path_index !~ /^\d+$/) {
     confess "$0: Apache::ConfigParser::Directive::",
             "_value_is_path_or_abs_path_or_rel_path ",
-            "passed invalid value_path_index value `$value_path_index'.\n";
+            "passed invalid value_path_index value '$value_path_index'.\n";
   }
 
   my $array_ref = $self->{$array_var_name};
@@ -631,7 +631,7 @@ sub _value_is_path_or_abs_path_or_rel_path {
       $sub_ref = $directive_value_takes_rel_path{$directive_name};
     }
   } else {
-    confess "$0: internal error: check_type case `$check_type' not handled.\n";
+    confess "$0: internal error: check_type case '$check_type' not handled.\n";
   }
 
   unless ($sub_ref) {
@@ -648,7 +648,7 @@ sub _value_is_path_or_abs_path_or_rel_path {
       return File::Spec->file_name_is_absolute($path) ? 0 : 1;
     } else {
       confess "$0: internal error: check_type case ",
-              "`$check_type' not handled.\n";
+              "'$check_type' not handled.\n";
     }
   } else {
     return 0;
@@ -672,7 +672,7 @@ sub value_is_path {
 =item $d->orig_value_is_path($index_into_value_array)
 
 This has the same behavior as C<$d->value_is_path> except the results
-are applicable to C<$d>'s `original' value array.
+are applicable to C<$d>'s 'original' value array.
 
 =cut
 
@@ -727,7 +727,7 @@ sub value_is_abs_path {
 =item $d->orig_value_is_abs_path($index_into_value_array)
 
 This has the same behavior as C<$d->value_is_abs_path> except the
-results are applicable to C<$d>'s `original' value array.
+results are applicable to C<$d>'s 'original' value array.
 
 =cut
 
@@ -782,7 +782,7 @@ sub value_is_rel_path {
 =item $d->orig_value_is_rel_path($index_into_value_array)
 
 This has the same behavior as C<$d->value_is_rel_path> except the
-results are applicable to C<$d>'s `original' value array.
+results are applicable to C<$d>'s 'original' value array.
 
 =cut
 

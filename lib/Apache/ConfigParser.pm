@@ -319,11 +319,11 @@ sub new {
             $self->{$opt_name} = $opt_value;
           } else {
             warn "$0: Apache::ConfigParser::new passed an ARRAY reference ",
-                 "whose first element is not a CODE ref for `$opt_name'.\n";
+                 "whose first element is not a CODE ref for '$opt_name'.\n";
           }
         } else {
           warn "$0: Apache::ConfigParser::new not passed an ARRAY or CODE ",
-               "reference for `$opt_name'.\n";
+               "reference for '$opt_name'.\n";
         }
       }
     }
@@ -485,8 +485,8 @@ sub parse_file {
       # configuration file.
       my $mother = $current_node->mother;
       unless (defined $mother) {
-        warn "$0: `$file_or_dir_name' line $line_number ends context ",
-             "`$context' which was never started.\n";
+        warn "$0: '$file_or_dir_name' line $line_number ends context ",
+             "'$context' which was never started.\n";
         next;
       }
 
@@ -494,8 +494,8 @@ sub parse_file {
       $context               = lc($context);
       my $start_context_name = $current_node->name; 
       unless ($start_context_name eq $context) {
-        warn "$0: `$file_or_dir_name' line $line_number closes context ",
-             "`$context' that should close `$start_context_name'.\n";
+        warn "$0: '$file_or_dir_name' line $line_number closes context ",
+             "'$context' that should close '$start_context_name'.\n";
         next;
       }
 
@@ -640,7 +640,7 @@ sub parse_file {
   }
 
   close($fd)
-    or warn "$0: cannot close `$file_or_dir_name' for reading: $!\n";
+    or warn "$0: cannot close '$file_or_dir_name' for reading: $!\n";
 
   # Save the current node that directives were being added to.
   $self->{current_node} = $current_node;
@@ -656,7 +656,7 @@ sub parse_file {
     my $attrs            = $current_node->attributes;
     my $context_filename = $attrs->{filename};
     my $line_number      = $attrs->{line_number};
-    warn "$0: `$context_filename' line $line_number context `$context_name' ",
+    warn "$0: '$context_filename' line $line_number context '$context_name' ",
          "was never closed.\n";
     $current_node = $current_node->mother;
   }
@@ -864,7 +864,7 @@ sub _dump {
 
   unless (ref $object) {
     if (defined $object) {
-      return ("$spaces `$object'");
+      return ("$spaces '$object'");
     } else {
       return ("$spaces UNDEFINED");
     }
@@ -898,7 +898,7 @@ sub _dump {
     push(@dump_ref_count_stack, 0);
     my @result = ("$spaces with " . scalar keys(%$object) . " keys");
     foreach my $key (sort keys %$object) {
-      push(@result, "$spaces key `$key'",
+      push(@result, "$spaces key '$key'",
                      _dump($object->{$key}, $seen_ref, $depth));
     }
     pop(@dump_ref_count_stack);
