@@ -34,6 +34,7 @@ if ($@) {
   ++$missing_modules;
   print <<EOT;
 $@
+
 Test::More is used to test the package.
 
 EOT
@@ -49,6 +50,7 @@ if ($@) {
   ++$missing_modules;
   print <<EOT;
 $@
+
 Tree::DAG_Node must be installed to set up a tree structure for the
 Apache configuration files.
 
@@ -67,8 +69,8 @@ EOT
 WriteMakefile(
   'NAME'	 => 'Apache::ConfigParser',
   'VERSION_FROM' => 'lib/Apache/ConfigParser.pm', # finds $VERSION
-  'dist'         => {
-    'COMPRESS'   => 'gzip -9',
-    'SUFFIX'     => 'gz'
-  },
-);	
+  'PREREQ_PM'    => { 'Tree::DAG_Node' => 1.04 },
+  'dist'         => { 'COMPRESS'       => 'gzip -9',
+                      'SUFFIX'         => 'gz'
+                    },
+);

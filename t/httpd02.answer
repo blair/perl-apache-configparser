@@ -418,13 +418,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-16-2 ARRAY index 1
            `modules/mod_vhost_alias.so'
       reference 1-1-2-15 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/vhost_alias_module modules/mod_vhost_alias.so'
+         `vhost_alias_module /etc/httpd/modules/mod_vhost_alias.so'
       reference 1-1-2-15 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-16-3 ARRAY with 2 elements
         reference 1-1-2-16-3 ARRAY index 0
-           `/etc/httpd/vhost_alias_module'
+           `vhost_alias_module'
         reference 1-1-2-16-3 ARRAY index 1
-           `modules/mod_vhost_alias.so'
+           `/etc/httpd/modules/mod_vhost_alias.so'
     reference 1-1-1 ARRAY index 16
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -454,13 +454,13 @@ reference 0 EmptySubclass=HASH key `current_node'
             reference 1-1-2-17-2-1-2 ARRAY index 1
                `modules/mod_bandwidth.so'
           reference 1-1-2-17-2-0 Apache::ConfigParser::Directive=HASH key `value'
-             `/etc/httpd/bandwidth_module modules/mod_bandwidth.so'
+             `bandwidth_module /etc/httpd/modules/mod_bandwidth.so'
           reference 1-1-2-17-2-0 Apache::ConfigParser::Directive=HASH key `value_array'
             reference 1-1-2-17-2-1-3 ARRAY with 2 elements
             reference 1-1-2-17-2-1-3 ARRAY index 0
-               `/etc/httpd/bandwidth_module'
+               `bandwidth_module'
             reference 1-1-2-17-2-1-3 ARRAY index 1
-               `modules/mod_bandwidth.so'
+               `/etc/httpd/modules/mod_bandwidth.so'
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH key `filename'
          `httpd02.conf'
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH key `line_number'
@@ -510,13 +510,13 @@ reference 0 EmptySubclass=HASH key `current_node'
             reference 1-1-2-18-2-1-2 ARRAY index 1
                `modules/mod_throttle.so'
           reference 1-1-2-18-2-0 Apache::ConfigParser::Directive=HASH key `value'
-             `/etc/httpd/throttle_module modules/mod_throttle.so'
+             `throttle_module /etc/httpd/modules/mod_throttle.so'
           reference 1-1-2-18-2-0 Apache::ConfigParser::Directive=HASH key `value_array'
             reference 1-1-2-18-2-1-3 ARRAY with 2 elements
             reference 1-1-2-18-2-1-3 ARRAY index 0
-               `/etc/httpd/throttle_module'
+               `throttle_module'
             reference 1-1-2-18-2-1-3 ARRAY index 1
-               `modules/mod_throttle.so'
+               `/etc/httpd/modules/mod_throttle.so'
       reference 1-1-2-17 Apache::ConfigParser::Directive=HASH key `filename'
          `httpd02.conf'
       reference 1-1-2-17 Apache::ConfigParser::Directive=HASH key `line_number'
@@ -560,13 +560,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-19-2 ARRAY index 1
            `modules/mod_env.so'
       reference 1-1-2-18 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/env_module modules/mod_env.so'
+         `env_module /etc/httpd/modules/mod_env.so'
       reference 1-1-2-18 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-19-3 ARRAY with 2 elements
         reference 1-1-2-19-3 ARRAY index 0
-           `/etc/httpd/env_module'
+           `env_module'
         reference 1-1-2-19-3 ARRAY index 1
-           `modules/mod_env.so'
+           `/etc/httpd/modules/mod_env.so'
     reference 1-1-1 ARRAY index 19
       reference 1-1-2-19 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-19 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -590,13 +590,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-20-2 ARRAY index 1
            `modules/mod_log_config.so'
       reference 1-1-2-19 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/config_log_module modules/mod_log_config.so'
+         `config_log_module /etc/httpd/modules/mod_log_config.so'
       reference 1-1-2-19 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-20-3 ARRAY with 2 elements
         reference 1-1-2-20-3 ARRAY index 0
-           `/etc/httpd/config_log_module'
+           `config_log_module'
         reference 1-1-2-20-3 ARRAY index 1
-           `modules/mod_log_config.so'
+           `/etc/httpd/modules/mod_log_config.so'
     reference 1-1-1 ARRAY index 20
       reference 1-1-2-20 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-20 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -620,13 +620,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-21-2 ARRAY index 1
            `modules/mod_log_agent.so'
       reference 1-1-2-20 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/agent_log_module modules/mod_log_agent.so'
+         `agent_log_module /etc/httpd/modules/mod_log_agent.so'
       reference 1-1-2-20 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-21-3 ARRAY with 2 elements
         reference 1-1-2-21-3 ARRAY index 0
-           `/etc/httpd/agent_log_module'
+           `agent_log_module'
         reference 1-1-2-21-3 ARRAY index 1
-           `modules/mod_log_agent.so'
+           `/etc/httpd/modules/mod_log_agent.so'
     reference 1-1-1 ARRAY index 21
       reference 1-1-2-21 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-21 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -650,13 +650,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-22-2 ARRAY index 1
            `modules/mod_log_referer.so'
       reference 1-1-2-21 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/referer_log_module modules/mod_log_referer.so'
+         `referer_log_module /etc/httpd/modules/mod_log_referer.so'
       reference 1-1-2-21 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-22-3 ARRAY with 2 elements
         reference 1-1-2-22-3 ARRAY index 0
-           `/etc/httpd/referer_log_module'
+           `referer_log_module'
         reference 1-1-2-22-3 ARRAY index 1
-           `modules/mod_log_referer.so'
+           `/etc/httpd/modules/mod_log_referer.so'
     reference 1-1-1 ARRAY index 22
       reference 1-1-2-22 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-22 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -680,13 +680,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-23-2 ARRAY index 1
            `modules/mod_mime.so'
       reference 1-1-2-22 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/mime_module modules/mod_mime.so'
+         `mime_module /etc/httpd/modules/mod_mime.so'
       reference 1-1-2-22 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-23-3 ARRAY with 2 elements
         reference 1-1-2-23-3 ARRAY index 0
-           `/etc/httpd/mime_module'
+           `mime_module'
         reference 1-1-2-23-3 ARRAY index 1
-           `modules/mod_mime.so'
+           `/etc/httpd/modules/mod_mime.so'
     reference 1-1-1 ARRAY index 23
       reference 1-1-2-23 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-23 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -710,13 +710,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-24-2 ARRAY index 1
            `modules/mod_negotiation.so'
       reference 1-1-2-23 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/negotiation_module modules/mod_negotiation.so'
+         `negotiation_module /etc/httpd/modules/mod_negotiation.so'
       reference 1-1-2-23 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-24-3 ARRAY with 2 elements
         reference 1-1-2-24-3 ARRAY index 0
-           `/etc/httpd/negotiation_module'
+           `negotiation_module'
         reference 1-1-2-24-3 ARRAY index 1
-           `modules/mod_negotiation.so'
+           `/etc/httpd/modules/mod_negotiation.so'
     reference 1-1-1 ARRAY index 24
       reference 1-1-2-24 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-24 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -740,13 +740,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-25-2 ARRAY index 1
            `modules/mod_status.so'
       reference 1-1-2-24 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/status_module modules/mod_status.so'
+         `status_module /etc/httpd/modules/mod_status.so'
       reference 1-1-2-24 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-25-3 ARRAY with 2 elements
         reference 1-1-2-25-3 ARRAY index 0
-           `/etc/httpd/status_module'
+           `status_module'
         reference 1-1-2-25-3 ARRAY index 1
-           `modules/mod_status.so'
+           `/etc/httpd/modules/mod_status.so'
     reference 1-1-1 ARRAY index 25
       reference 1-1-2-25 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-25 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -770,13 +770,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-26-2 ARRAY index 1
            `modules/mod_info.so'
       reference 1-1-2-25 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/info_module modules/mod_info.so'
+         `info_module /etc/httpd/modules/mod_info.so'
       reference 1-1-2-25 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-26-3 ARRAY with 2 elements
         reference 1-1-2-26-3 ARRAY index 0
-           `/etc/httpd/info_module'
+           `info_module'
         reference 1-1-2-26-3 ARRAY index 1
-           `modules/mod_info.so'
+           `/etc/httpd/modules/mod_info.so'
     reference 1-1-1 ARRAY index 26
       reference 1-1-2-26 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-26 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -800,13 +800,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-27-2 ARRAY index 1
            `modules/mod_include.so'
       reference 1-1-2-26 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/includes_module modules/mod_include.so'
+         `includes_module /etc/httpd/modules/mod_include.so'
       reference 1-1-2-26 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-27-3 ARRAY with 2 elements
         reference 1-1-2-27-3 ARRAY index 0
-           `/etc/httpd/includes_module'
+           `includes_module'
         reference 1-1-2-27-3 ARRAY index 1
-           `modules/mod_include.so'
+           `/etc/httpd/modules/mod_include.so'
     reference 1-1-1 ARRAY index 27
       reference 1-1-2-27 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-27 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -830,13 +830,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-28-2 ARRAY index 1
            `modules/mod_autoindex.so'
       reference 1-1-2-27 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/autoindex_module modules/mod_autoindex.so'
+         `autoindex_module /etc/httpd/modules/mod_autoindex.so'
       reference 1-1-2-27 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-28-3 ARRAY with 2 elements
         reference 1-1-2-28-3 ARRAY index 0
-           `/etc/httpd/autoindex_module'
+           `autoindex_module'
         reference 1-1-2-28-3 ARRAY index 1
-           `modules/mod_autoindex.so'
+           `/etc/httpd/modules/mod_autoindex.so'
     reference 1-1-1 ARRAY index 28
       reference 1-1-2-28 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-28 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -860,13 +860,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-29-2 ARRAY index 1
            `modules/mod_dir.so'
       reference 1-1-2-28 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/dir_module modules/mod_dir.so'
+         `dir_module /etc/httpd/modules/mod_dir.so'
       reference 1-1-2-28 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-29-3 ARRAY with 2 elements
         reference 1-1-2-29-3 ARRAY index 0
-           `/etc/httpd/dir_module'
+           `dir_module'
         reference 1-1-2-29-3 ARRAY index 1
-           `modules/mod_dir.so'
+           `/etc/httpd/modules/mod_dir.so'
     reference 1-1-1 ARRAY index 29
       reference 1-1-2-29 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-29 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -890,13 +890,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-30-2 ARRAY index 1
            `modules/mod_cgi.so'
       reference 1-1-2-29 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/cgi_module modules/mod_cgi.so'
+         `cgi_module /etc/httpd/modules/mod_cgi.so'
       reference 1-1-2-29 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-30-3 ARRAY with 2 elements
         reference 1-1-2-30-3 ARRAY index 0
-           `/etc/httpd/cgi_module'
+           `cgi_module'
         reference 1-1-2-30-3 ARRAY index 1
-           `modules/mod_cgi.so'
+           `/etc/httpd/modules/mod_cgi.so'
     reference 1-1-1 ARRAY index 30
       reference 1-1-2-30 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-30 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -920,13 +920,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-31-2 ARRAY index 1
            `modules/mod_asis.so'
       reference 1-1-2-30 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/asis_module modules/mod_asis.so'
+         `asis_module /etc/httpd/modules/mod_asis.so'
       reference 1-1-2-30 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-31-3 ARRAY with 2 elements
         reference 1-1-2-31-3 ARRAY index 0
-           `/etc/httpd/asis_module'
+           `asis_module'
         reference 1-1-2-31-3 ARRAY index 1
-           `modules/mod_asis.so'
+           `/etc/httpd/modules/mod_asis.so'
     reference 1-1-1 ARRAY index 31
       reference 1-1-2-31 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-31 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -950,13 +950,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-32-2 ARRAY index 1
            `modules/mod_imap.so'
       reference 1-1-2-31 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/imap_module modules/mod_imap.so'
+         `imap_module /etc/httpd/modules/mod_imap.so'
       reference 1-1-2-31 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-32-3 ARRAY with 2 elements
         reference 1-1-2-32-3 ARRAY index 0
-           `/etc/httpd/imap_module'
+           `imap_module'
         reference 1-1-2-32-3 ARRAY index 1
-           `modules/mod_imap.so'
+           `/etc/httpd/modules/mod_imap.so'
     reference 1-1-1 ARRAY index 32
       reference 1-1-2-32 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-32 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -980,13 +980,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-33-2 ARRAY index 1
            `modules/mod_actions.so'
       reference 1-1-2-32 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/action_module modules/mod_actions.so'
+         `action_module /etc/httpd/modules/mod_actions.so'
       reference 1-1-2-32 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-33-3 ARRAY with 2 elements
         reference 1-1-2-33-3 ARRAY index 0
-           `/etc/httpd/action_module'
+           `action_module'
         reference 1-1-2-33-3 ARRAY index 1
-           `modules/mod_actions.so'
+           `/etc/httpd/modules/mod_actions.so'
     reference 1-1-1 ARRAY index 33
       reference 1-1-2-33 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-33 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -1010,13 +1010,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-34-2 ARRAY index 1
            `modules/mod_userdir.so'
       reference 1-1-2-33 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/userdir_module modules/mod_userdir.so'
+         `userdir_module /etc/httpd/modules/mod_userdir.so'
       reference 1-1-2-33 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-34-3 ARRAY with 2 elements
         reference 1-1-2-34-3 ARRAY index 0
-           `/etc/httpd/userdir_module'
+           `userdir_module'
         reference 1-1-2-34-3 ARRAY index 1
-           `modules/mod_userdir.so'
+           `/etc/httpd/modules/mod_userdir.so'
     reference 1-1-1 ARRAY index 34
       reference 1-1-2-34 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-34 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -1040,13 +1040,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-35-2 ARRAY index 1
            `modules/mod_alias.so'
       reference 1-1-2-34 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/alias_module modules/mod_alias.so'
+         `alias_module /etc/httpd/modules/mod_alias.so'
       reference 1-1-2-34 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-35-3 ARRAY with 2 elements
         reference 1-1-2-35-3 ARRAY index 0
-           `/etc/httpd/alias_module'
+           `alias_module'
         reference 1-1-2-35-3 ARRAY index 1
-           `modules/mod_alias.so'
+           `/etc/httpd/modules/mod_alias.so'
     reference 1-1-1 ARRAY index 35
       reference 1-1-2-35 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-35 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -1070,13 +1070,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-36-2 ARRAY index 1
            `modules/mod_rewrite.so'
       reference 1-1-2-35 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/rewrite_module modules/mod_rewrite.so'
+         `rewrite_module /etc/httpd/modules/mod_rewrite.so'
       reference 1-1-2-35 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-36-3 ARRAY with 2 elements
         reference 1-1-2-36-3 ARRAY index 0
-           `/etc/httpd/rewrite_module'
+           `rewrite_module'
         reference 1-1-2-36-3 ARRAY index 1
-           `modules/mod_rewrite.so'
+           `/etc/httpd/modules/mod_rewrite.so'
     reference 1-1-1 ARRAY index 36
       reference 1-1-2-36 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-36 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -1100,13 +1100,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-37-2 ARRAY index 1
            `modules/mod_access.so'
       reference 1-1-2-36 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/access_module modules/mod_access.so'
+         `access_module /etc/httpd/modules/mod_access.so'
       reference 1-1-2-36 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-37-3 ARRAY with 2 elements
         reference 1-1-2-37-3 ARRAY index 0
-           `/etc/httpd/access_module'
+           `access_module'
         reference 1-1-2-37-3 ARRAY index 1
-           `modules/mod_access.so'
+           `/etc/httpd/modules/mod_access.so'
     reference 1-1-1 ARRAY index 37
       reference 1-1-2-37 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-37 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -1130,13 +1130,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-38-2 ARRAY index 1
            `modules/mod_auth.so'
       reference 1-1-2-37 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/auth_module modules/mod_auth.so'
+         `auth_module /etc/httpd/modules/mod_auth.so'
       reference 1-1-2-37 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-38-3 ARRAY with 2 elements
         reference 1-1-2-38-3 ARRAY index 0
-           `/etc/httpd/auth_module'
+           `auth_module'
         reference 1-1-2-38-3 ARRAY index 1
-           `modules/mod_auth.so'
+           `/etc/httpd/modules/mod_auth.so'
     reference 1-1-1 ARRAY index 38
       reference 1-1-2-38 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-38 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -1160,13 +1160,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-39-2 ARRAY index 1
            `modules/mod_auth_anon.so'
       reference 1-1-2-38 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/anon_auth_module modules/mod_auth_anon.so'
+         `anon_auth_module /etc/httpd/modules/mod_auth_anon.so'
       reference 1-1-2-38 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-39-3 ARRAY with 2 elements
         reference 1-1-2-39-3 ARRAY index 0
-           `/etc/httpd/anon_auth_module'
+           `anon_auth_module'
         reference 1-1-2-39-3 ARRAY index 1
-           `modules/mod_auth_anon.so'
+           `/etc/httpd/modules/mod_auth_anon.so'
     reference 1-1-1 ARRAY index 39
       reference 1-1-2-39 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-39 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -1190,13 +1190,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-40-2 ARRAY index 1
            `modules/mod_auth_db.so'
       reference 1-1-2-39 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/db_auth_module modules/mod_auth_db.so'
+         `db_auth_module /etc/httpd/modules/mod_auth_db.so'
       reference 1-1-2-39 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-40-3 ARRAY with 2 elements
         reference 1-1-2-40-3 ARRAY index 0
-           `/etc/httpd/db_auth_module'
+           `db_auth_module'
         reference 1-1-2-40-3 ARRAY index 1
-           `modules/mod_auth_db.so'
+           `/etc/httpd/modules/mod_auth_db.so'
     reference 1-1-1 ARRAY index 40
       reference 1-1-2-40 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-40 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -1220,13 +1220,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-41-2 ARRAY index 1
            `modules/mod_expires.so'
       reference 1-1-2-40 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/expires_module modules/mod_expires.so'
+         `expires_module /etc/httpd/modules/mod_expires.so'
       reference 1-1-2-40 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-41-3 ARRAY with 2 elements
         reference 1-1-2-41-3 ARRAY index 0
-           `/etc/httpd/expires_module'
+           `expires_module'
         reference 1-1-2-41-3 ARRAY index 1
-           `modules/mod_expires.so'
+           `/etc/httpd/modules/mod_expires.so'
     reference 1-1-1 ARRAY index 41
       reference 1-1-2-41 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-41 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -1250,13 +1250,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-42-2 ARRAY index 1
            `modules/mod_headers.so'
       reference 1-1-2-41 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/headers_module modules/mod_headers.so'
+         `headers_module /etc/httpd/modules/mod_headers.so'
       reference 1-1-2-41 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-42-3 ARRAY with 2 elements
         reference 1-1-2-42-3 ARRAY index 0
-           `/etc/httpd/headers_module'
+           `headers_module'
         reference 1-1-2-42-3 ARRAY index 1
-           `modules/mod_headers.so'
+           `/etc/httpd/modules/mod_headers.so'
     reference 1-1-1 ARRAY index 42
       reference 1-1-2-42 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-42 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -1280,13 +1280,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-43-2 ARRAY index 1
            `modules/mod_setenvif.so'
       reference 1-1-2-42 Apache::ConfigParser::Directive=HASH key `value'
-         `/etc/httpd/setenvif_module modules/mod_setenvif.so'
+         `setenvif_module /etc/httpd/modules/mod_setenvif.so'
       reference 1-1-2-42 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-43-3 ARRAY with 2 elements
         reference 1-1-2-43-3 ARRAY index 0
-           `/etc/httpd/setenvif_module'
+           `setenvif_module'
         reference 1-1-2-43-3 ARRAY index 1
-           `modules/mod_setenvif.so'
+           `/etc/httpd/modules/mod_setenvif.so'
     reference 1-1-1 ARRAY index 43
       reference 1-1-2-43 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-43 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -1316,13 +1316,13 @@ reference 0 EmptySubclass=HASH key `current_node'
             reference 1-1-2-44-2-1-2 ARRAY index 1
                `modules/libperl.so'
           reference 1-1-2-44-2-0 Apache::ConfigParser::Directive=HASH key `value'
-             `/etc/httpd/perl_module modules/libperl.so'
+             `perl_module /etc/httpd/modules/libperl.so'
           reference 1-1-2-44-2-0 Apache::ConfigParser::Directive=HASH key `value_array'
             reference 1-1-2-44-2-1-3 ARRAY with 2 elements
             reference 1-1-2-44-2-1-3 ARRAY index 0
-               `/etc/httpd/perl_module'
+               `perl_module'
             reference 1-1-2-44-2-1-3 ARRAY index 1
-               `modules/libperl.so'
+               `/etc/httpd/modules/libperl.so'
       reference 1-1-2-43 Apache::ConfigParser::Directive=HASH key `filename'
          `httpd02.conf'
       reference 1-1-2-43 Apache::ConfigParser::Directive=HASH key `line_number'
@@ -1372,13 +1372,13 @@ reference 0 EmptySubclass=HASH key `current_node'
             reference 1-1-2-45-2-1-2 ARRAY index 1
                `modules/mod_php.so'
           reference 1-1-2-45-2-0 Apache::ConfigParser::Directive=HASH key `value'
-             `/etc/httpd/php_module modules/mod_php.so'
+             `php_module /etc/httpd/modules/mod_php.so'
           reference 1-1-2-45-2-0 Apache::ConfigParser::Directive=HASH key `value_array'
             reference 1-1-2-45-2-1-3 ARRAY with 2 elements
             reference 1-1-2-45-2-1-3 ARRAY index 0
-               `/etc/httpd/php_module'
+               `php_module'
             reference 1-1-2-45-2-1-3 ARRAY index 1
-               `modules/mod_php.so'
+               `/etc/httpd/modules/mod_php.so'
       reference 1-1-2-44 Apache::ConfigParser::Directive=HASH key `filename'
          `httpd02.conf'
       reference 1-1-2-44 Apache::ConfigParser::Directive=HASH key `line_number'
@@ -1428,13 +1428,13 @@ reference 0 EmptySubclass=HASH key `current_node'
             reference 1-1-2-46-2-1-2 ARRAY index 1
                `modules/libphp3.so'
           reference 1-1-2-46-2-0 Apache::ConfigParser::Directive=HASH key `value'
-             `/etc/httpd/php3_module modules/libphp3.so'
+             `php3_module /etc/httpd/modules/libphp3.so'
           reference 1-1-2-46-2-0 Apache::ConfigParser::Directive=HASH key `value_array'
             reference 1-1-2-46-2-1-3 ARRAY with 2 elements
             reference 1-1-2-46-2-1-3 ARRAY index 0
-               `/etc/httpd/php3_module'
+               `php3_module'
             reference 1-1-2-46-2-1-3 ARRAY index 1
-               `modules/libphp3.so'
+               `/etc/httpd/modules/libphp3.so'
       reference 1-1-2-45 Apache::ConfigParser::Directive=HASH key `filename'
          `httpd02.conf'
       reference 1-1-2-45 Apache::ConfigParser::Directive=HASH key `line_number'
@@ -1484,13 +1484,13 @@ reference 0 EmptySubclass=HASH key `current_node'
             reference 1-1-2-47-2-1-2 ARRAY index 1
                `modules/libphp4.so'
           reference 1-1-2-47-2-0 Apache::ConfigParser::Directive=HASH key `value'
-             `/etc/httpd/php4_module modules/libphp4.so'
+             `php4_module /etc/httpd/modules/libphp4.so'
           reference 1-1-2-47-2-0 Apache::ConfigParser::Directive=HASH key `value_array'
             reference 1-1-2-47-2-1-3 ARRAY with 2 elements
             reference 1-1-2-47-2-1-3 ARRAY index 0
-               `/etc/httpd/php4_module'
+               `php4_module'
             reference 1-1-2-47-2-1-3 ARRAY index 1
-               `modules/libphp4.so'
+               `/etc/httpd/modules/libphp4.so'
       reference 1-1-2-46 Apache::ConfigParser::Directive=HASH key `filename'
          `httpd02.conf'
       reference 1-1-2-46 Apache::ConfigParser::Directive=HASH key `line_number'
@@ -1540,13 +1540,13 @@ reference 0 EmptySubclass=HASH key `current_node'
             reference 1-1-2-48-2-1-2 ARRAY index 1
                `modules/libdav.so'
           reference 1-1-2-48-2-0 Apache::ConfigParser::Directive=HASH key `value'
-             `/etc/httpd/dav_module modules/libdav.so'
+             `dav_module /etc/httpd/modules/libdav.so'
           reference 1-1-2-48-2-0 Apache::ConfigParser::Directive=HASH key `value_array'
             reference 1-1-2-48-2-1-3 ARRAY with 2 elements
             reference 1-1-2-48-2-1-3 ARRAY index 0
-               `/etc/httpd/dav_module'
+               `dav_module'
             reference 1-1-2-48-2-1-3 ARRAY index 1
-               `modules/libdav.so'
+               `/etc/httpd/modules/libdav.so'
       reference 1-1-2-47 Apache::ConfigParser::Directive=HASH key `filename'
          `httpd02.conf'
       reference 1-1-2-47 Apache::ConfigParser::Directive=HASH key `line_number'
@@ -1596,13 +1596,13 @@ reference 0 EmptySubclass=HASH key `current_node'
             reference 1-1-2-49-2-1-2 ARRAY index 1
                `modules/mod_roaming.so'
           reference 1-1-2-49-2-0 Apache::ConfigParser::Directive=HASH key `value'
-             `/etc/httpd/roaming_module modules/mod_roaming.so'
+             `roaming_module /etc/httpd/modules/mod_roaming.so'
           reference 1-1-2-49-2-0 Apache::ConfigParser::Directive=HASH key `value_array'
             reference 1-1-2-49-2-1-3 ARRAY with 2 elements
             reference 1-1-2-49-2-1-3 ARRAY index 0
-               `/etc/httpd/roaming_module'
+               `roaming_module'
             reference 1-1-2-49-2-1-3 ARRAY index 1
-               `modules/mod_roaming.so'
+               `/etc/httpd/modules/mod_roaming.so'
       reference 1-1-2-48 Apache::ConfigParser::Directive=HASH key `filename'
          `httpd02.conf'
       reference 1-1-2-48 Apache::ConfigParser::Directive=HASH key `line_number'
@@ -1652,13 +1652,13 @@ reference 0 EmptySubclass=HASH key `current_node'
             reference 1-1-2-50-2-1-2 ARRAY index 1
                `modules/libssl.so'
           reference 1-1-2-50-2-0 Apache::ConfigParser::Directive=HASH key `value'
-             `/etc/httpd/ssl_module modules/libssl.so'
+             `ssl_module /etc/httpd/modules/libssl.so'
           reference 1-1-2-50-2-0 Apache::ConfigParser::Directive=HASH key `value_array'
             reference 1-1-2-50-2-1-3 ARRAY with 2 elements
             reference 1-1-2-50-2-1-3 ARRAY index 0
-               `/etc/httpd/ssl_module'
+               `ssl_module'
             reference 1-1-2-50-2-1-3 ARRAY index 1
-               `modules/libssl.so'
+               `/etc/httpd/modules/libssl.so'
       reference 1-1-2-49 Apache::ConfigParser::Directive=HASH key `filename'
          `httpd02.conf'
       reference 1-1-2-49 Apache::ConfigParser::Directive=HASH key `line_number'
@@ -1708,13 +1708,13 @@ reference 0 EmptySubclass=HASH key `current_node'
             reference 1-1-2-51-2-1-2 ARRAY index 1
                `modules/mod_put.so'
           reference 1-1-2-51-2-0 Apache::ConfigParser::Directive=HASH key `value'
-             `/etc/httpd/put_module modules/mod_put.so'
+             `put_module /etc/httpd/modules/mod_put.so'
           reference 1-1-2-51-2-0 Apache::ConfigParser::Directive=HASH key `value_array'
             reference 1-1-2-51-2-1-3 ARRAY with 2 elements
             reference 1-1-2-51-2-1-3 ARRAY index 0
-               `/etc/httpd/put_module'
+               `put_module'
             reference 1-1-2-51-2-1-3 ARRAY index 1
-               `modules/mod_put.so'
+               `/etc/httpd/modules/mod_put.so'
       reference 1-1-2-50 Apache::ConfigParser::Directive=HASH key `filename'
          `httpd02.conf'
       reference 1-1-2-50 Apache::ConfigParser::Directive=HASH key `line_number'
@@ -1764,13 +1764,13 @@ reference 0 EmptySubclass=HASH key `current_node'
             reference 1-1-2-52-2-1-2 ARRAY index 1
                `modules/mod_python.so'
           reference 1-1-2-52-2-0 Apache::ConfigParser::Directive=HASH key `value'
-             `/etc/httpd/python_module modules/mod_python.so'
+             `python_module /etc/httpd/modules/mod_python.so'
           reference 1-1-2-52-2-0 Apache::ConfigParser::Directive=HASH key `value_array'
             reference 1-1-2-52-2-1-3 ARRAY with 2 elements
             reference 1-1-2-52-2-1-3 ARRAY index 0
-               `/etc/httpd/python_module'
+               `python_module'
             reference 1-1-2-52-2-1-3 ARRAY index 1
-               `modules/mod_python.so'
+               `/etc/httpd/modules/mod_python.so'
       reference 1-1-2-51 Apache::ConfigParser::Directive=HASH key `filename'
          `httpd02.conf'
       reference 1-1-2-51 Apache::ConfigParser::Directive=HASH key `line_number'

@@ -46,17 +46,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-1 Apache::ConfigParser::Directive=HASH key `name'
          `accessconfig'
       reference 1-1-2-1 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-1 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-2-2 ARRAY with 1 elements
         reference 1-1-2-2-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-1 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-1 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-2-3 ARRAY with 1 elements
         reference 1-1-2-2-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 2
       reference 1-1-2-2 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-2 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -72,17 +72,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-2 Apache::ConfigParser::Directive=HASH key `name'
          `authgroupfile'
       reference 1-1-2-2 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-2 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-3-2 ARRAY with 1 elements
         reference 1-1-2-3-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-2 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-2 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-3-3 ARRAY with 1 elements
         reference 1-1-2-3-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 3
       reference 1-1-2-3 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-3 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -98,17 +98,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-3 Apache::ConfigParser::Directive=HASH key `name'
          `authuserfile'
       reference 1-1-2-3 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-3 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-4-2 ARRAY with 1 elements
         reference 1-1-2-4-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-3 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-3 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-4-3 ARRAY with 1 elements
         reference 1-1-2-4-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 4
       reference 1-1-2-4 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-4 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -124,17 +124,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-4 Apache::ConfigParser::Directive=HASH key `name'
          `cookielog'
       reference 1-1-2-4 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-4 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-5-2 ARRAY with 1 elements
         reference 1-1-2-5-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-4 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-4 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-5-3 ARRAY with 1 elements
         reference 1-1-2-5-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 5
       reference 1-1-2-5 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-5 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -150,17 +150,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-5 Apache::ConfigParser::Directive=HASH key `name'
          `customlog'
       reference 1-1-2-5 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-5 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-6-2 ARRAY with 1 elements
         reference 1-1-2-6-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-5 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-5 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-6-3 ARRAY with 1 elements
         reference 1-1-2-6-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 6
       reference 1-1-2-6 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-6 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -202,17 +202,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-7 Apache::ConfigParser::Directive=HASH key `name'
          `errorlog'
       reference 1-1-2-7 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-7 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-8-2 ARRAY with 1 elements
         reference 1-1-2-8-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-7 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-7 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-8-3 ARRAY with 1 elements
         reference 1-1-2-8-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 8
       reference 1-1-2-8 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-8 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -280,17 +280,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-10 Apache::ConfigParser::Directive=HASH key `name'
          `include'
       reference 1-1-2-10 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-10 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-11-2 ARRAY with 1 elements
         reference 1-1-2-11-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-10 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-10 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-11-3 ARRAY with 1 elements
         reference 1-1-2-11-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 11
       reference 1-1-2-11 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-11 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -306,17 +306,25 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-11 Apache::ConfigParser::Directive=HASH key `name'
          `loadfile'
       reference 1-1-2-11 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file" "some-other-existent-file" "one-more"'
       reference 1-1-2-11 Apache::ConfigParser::Directive=HASH key `orig_value_array'
-        reference 1-1-2-12-2 ARRAY with 1 elements
+        reference 1-1-2-12-2 ARRAY with 3 elements
         reference 1-1-2-12-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
+        reference 1-1-2-12-2 ARRAY index 1
+           `some-other-existent-file'
+        reference 1-1-2-12-2 ARRAY index 2
+           `one-more'
       reference 1-1-2-11 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file" "MUNGE /home/server/root/some-other-existent-file" "MUNGE /home/server/root/one-more"'
       reference 1-1-2-11 Apache::ConfigParser::Directive=HASH key `value_array'
-        reference 1-1-2-12-3 ARRAY with 1 elements
+        reference 1-1-2-12-3 ARRAY with 3 elements
         reference 1-1-2-12-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
+        reference 1-1-2-12-3 ARRAY index 1
+           `MUNGE /home/server/root/some-other-existent-file'
+        reference 1-1-2-12-3 ARRAY index 2
+           `MUNGE /home/server/root/one-more'
     reference 1-1-1 ARRAY index 12
       reference 1-1-2-12 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-12 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -332,17 +340,25 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-12 Apache::ConfigParser::Directive=HASH key `name'
          `loadmodule'
       reference 1-1-2-12 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file" "some-other-existent-file" "one-more"'
       reference 1-1-2-12 Apache::ConfigParser::Directive=HASH key `orig_value_array'
-        reference 1-1-2-13-2 ARRAY with 1 elements
+        reference 1-1-2-13-2 ARRAY with 3 elements
         reference 1-1-2-13-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
+        reference 1-1-2-13-2 ARRAY index 1
+           `some-other-existent-file'
+        reference 1-1-2-13-2 ARRAY index 2
+           `one-more'
       reference 1-1-2-12 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `some-non-existent-file "MUNGE /home/server/root/some-other-existent-file" one-more'
       reference 1-1-2-12 Apache::ConfigParser::Directive=HASH key `value_array'
-        reference 1-1-2-13-3 ARRAY with 1 elements
+        reference 1-1-2-13-3 ARRAY with 3 elements
         reference 1-1-2-13-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `some-non-existent-file'
+        reference 1-1-2-13-3 ARRAY index 1
+           `MUNGE /home/server/root/some-other-existent-file'
+        reference 1-1-2-13-3 ARRAY index 2
+           `one-more'
     reference 1-1-1 ARRAY index 13
       reference 1-1-2-13 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-13 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -358,17 +374,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-13 Apache::ConfigParser::Directive=HASH key `name'
          `lockfile'
       reference 1-1-2-13 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-13 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-14-2 ARRAY with 1 elements
         reference 1-1-2-14-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-13 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-13 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-14-3 ARRAY with 1 elements
         reference 1-1-2-14-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 14
       reference 1-1-2-14 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-14 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -384,17 +400,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-14 Apache::ConfigParser::Directive=HASH key `name'
          `mimemagicfile'
       reference 1-1-2-14 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-14 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-15-2 ARRAY with 1 elements
         reference 1-1-2-15-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-14 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-14 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-15-3 ARRAY with 1 elements
         reference 1-1-2-15-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 15
       reference 1-1-2-15 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-15 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -410,17 +426,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-15 Apache::ConfigParser::Directive=HASH key `name'
          `pidfile'
       reference 1-1-2-15 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-15 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-16-2 ARRAY with 1 elements
         reference 1-1-2-16-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-15 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-15 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-16-3 ARRAY with 1 elements
         reference 1-1-2-16-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 16
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -436,17 +452,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH key `name'
          `refererlog'
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-17-2 ARRAY with 1 elements
         reference 1-1-2-17-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-17-3 ARRAY with 1 elements
         reference 1-1-2-17-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 17
       reference 1-1-2-17 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-17 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -488,17 +504,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-18 Apache::ConfigParser::Directive=HASH key `name'
          `resourceconfig'
       reference 1-1-2-18 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-18 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-19-2 ARRAY with 1 elements
         reference 1-1-2-19-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-18 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-18 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-19-3 ARRAY with 1 elements
         reference 1-1-2-19-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 19
       reference 1-1-2-19 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-19 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -514,17 +530,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-19 Apache::ConfigParser::Directive=HASH key `name'
          `scoreboardfile'
       reference 1-1-2-19 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-19 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-20-2 ARRAY with 1 elements
         reference 1-1-2-20-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-19 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-19 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-20-3 ARRAY with 1 elements
         reference 1-1-2-20-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 20
       reference 1-1-2-20 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-20 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -540,17 +556,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-20 Apache::ConfigParser::Directive=HASH key `name'
          `scriptlog'
       reference 1-1-2-20 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-20 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-21-2 ARRAY with 1 elements
         reference 1-1-2-21-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-20 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-20 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-21-3 ARRAY with 1 elements
         reference 1-1-2-21-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 21
       reference 1-1-2-21 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-21 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -566,17 +582,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-21 Apache::ConfigParser::Directive=HASH key `name'
          `transferlog'
       reference 1-1-2-21 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-21 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-22-2 ARRAY with 1 elements
         reference 1-1-2-22-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-21 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-21 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-22-3 ARRAY with 1 elements
         reference 1-1-2-22-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
     reference 1-1-1 ARRAY index 22
       reference 1-1-2-22 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-22 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -618,17 +634,17 @@ reference 0 EmptySubclass=HASH key `current_node'
       reference 1-1-2-23 Apache::ConfigParser::Directive=HASH key `name'
          `typesconfig'
       reference 1-1-2-23 Apache::ConfigParser::Directive=HASH key `orig_value'
-         `"some-non-existant-file"'
+         `"some-non-existent-file"'
       reference 1-1-2-23 Apache::ConfigParser::Directive=HASH key `orig_value_array'
         reference 1-1-2-24-2 ARRAY with 1 elements
         reference 1-1-2-24-2 ARRAY index 0
-           `some-non-existant-file'
+           `some-non-existent-file'
       reference 1-1-2-23 Apache::ConfigParser::Directive=HASH key `value'
-         `"MUNGE /home/server/root/some-non-existant-file"'
+         `"MUNGE /home/server/root/some-non-existent-file"'
       reference 1-1-2-23 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-24-3 ARRAY with 1 elements
         reference 1-1-2-24-3 ARRAY index 0
-           `MUNGE /home/server/root/some-non-existant-file'
+           `MUNGE /home/server/root/some-non-existent-file'
   reference 1-0 Apache::ConfigParser::Directive=HASH key `filename'
      `'
   reference 1-0 Apache::ConfigParser::Directive=HASH key `line_number'

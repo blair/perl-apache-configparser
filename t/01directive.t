@@ -102,12 +102,22 @@ is(scalar $d->get_value_array, undef, 'getting value array returns undef');
 @value = $d->get_value_array;
 ok(eq_array(\@value, []), 'value array is empty');
 
-# Test the value_is_path, value_is_rel_path and value_is_abs_path.
-my $pipe     = '| pipe';
-my $syslog   = 'syslog:local7';
-my $abs_path = File::Spec->rel2abs('.');
-my $rel_path = File::Spec->catfile('some', 'relative', 'path'); 
-my $dev_null = File::Spec->devnull;
+# Test value_is_path, value_is_rel_path and value_is_abs_path.
+my $one_pipe     = '| some_program_to_pipe_to';
+my @pipe         = ($one_pipe, $one_pipe);
+my $pipe         = "'$one_pipe' '$one_pipe'";
+my $one_syslog   = 'syslog:local7';
+my @syslog       = ($one_syslog, $one_syslog);
+my $syslog       = "'$one_syslog' '$one_syslog'";
+my $one_abs_path = File::Spec->rel2abs('.');
+my @abs_path     = ($one_abs_path, $one_abs_path);
+my $abs_path     = "$one_abs_path $one_abs_path";
+my $one_rel_path = File::Spec->catfile('some', 'relative', 'path'); 
+my @rel_path     = ($one_rel_path, $one_rel_path);
+my $rel_path     = "@rel_path";
+my $one_dev_null = File::Spec->devnull;
+my @dev_null     = ($one_dev_null, $one_dev_null);
+my $dev_null     = "@dev_null";
 
 # This array is grouped into sets of 13 elements.  The elements are:
 #  1) Directive name
@@ -162,8 +172,8 @@ while (@tests > 6) {
   $d->name($dn);
 
   # Check that a pipe is treated properly.
-  $d->value($pipe);
-  $d->orig_value($pipe);
+  $d->set_value_array(@pipe);
+  $d->set_orig_value_array(@pipe);
   is($d->value_is_path,          $a[0], "$dn $pipe value path");
   is($d->value_is_abs_path,      $a[1], "$dn $pipe value abs path");
   is($d->value_is_rel_path,      $a[2], "$dn $pipe value rel path");
@@ -173,8 +183,8 @@ while (@tests > 6) {
   is($d->orig_value_is_rel_path, $a[2], "$dn $pipe value rel path");
 
   # Check that a syslog is treated properly.
-  is($d->value($syslog),      $pipe, "old value is $pipe");
-  is($d->orig_value($syslog), $pipe, "old orig value is $pipe");
+  ok(eq_array(\@pipe, [$d->set_value_array(@syslog)]), "old value is @pipe");
+  ok(eq_array(\@pipe, [$d->set_orig_value_array(@syslog)]), "old orig value is @pipe");
 
   is($d->value_is_path,          $a[3], "$dn $syslog value path");
   is($d->value_is_abs_path,      $a[4], "$dn $syslog value abs path");
@@ -185,8 +195,8 @@ while (@tests > 6) {
   is($d->orig_value_is_rel_path, $a[5], "$dn $syslog value rel path");
 
   # Test setting to the /dev/null equivalent on this operating system.
-  is($d->value($dev_null),      $syslog, "old value is $syslog");
-  is($d->orig_value($dev_null), $syslog, "old orig value is $syslog");
+  is($d->value($dev_null),      "@syslog", "old value is $syslog");
+  is($d->orig_value($dev_null), "@syslog", "old orig value is $syslog");
   is($d->value_is_path,     0, "$dn $dev_null is not a path");
   is($d->value_is_abs_path, 0, "$dn $dev_null is not a abs path");
   is($d->value_is_rel_path, 0, "$dn $dev_null is not a rel path");

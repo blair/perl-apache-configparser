@@ -1,6 +1,6 @@
 # Apache::ConfigParser: Load Apache configuration file.
 #
-# Copyright (C) 2001 Blair Zajac.  All rights reserved.
+# Copyright (C) 2001-2002 Blair Zajac.  All rights reserved.
 
 package Apache::ConfigParser;
 require 5.004_05;
@@ -62,6 +62,30 @@ Apache::ConfigParser - Load Apache configuration files
   @custom_log_args   = $custom_log->get_orig_value_array;
   $customer_log_file = $custom_log_args[0];
 
+  # Here is a more complete example to load an httpd.conf file and add
+  # a new VirtualHost directive to it.
+  #
+  # The Apache::ConfigParser object contains a reference to a
+  # Apache::ConfigParser::Directive object, which can be obtained by
+  # using Apache::ConfigParser->root.  The root node is a
+  # Apache::ConfigParser::Directive which ISA Tree::DAG_Node (that is
+  # Apache::ConfigParser::Directive's @ISA contains Tree::DAG_Node).
+  # So to get the root node and add a new directive to it, it could be
+  # done like this:
+
+  my $c                = Apache::ConfigParser->new('/etc/httpd.conf');
+  my $root             = $c->root;
+  my $new_virtual_host = $root->new_daughter;
+  $new_virtual_host->name('VirtualHost');
+  $new_virtual_host->value('*');
+
+  # The VirtualHost is called a "context" that contains other
+  # Apache::ConfigParser::Directive's:
+
+  my $server_name = $new_virtual_host->new_daughter;
+  $server_name->name('ServerName');
+  $server_name->value('my.hostname.com');
+
 =head1 DESCRIPTION
 
 The C<Apache::ConfigParser> module is used to load an Apache
@@ -104,12 +128,13 @@ not continue the line.
 use Exporter;
 use Carp;
 use Symbol;
-use File::Spec 0.82;
-use Apache::ConfigParser::Directive;
+use File::Spec                      0.82;
+use Apache::ConfigParser::Directive      qw(DEV_NULL
+                                            %directive_value_path_element_pos);
 
 use vars qw(@ISA $VERSION);
 @ISA     = qw(Exporter);
-$VERSION = sprintf '%d.%02d', '$Revision: 0.05 $' =~ /(\d+)\.(\d+)/;
+$VERSION = sprintf '%d.%02d', '$Revision: 0.06 $' =~ /(\d+)\.(\d+)/;
 
 # This constant is used throughout the module.
 my $INCORRECT_NUMBER_OF_ARGS = "passed incorrect number of arguments.\n";
@@ -517,43 +542,65 @@ sub parse_file {
 
     my @values = $new_node->get_value_array;
 
-    # If this directive takes a path argument, then make sure the path
-    # is absolute.
-    if ($new_node->value_is_path) {
-      # If the path needs to be pre transformed, then do that now.
-      if (my $pre_transform_path_sub = $self->{pre_transform_path_sub}) {
-        my ($sub, @args) = @$pre_transform_path_sub;
-        my $new_path     = &$sub($self, $directive, $values[0], @args);
-        if (defined $new_path and length $new_path) {
-          $values[0] = $new_path;
-        } else {
-          $values[0] = File::Spec->devnull;
-        }
-      }
-
-      # Determine if the file or directory path needs to have the
-      # ServerRoot prepended to it.  First check if the ServerRoot has
-      # been set then check if the file or directory path is relative
-      # for this operating system.
-      my $server_root = $self->{server_root};
-      if (defined $server_root and
-          length  $server_root and
-          $new_node->value_is_rel_path) {
-        $values[0] = "$server_root/$values[0]";
-      }
-
-      # If the path needs to be post transformed, then do that now.
-      if (my $post_transform_path_sub = $self->{post_transform_path_sub}) {
-        my ($sub, @args) = @$post_transform_path_sub;
-        my $new_path     = &$sub($self, $directive, $values[0], @args);
-        if (defined $new_path and length $new_path) {
-          $values[0] = $new_path;
-        } else {
-          $values[0] = File::Spec->devnull;
-        }
+    # Go through all of the value array elements for those elements
+    # that are paths that need to be optionally pre-transformed, then
+    # made absolute using ServerRoot and then optionally
+    # post-transformed.
+    my $value_path_index = $directive_value_path_element_pos{$directive};
+    my @value_path_indexes;
+    if (defined $value_path_index and $value_path_index =~ /^-?\d+$/) {
+      if (substr($value_path_index, 0, 1) eq '-') {
+        @value_path_indexes = (abs($value_path_index) .. $#values);
+      } else {
+        @value_path_indexes = ($value_path_index);
       }
     }
 
+    for my $i (@value_path_indexes) {
+      # If this directive takes a path argument, then make sure the path
+      # is absolute.
+      if ($new_node->value_is_path($i)) {
+	# If the path needs to be pre transformed, then do that now.
+	if (my $pre_transform_path_sub = $self->{pre_transform_path_sub}) {
+	  my ($sub, @args) = @$pre_transform_path_sub;
+	  my $new_path     = &$sub($self, $directive, $values[$i], @args);
+	  if (defined $new_path and length $new_path) {
+	    $values[$i] = $new_path;
+	  } else {
+	    $values[$i] = DEV_NULL;
+	  }
+	  $new_node->set_value_array(@values);
+	}
+
+	# Determine if the file or directory path needs to have the
+	# ServerRoot prepended to it.  First check if the ServerRoot
+	# has been set then check if the file or directory path is
+	# relative for this operating system.
+	my $server_root = $self->{server_root};
+	if (defined $server_root and
+	    length  $server_root and
+	    $new_node->value_is_rel_path) {
+	  $values[$i] = "$server_root/$values[$i]";
+	  $new_node->set_value_array(@values);
+	}
+
+	# If the path needs to be post transformed, then do that now.
+	if (my $post_transform_path_sub = $self->{post_transform_path_sub}) {
+	  my ($sub, @args) = @$post_transform_path_sub;
+	  my $new_path     = &$sub($self, $directive, $values[$i], @args);
+	  if (defined $new_path and length $new_path) {
+	    $values[$i] = $new_path;
+	  } else {
+	    $values[$i] = DEV_NULL;
+	  }
+	  $new_node->set_value_array(@values);
+	}
+      }
+    }
+
+    # Always set the string value using the value array.  This will
+    # normalize all string values by collapsing any whitespace,
+    # protect \'s, etc.
     $new_node->set_value_array(@values);
 
     # If this directive is ServerRoot and node is the parent node,
@@ -870,6 +917,6 @@ Blair Zajac <blair@orcaware.com>.
 
 =head1 COPYRIGHT
 
-Copyright (C) 2001 Blair Zajac.  All rights reserved.  This program is
-free software; you can redistribute it and/or modify it under the same
-terms as Perl itself.
+Copyright (C) 2001-2002 Blair Zajac.  All rights reserved.  This
+program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.

@@ -28,13 +28,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-1-2 ARRAY index 1
            `libexec/mod_env.so'
       reference 1-1-2-0 Apache::ConfigParser::Directive=HASH key `value'
-         `env_module libexec/mod_env.so'
+         `env_module mod_env.so'
       reference 1-1-2-0 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-1-3 ARRAY with 2 elements
         reference 1-1-2-1-3 ARRAY index 0
            `env_module'
         reference 1-1-2-1-3 ARRAY index 1
-           `libexec/mod_env.so'
+           `mod_env.so'
     reference 1-1-1 ARRAY index 1
       reference 1-1-2-1 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-1 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -58,13 +58,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-2-2 ARRAY index 1
            `libexec/mod_log_config.so'
       reference 1-1-2-1 Apache::ConfigParser::Directive=HASH key `value'
-         `config_log_module libexec/mod_log_config.so'
+         `config_log_module mod_log_config.so'
       reference 1-1-2-1 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-2-3 ARRAY with 2 elements
         reference 1-1-2-2-3 ARRAY index 0
            `config_log_module'
         reference 1-1-2-2-3 ARRAY index 1
-           `libexec/mod_log_config.so'
+           `mod_log_config.so'
     reference 1-1-1 ARRAY index 2
       reference 1-1-2-2 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-2 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -88,13 +88,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-3-2 ARRAY index 1
            `libexec/mod_mime.so'
       reference 1-1-2-2 Apache::ConfigParser::Directive=HASH key `value'
-         `mime_module libexec/mod_mime.so'
+         `mime_module mod_mime.so'
       reference 1-1-2-2 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-3-3 ARRAY with 2 elements
         reference 1-1-2-3-3 ARRAY index 0
            `mime_module'
         reference 1-1-2-3-3 ARRAY index 1
-           `libexec/mod_mime.so'
+           `mod_mime.so'
     reference 1-1-1 ARRAY index 3
       reference 1-1-2-3 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-3 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -118,13 +118,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-4-2 ARRAY index 1
            `libexec/mod_negotiation.so'
       reference 1-1-2-3 Apache::ConfigParser::Directive=HASH key `value'
-         `negotiation_module libexec/mod_negotiation.so'
+         `negotiation_module mod_negotiation.so'
       reference 1-1-2-3 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-4-3 ARRAY with 2 elements
         reference 1-1-2-4-3 ARRAY index 0
            `negotiation_module'
         reference 1-1-2-4-3 ARRAY index 1
-           `libexec/mod_negotiation.so'
+           `mod_negotiation.so'
     reference 1-1-1 ARRAY index 4
       reference 1-1-2-4 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-4 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -148,13 +148,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-5-2 ARRAY index 1
            `libexec/mod_include.so'
       reference 1-1-2-4 Apache::ConfigParser::Directive=HASH key `value'
-         `includes_module libexec/mod_include.so'
+         `includes_module mod_include.so'
       reference 1-1-2-4 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-5-3 ARRAY with 2 elements
         reference 1-1-2-5-3 ARRAY index 0
            `includes_module'
         reference 1-1-2-5-3 ARRAY index 1
-           `libexec/mod_include.so'
+           `mod_include.so'
     reference 1-1-1 ARRAY index 5
       reference 1-1-2-5 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-5 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -178,13 +178,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-6-2 ARRAY index 1
            `libexec/mod_autoindex.so'
       reference 1-1-2-5 Apache::ConfigParser::Directive=HASH key `value'
-         `autoindex_module libexec/mod_autoindex.so'
+         `autoindex_module mod_autoindex.so'
       reference 1-1-2-5 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-6-3 ARRAY with 2 elements
         reference 1-1-2-6-3 ARRAY index 0
            `autoindex_module'
         reference 1-1-2-6-3 ARRAY index 1
-           `libexec/mod_autoindex.so'
+           `mod_autoindex.so'
     reference 1-1-1 ARRAY index 6
       reference 1-1-2-6 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-6 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -208,13 +208,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-7-2 ARRAY index 1
            `libexec/mod_dir.so'
       reference 1-1-2-6 Apache::ConfigParser::Directive=HASH key `value'
-         `dir_module libexec/mod_dir.so'
+         `dir_module mod_dir.so'
       reference 1-1-2-6 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-7-3 ARRAY with 2 elements
         reference 1-1-2-7-3 ARRAY index 0
            `dir_module'
         reference 1-1-2-7-3 ARRAY index 1
-           `libexec/mod_dir.so'
+           `mod_dir.so'
     reference 1-1-1 ARRAY index 7
       reference 1-1-2-7 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-7 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -238,13 +238,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-8-2 ARRAY index 1
            `libexec/mod_cgi.so'
       reference 1-1-2-7 Apache::ConfigParser::Directive=HASH key `value'
-         `cgi_module libexec/mod_cgi.so'
+         `cgi_module mod_cgi.so'
       reference 1-1-2-7 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-8-3 ARRAY with 2 elements
         reference 1-1-2-8-3 ARRAY index 0
            `cgi_module'
         reference 1-1-2-8-3 ARRAY index 1
-           `libexec/mod_cgi.so'
+           `mod_cgi.so'
     reference 1-1-1 ARRAY index 8
       reference 1-1-2-8 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-8 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -268,13 +268,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-9-2 ARRAY index 1
            `libexec/mod_asis.so'
       reference 1-1-2-8 Apache::ConfigParser::Directive=HASH key `value'
-         `asis_module libexec/mod_asis.so'
+         `asis_module mod_asis.so'
       reference 1-1-2-8 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-9-3 ARRAY with 2 elements
         reference 1-1-2-9-3 ARRAY index 0
            `asis_module'
         reference 1-1-2-9-3 ARRAY index 1
-           `libexec/mod_asis.so'
+           `mod_asis.so'
     reference 1-1-1 ARRAY index 9
       reference 1-1-2-9 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-9 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -298,13 +298,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-10-2 ARRAY index 1
            `libexec/mod_imap.so'
       reference 1-1-2-9 Apache::ConfigParser::Directive=HASH key `value'
-         `imap_module libexec/mod_imap.so'
+         `imap_module mod_imap.so'
       reference 1-1-2-9 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-10-3 ARRAY with 2 elements
         reference 1-1-2-10-3 ARRAY index 0
            `imap_module'
         reference 1-1-2-10-3 ARRAY index 1
-           `libexec/mod_imap.so'
+           `mod_imap.so'
     reference 1-1-1 ARRAY index 10
       reference 1-1-2-10 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-10 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -328,13 +328,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-11-2 ARRAY index 1
            `libexec/mod_actions.so'
       reference 1-1-2-10 Apache::ConfigParser::Directive=HASH key `value'
-         `action_module libexec/mod_actions.so'
+         `action_module mod_actions.so'
       reference 1-1-2-10 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-11-3 ARRAY with 2 elements
         reference 1-1-2-11-3 ARRAY index 0
            `action_module'
         reference 1-1-2-11-3 ARRAY index 1
-           `libexec/mod_actions.so'
+           `mod_actions.so'
     reference 1-1-1 ARRAY index 11
       reference 1-1-2-11 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-11 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -358,13 +358,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-12-2 ARRAY index 1
            `libexec/mod_userdir.so'
       reference 1-1-2-11 Apache::ConfigParser::Directive=HASH key `value'
-         `userdir_module libexec/mod_userdir.so'
+         `userdir_module mod_userdir.so'
       reference 1-1-2-11 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-12-3 ARRAY with 2 elements
         reference 1-1-2-12-3 ARRAY index 0
            `userdir_module'
         reference 1-1-2-12-3 ARRAY index 1
-           `libexec/mod_userdir.so'
+           `mod_userdir.so'
     reference 1-1-1 ARRAY index 12
       reference 1-1-2-12 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-12 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -388,13 +388,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-13-2 ARRAY index 1
            `libexec/mod_alias.so'
       reference 1-1-2-12 Apache::ConfigParser::Directive=HASH key `value'
-         `alias_module libexec/mod_alias.so'
+         `alias_module mod_alias.so'
       reference 1-1-2-12 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-13-3 ARRAY with 2 elements
         reference 1-1-2-13-3 ARRAY index 0
            `alias_module'
         reference 1-1-2-13-3 ARRAY index 1
-           `libexec/mod_alias.so'
+           `mod_alias.so'
     reference 1-1-1 ARRAY index 13
       reference 1-1-2-13 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-13 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -418,13 +418,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-14-2 ARRAY index 1
            `libexec/mod_access.so'
       reference 1-1-2-13 Apache::ConfigParser::Directive=HASH key `value'
-         `access_module libexec/mod_access.so'
+         `access_module mod_access.so'
       reference 1-1-2-13 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-14-3 ARRAY with 2 elements
         reference 1-1-2-14-3 ARRAY index 0
            `access_module'
         reference 1-1-2-14-3 ARRAY index 1
-           `libexec/mod_access.so'
+           `mod_access.so'
     reference 1-1-1 ARRAY index 14
       reference 1-1-2-14 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-14 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -448,13 +448,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-15-2 ARRAY index 1
            `libexec/mod_auth.so'
       reference 1-1-2-14 Apache::ConfigParser::Directive=HASH key `value'
-         `auth_module libexec/mod_auth.so'
+         `auth_module mod_auth.so'
       reference 1-1-2-14 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-15-3 ARRAY with 2 elements
         reference 1-1-2-15-3 ARRAY index 0
            `auth_module'
         reference 1-1-2-15-3 ARRAY index 1
-           `libexec/mod_auth.so'
+           `mod_auth.so'
     reference 1-1-1 ARRAY index 15
       reference 1-1-2-15 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-15 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -478,13 +478,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-16-2 ARRAY index 1
            `libexec/mod_setenvif.so'
       reference 1-1-2-15 Apache::ConfigParser::Directive=HASH key `value'
-         `setenvif_module libexec/mod_setenvif.so'
+         `setenvif_module mod_setenvif.so'
       reference 1-1-2-15 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-16-3 ARRAY with 2 elements
         reference 1-1-2-16-3 ARRAY index 0
            `setenvif_module'
         reference 1-1-2-16-3 ARRAY index 1
-           `libexec/mod_setenvif.so'
+           `mod_setenvif.so'
     reference 1-1-1 ARRAY index 16
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -508,13 +508,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-17-2 ARRAY index 1
            `libexec/mod_jserv.so'
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH key `value'
-         `jserv_module libexec/mod_jserv.so'
+         `jserv_module mod_jserv.so'
       reference 1-1-2-16 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-17-3 ARRAY with 2 elements
         reference 1-1-2-17-3 ARRAY index 0
            `jserv_module'
         reference 1-1-2-17-3 ARRAY index 1
-           `libexec/mod_jserv.so'
+           `mod_jserv.so'
     reference 1-1-1 ARRAY index 17
       reference 1-1-2-17 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-17 Apache::ConfigParser::Directive=HASH key `attributes'
@@ -1932,13 +1932,13 @@ reference 0 EmptySubclass=HASH key `current_node'
         reference 1-1-2-66-2 ARRAY index 1
            `libexec/mod_jserv.so'
       reference 1-1-2-65 Apache::ConfigParser::Directive=HASH key `value'
-         `jserv_module libexec/mod_jserv.so'
+         `jserv_module mod_jserv.so'
       reference 1-1-2-65 Apache::ConfigParser::Directive=HASH key `value_array'
         reference 1-1-2-66-3 ARRAY with 2 elements
         reference 1-1-2-66-3 ARRAY index 0
            `jserv_module'
         reference 1-1-2-66-3 ARRAY index 1
-           `libexec/mod_jserv.so'
+           `mod_jserv.so'
     reference 1-1-1 ARRAY index 66
       reference 1-1-2-66 Apache::ConfigParser::Directive=HASH with 10 keys
       reference 1-1-2-66 Apache::ConfigParser::Directive=HASH key `attributes'

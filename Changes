@@ -1,3 +1,30 @@
+Mon Dec  9 18:07:14 PST 2002 <blair@orcaware.com> Blair Zajac
+
+	* Release 0.06.
+
+Mon Dec  9 17:39:15 PST 2002 <blair@orcaware.com> Blair Zajac
+
+	* Changes: Rename CHANGES from Changes.
+	* Makefile.PL, add a prerequisite for Tree::DAG_Node
+	  1.04. This should make the module load easier from CPAN when
+	  Tree::DAG_Node is not previously installed into Perl.
+	* MANIFEST: Renamed Changes from CHANGES.
+	* README: Note that this package is hosted in a Subversion
+	  repository and give its URL.
+	* lib/Apache/ConfigParser/Directive.pm: Export DEV_NULL,
+	  DEV_NULL and is_dev_null via @EXPORT_OK.  Add
+	  %directive_value_path_element_pos and export it via
+	  @EXPORT_OK.  Rename %directive_value_takes_path to
+	  %directive_value_takes_abs_path.  Improve the POD for
+	  *value_is_{abs_,rel_,}path.  The set_value_array and
+	  set_orig_value_array methods now return the value of the
+	  array before the method was called.
+	* lib/Apache/ConfigParser.pm: For those directives that take
+	  path arguments, instead of always checking value array index
+	  0 to see if it should have ServerRoot prepended to it, which
+	  is incorrect for LoadModule among other directives, check
+	  all value array positions that may take a path.
+
 Mon Sep 17 21:58:48 PDT 2001 <blair@orcaware.com> Blair Zajac
 
 	* Release version 0.05.
@@ -117,7 +144,7 @@ Fri Sep 14 21:08:14 PDT 2001 <blair@orcaware.com> Blair Zajac
 
 	* lib/Apache/ConfigParser.pm: Instead of checking if a file or
 	  directory is absolute to prepend the ServerRoot on just Unix
-	  and Windows sytems, use File::Spec->file_name_is_absolute
+	  and Windows systems, use File::Spec->file_name_is_absolute
 	  which handles many more operating systems.  For the
 	  AccessConfig, Include and ResourceConfig directives, do not
 	  include the file or directory if the filename is equal to
