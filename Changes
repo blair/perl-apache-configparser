@@ -5,12 +5,16 @@ Mon Dec  9 18:07:14 PST 2002 <blair@orcaware.com> Blair Zajac
 Mon Dec  9 17:39:15 PST 2002 <blair@orcaware.com> Blair Zajac
 
 	* Changes: Rename CHANGES from Changes.
+
 	* Makefile.PL, add a prerequisite for Tree::DAG_Node
 	  1.04. This should make the module load easier from CPAN when
 	  Tree::DAG_Node is not previously installed into Perl.
+
 	* MANIFEST: Renamed Changes from CHANGES.
+
 	* README: Note that this package is hosted in a Subversion
 	  repository and give its URL.
+
 	* lib/Apache/ConfigParser/Directive.pm: Export DEV_NULL,
 	  DEV_NULL and is_dev_null via @EXPORT_OK.  Add
 	  %directive_value_path_element_pos and export it via
@@ -19,6 +23,7 @@ Mon Dec  9 17:39:15 PST 2002 <blair@orcaware.com> Blair Zajac
 	  *value_is_{abs_,rel_,}path.  The set_value_array and
 	  set_orig_value_array methods now return the value of the
 	  array before the method was called.
+
 	* lib/Apache/ConfigParser.pm: For those directives that take
 	  path arguments, instead of always checking value array index
 	  0 to see if it should have ServerRoot prepended to it, which
@@ -34,7 +39,9 @@ Mon Sep 17 21:47:46 PDT 2001 <blair@orcaware.com> Blair Zajac
 	* lib/Apache/ConfigParser.pm: Shorten the find_* method
 	  names.  Rename find_at_and_down_directive_names to
 	  find_down_directive_names and find_in_* to find_*.
+
 	* lib/Apache/ConfigParser.pod: Ditto.
+
 	* t/02parser.t: Ditto.
 
 Mon Sep 17 12:25:41 PDT 2001 <blair@orcaware.com> Blair Zajac
@@ -43,7 +50,9 @@ Mon Sep 17 12:25:41 PDT 2001 <blair@orcaware.com> Blair Zajac
 	  to use the word directive instead of option.  Change all of
 	  the comments and POD documentation to use the word directive
 	  instead of option.
+
 	* lib/Apache/ConfigParser.pod: Ditto.
+
 	* t/02parser.t: Ditto.
 
 Mon Sep 17 02:01:35 PDT 2001 <blair@orcaware.com> Blair Zajac
@@ -56,10 +65,14 @@ Mon Sep 17 01:17:00 PDT 2001 <blair@orcaware.com> Blair Zajac
 	  Apache::ConfigParser's ServerRoot hash value after the value
 	  array is set.  This removes any unnecessary quotes around
 	  the value.
+
 	* lib/Apache/ConfigParser.pod: Ditto.
+
 	* t/httpd02.answer: Update the answer file to reflect this
 	  change with ServerRoot.
+
 	* t/httpd04.answer: Ditto.
+
 	* lib/Apache/ConfigParser.pm: Move all of the code that
 	  checked if a particular directive's value is a path, a pipe
 	  or a syslog into lib/Apache/ConfigParser/Directive.pm since
@@ -69,7 +82,9 @@ Mon Sep 17 01:17:00 PDT 2001 <blair@orcaware.com> Blair Zajac
 	  Also rename the hash to %directive_value_takes_path to make
 	  the name more accurate.  Remove the declaration of
 	  @EXPORT_OK since the module does not export anything now.
+
 	* lib/Apache/ConfigParser.pod: Ditto.
+
 	* lib/Apache/ConfigParser.pm: Allow pre_transform_path_sub and
 	  post_transform_path_sub to operate on any file or directory
 	  path that is a hash key of %directive_value_takes_path but
@@ -81,7 +96,9 @@ Mon Sep 17 01:17:00 PDT 2001 <blair@orcaware.com> Blair Zajac
 	  AuthDBMUserFile, AuthDBUserFile, AuthDigestFile, CacheRoot,
 	  CoreDumpDirectory, Directory, DocumentRoot, MMapFile,
 	  RewriteLock and ServerRoot.
+
 	* lib/Apache/ConfigParser.pod: Ditto.
+
 	* lib/Apache/ConfigParser/Directive.pm: Add several new
 	  methods to Apache::ConfigParser::Directive to determine the
 	  file and directory properties of directives.  The new
@@ -100,12 +117,15 @@ Mon Sep 17 01:17:00 PDT 2001 <blair@orcaware.com> Blair Zajac
 	      absolute or relative file or directory path as its value
 	      array element 0 and that element is a relative file or
 	      directory path.
+
 	* lib/Apache/ConfigParser/Directive.pod: Ditto.
+
 	* lib/Apache/ConfigParser/Directive.pm: Export via @EXPORT_OK
 	  the two hashes %directive_value_takes_path and
 	  %directive_value_takes_rel_path which are used by the new
 	  methods above and made available to other users of the
 	  module.
+
 	* t/01directive.t: Add tests to extensively test all of the
 	  new methods in Apache::ConfigParser::Directive.
 
@@ -124,6 +144,7 @@ Sat Sep 15 22:50:27 PDT 2001 <blair@orcaware.com> Blair Zajac
 	  &directive_value_is_not_dev_null_and_pipe_and_syslog allow
 	  0-9 to appear in the facility name and allow :facility to be
 	  optional.
+
 	* lib/Apache/ConfigParser.pm: Ditto.
 
 Fri Sep 14 21:44:24 PDT 2001 <blair@orcaware.com> Blair Zajac
@@ -138,6 +159,7 @@ Fri Sep 14 21:27:48 PDT 2001 <blair@orcaware.com> Blair Zajac
 	  &directive_value_is_not_dev_null_and_pipe and
 	  &relative_path_check_for_pipe_and_syslog to
 	  &directive_value_is_not_dev_null_and_pipe_and_syslog.
+
 	* lib/Apache/ConfigParser.pod: Ditto.
 
 Fri Sep 14 21:08:14 PDT 2001 <blair@orcaware.com> Blair Zajac
@@ -149,19 +171,23 @@ Fri Sep 14 21:08:14 PDT 2001 <blair@orcaware.com> Blair Zajac
 	  AccessConfig, Include and ResourceConfig directives, do not
 	  include the file or directory if the filename is equal to
 	  File::Spec->devnull.
+
 	* lib/Apache/ConfigParser.pm: Ditto.
 
 Fri Sep 14 20:51:14 PDT 2001 <blair@orcaware.com> Blair Zajac
 
 	* lib/Apache/ConfigParser.pm: Rename %directive_takes_rel_path
 	  to %directive_takes_rel_path to have a more accurate name.
+
 	* lib/Apache/ConfigParser.pod: Ditto.
 
 Fri Sep 14 20:41:50 PDT 2001 <blair@orcaware.com> Blair Zajac
 
 	* lib/Apache/ConfigParser.pm: Require File::Spec 0.82 which is
 	  now used to do file and directory path tests.
+
 	* lib/Apache/ConfigParser.pod: Ditto.
+
 	* Makefile.PL: Ditto.
 
 Fri Sep 14 19:39:26 PDT 2001 <blair@orcaware.com> Blair Zajac
@@ -172,10 +198,14 @@ Fri Sep 14 19:39:26 PDT 2001 <blair@orcaware.com> Blair Zajac
 	  more arbitrary elements to be passed as the arguments to
 	  new's pre_transform_path_sub and post_transform_path_sub
 	  options.
+
 	* lib/Apache/ConfigParser.pod: Ditto.
+
 	* t/02parser.t: Add tests to make sure that passing arguments to 
 	  pre_transform_path_sub and post_transform_path_sub work.
+
 	* t/httpd05.answer: Ditto.
+
 	* t/httpd07.answer: Ditto.
 
 Thu Sep 13 14:12:43 PDT 2001 <blair@orcaware.com> Blair Zajac
@@ -183,18 +213,22 @@ Thu Sep 13 14:12:43 PDT 2001 <blair@orcaware.com> Blair Zajac
 	* lib/Apache/ConfigParser.pm: When checking for an absolute
 	  path name on Windows, also check for upper case drive
 	  letters.
+
 	* lib/Apache/ConfigParser.pod: ditto.
 
 Thu Sep 13 12:58:58 PDT 2001 <blair@orcaware.com> Blair Zajac
 
 	* lib/Apache/ConfigParser.pm: Update version number to 0.02.
+
 	* lib/Apache/ConfigParser.pod: Ditto.
+
 	* README: Ditto.
 
 Thu Sep 13 12:50:59 PDT 2001 <blair@orcaware.com> Blair Zajac
 
 	* lib/Apache/ConfigParser.pm: Reformat a POD comment to make
 	  sure it formats to an 80 character width screen.
+
 	* lib/Apache/ConfigParser.pod: Ditto.
 
 Thu Sep  6 19:14:34 PDT 2001 <blair@orcaware.com> Blair Zajac
