@@ -1,4 +1,4 @@
-Package Apache::ConfigParser version 0.02
+Package Apache::ConfigParser version 0.03
 
 This is the Apache::ConfigParser package.  This module provides for
 the parsing and manipulation of Apache configuration files.

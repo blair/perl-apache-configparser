@@ -137,10 +137,22 @@ value is a valid file or directory path.  It also does not check if
 the path is absolute, C<File::Spec->file_name_is_absolute> can be used
 to check that in an operating system independent manner.
 
-For example, ErrorLog can take a filename, a piped command or a
-syslog:* entry.  The particular subroutine for ErrorLog checks if the
-value not equal to C<File::Spec->devnull>, a piped command or
-syslog:*.
+For example, ErrorLog can take a filename, such as
+
+  ErrorLog /var/log/httpd/error_log
+
+or a piped command, such as
+
+  ErrorLog "| cronolog /var/log/httpd/%Y/%m/%d/error.log"
+
+or a syslog entry of the two forms:
+
+  ErrorLog syslog
+  ErrorLog syslog:local7
+
+The particular subroutine for ErrorLog checks if the value is not
+equal to C<File::Spec->devnull>, does not begin with a | or does not
+match syslog(:[a-zA-Z0-9]+)?.
 
 On all operating systems, these subroutines return 0 if the value is
 equal to C<File::Spec->devnull> in a case sensitive or case
@@ -156,19 +168,19 @@ Apache 1.3.20.
   AuthGroupFile
   AuthUserFile
   CookieLog
-  CustomLog		check for "| command"
-  ErrorLog		check for "| command" or syslog:
+  CustomLog       check for "| command"
+  ErrorLog        check for "| command", or syslog or syslog:facility
   Include
   LoadFile
   LoadModule
   LockFile
   MimeMagicFile
   PidFile
-  RefererLog		check for "| command"
+  RefererLog      check for "| command"
   ResourceConf
   ScoreBoardFile
   ScriptLog
-  TransferLog		check for "| command"
+  TransferLog     check for "| command"
   TypesConfig
 
 =back
@@ -234,7 +246,7 @@ sub directive_value_is_not_dev_null_and_pipe_and_syslog {
     return 0;
   }
 
-  return $_[0] !~ /^\s*(?:(?:\|)|(?:syslog:))/;
+  return $_[0] !~ /^\s*(?:(?:\|)|(?:syslog(?::[a-zA-Z0-9]+)?))/;
 }
 
 =head1 METHODS

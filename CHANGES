@@ -1,3 +1,20 @@
+Sat Sep 15 23:00:54 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* Release version 0.03.
+
+Sat Sep 15 22:59:50 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* lib/Apache/ConfigParser.pm: Upgrade to version 0.03.
+	  README: Ditto.
+
+Sat Sep 15 22:50:27 PDT 2001 <blair@orcaware.com> Blair Zajac
+
+	* lib/Apache/ConfigParser.pm: In
+	  &directive_value_is_not_dev_null_and_pipe_and_syslog allow
+	  0-9 to appear in the facility name and allow :facility to be
+	  optional.
+	* lib/Apache/ConfigParser.pm: Ditto.
+
 Fri Sep 14 21:44:24 PDT 2001 <blair@orcaware.com> Blair Zajac
 
 	* Release version 0.02.
