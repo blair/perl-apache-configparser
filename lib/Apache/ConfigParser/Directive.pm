@@ -180,7 +180,8 @@ version of I<$name> and return the original name.
 
 sub name {
   unless (@_ < 3) {
-    confess "$0: Apache::ConfigParser::Directive::name $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::name ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   my $self = shift;
@@ -224,7 +225,8 @@ get the value elements.
 # either the `value' or `orig_value' hash keys.
 sub _get_set_value_string {
   unless (@_ > 1 and @_ < 4) {
-    confess "$0: Apache::ConfigParser::Directive::_get_set_value_string $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::_get_set_value_string ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   my $self            = shift;
@@ -277,7 +279,8 @@ sub _get_set_value_string {
 
 sub value {
   unless (@_ and @_ < 3) {
-    confess "$0: Apache::ConfigParser::Directive::value $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::value ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   return _get_set_value_string(@_, 'value');
@@ -285,7 +288,8 @@ sub value {
 
 sub orig_value {
   unless (@_ and @_ < 3) {
-    confess "$0: Apache::ConfigParser::Directive::orig_value $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::orig_value ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   return _get_set_value_string(@_, 'orig_value');
@@ -319,7 +323,8 @@ the `original' value.
 # suitable for placing into an Apache configuration file.
 sub _set_value_array {
   unless (@_ > 1) {
-    confess "$0: Apache::ConfigParser::Directive::_set_value_array $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::_set_value_array ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   my $self            = shift;
@@ -354,7 +359,8 @@ sub _set_value_array {
 
 sub value_array_ref {
   unless (@_ and @_ < 3) {
-    confess "$0: Apache::ConfigParser::Directive::value_array_ref $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::value_array_ref ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   my $self = shift;
@@ -376,7 +382,8 @@ sub value_array_ref {
 
 sub orig_value_array_ref {
   unless (@_ and @_ < 3) {
-    confess "$0: Apache::ConfigParser::Directive::orig_value_array_ref $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::orig_value_array_ref ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   my $self = shift;
@@ -412,7 +419,8 @@ operates on the `original' value.
 
 sub get_value_array {
   unless (@_ == 1) {
-    confess "$0: Apache::ConfigParser::Directive::get_value_array $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::get_value_array ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   my $ref = shift->{value_array};
@@ -426,7 +434,8 @@ sub get_value_array {
 
 sub get_orig_value_array {
   unless (@_ == 1) {
-    confess "$0: Apache::ConfigParser::Directive::get_orig_value_array $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::get_orig_value_array ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   my $ref = shift->{orig_value_array};
@@ -542,7 +551,9 @@ sub CHECK_TYPE_ABS_OR_REL () { 'abs_or_rel' }
 # value_is_rel_path and orig_value_is_rel_path.
 sub _value_is_path_or_abs_path_or_rel_path {
   unless (@_ == 4) {
-    confess "$0: Apache::ConfigParser::Directive::_value_is_path_or_abs_path_or_rel_path $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::",
+            "_value_is_path_or_abs_path_or_rel_path ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   my ($self,
@@ -553,11 +564,15 @@ sub _value_is_path_or_abs_path_or_rel_path {
   unless ($check_type eq CHECK_TYPE_ABS or
           $check_type eq CHECK_TYPE_REL or
           $check_type eq CHECK_TYPE_ABS_OR_REL) {
-    confess "$0: Apache::ConfigParser::Directive::_value_is_path_or_abs_path_or_rel_path passed invalid check_type value `$check_type'.\n";
+    confess "$0: Apache::ConfigParser::Directive::",
+            "_value_is_path_or_abs_path_or_rel_path ",
+            "passed invalid check_type value `$check_type'.\n";
   }
 
   if (defined $value_path_index and $value_path_index !~ /^\d+$/) {
-    confess "$0: Apache::ConfigParser::Directive::_value_is_path_or_abs_path_or_rel_path passed invalid value_path_index value `$value_path_index'.\n";
+    confess "$0: Apache::ConfigParser::Directive::",
+            "_value_is_path_or_abs_path_or_rel_path ",
+            "passed invalid value_path_index value `$value_path_index'.\n";
   }
 
   my $array_ref = $self->{$array_var_name};
@@ -632,7 +647,8 @@ sub _value_is_path_or_abs_path_or_rel_path {
     } elsif ($check_type eq CHECK_TYPE_REL) {
       return File::Spec->file_name_is_absolute($path) ? 0 : 1;
     } else {
-      confess "$0: internal error: check_type case `$check_type' not handled.\n";
+      confess "$0: internal error: check_type case ",
+              "`$check_type' not handled.\n";
     }
   } else {
     return 0;
@@ -641,7 +657,8 @@ sub _value_is_path_or_abs_path_or_rel_path {
 
 sub value_is_path {
   unless (@_ < 3) {
-    confess "$0: Apache::ConfigParser::Directive::value_is_path $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::value_is_path ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   _value_is_path_or_abs_path_or_rel_path($_[0],
@@ -661,7 +678,8 @@ are applicable to C<$d>'s `original' value array.
 
 sub orig_value_is_path {
   unless (@_ < 3) {
-    confess "$0: Apache::ConfigParser::Directive::orig_value_is_path $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::orig_value_is_path ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   _value_is_path_or_abs_path_or_rel_path($_[0],
@@ -694,7 +712,8 @@ have different path formats, such as Unix, Windows and Macintosh.
 
 sub value_is_abs_path {
   unless (@_ < 3) {
-    confess "$0: Apache::ConfigParser::Directive::value_is_abs_path $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::value_is_abs_path ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   _value_is_path_or_abs_path_or_rel_path($_[0],
@@ -714,7 +733,8 @@ results are applicable to C<$d>'s `original' value array.
 
 sub orig_value_is_abs_path {
   unless (@_ < 3) {
-    confess "$0: Apache::ConfigParser::Directive::orig_value_is_abs_path $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::orig_value_is_abs_path ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   _value_is_path_or_abs_path_or_rel_path($_[0],
@@ -747,7 +767,8 @@ have different path formats, such as Unix, Windows and Macintosh.
 
 sub value_is_rel_path {
   unless (@_ < 3) {
-    confess "$0: Apache::ConfigParser::Directive::value_is_rel_path $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::value_is_rel_path ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   _value_is_path_or_abs_path_or_rel_path($_[0],
@@ -767,7 +788,8 @@ results are applicable to C<$d>'s `original' value array.
 
 sub orig_value_is_rel_path {
   unless (@_ < 3) {
-    confess "$0: Apache::ConfigParser::Directive::orig_value_is_rel_path $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::orig_value_is_rel_path ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   _value_is_path_or_abs_path_or_rel_path($_[0],
@@ -788,7 +810,8 @@ directive or context and return the original filename.
 
 sub filename {
   unless (@_ < 3) {
-    confess "$0: Apache::ConfigParser::Directive::filename $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::filename ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   my $self = shift;
@@ -813,7 +836,8 @@ the directive or context and return the original line number.
 
 sub line_number {
   unless (@_ < 3) {
-    confess "$0: Apache::ConfigParser::Directive::line_number $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::Directive::line_number ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   my $self = shift;

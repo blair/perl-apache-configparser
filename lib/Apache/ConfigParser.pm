@@ -639,8 +639,8 @@ sub parse_file {
     next;
   }
 
-  close($fd) or
-    warn "$0: cannot close `$file_or_dir_name' for reading: $!\n";
+  close($fd)
+    or warn "$0: cannot close `$file_or_dir_name' for reading: $!\n";
 
   # Save the current node that directives were being added to.
   $self->{current_node} = $current_node;
@@ -700,7 +700,8 @@ configuration file:
 
 sub find_down_directive_names {
   unless (@_ > 1) {
-    confess "$0: Apache::ConfigParser::find_down_directive_names $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::find_down_directive_names ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   my $self = shift;
@@ -751,7 +752,8 @@ case.
 
 sub find_siblings_directive_names {
   unless (@_ > 1) {
-    confess "$0: Apache::ConfigParser::find_siblings_directive_names $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::find_siblings_directive_names ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   my $self = shift;
@@ -812,7 +814,8 @@ find the associated ServerName.
 
 sub find_siblings_and_up_directive_names {
   unless (@_ > 1) {
-    confess "$0: Apache::ConfigParser::find_siblings_and_up_directive_names $INCORRECT_NUMBER_OF_ARGS";
+    confess "$0: Apache::ConfigParser::find_siblings_and_up_directive_names ",
+            $INCORRECT_NUMBER_OF_ARGS;
   }
 
   my $self = shift;
