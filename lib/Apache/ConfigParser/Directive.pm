@@ -1,5 +1,10 @@
 # Apache::ConfigParser::Directive: A single Apache directive or start context.
 #
+# $HeadURL$
+# $LastChangedRevision$
+# $LastChangedDate$
+# $LastChangedBy$
+#
 # Copyright (C) 2001-2005 Blair Zajac.  All rights reserved.
 
 package Apache::ConfigParser::Directive;
@@ -14,7 +19,7 @@ use Tree::DAG_Node 1.04;
 
 use vars qw(@EXPORT_OK @ISA $VERSION);
 @ISA     = qw(Tree::DAG_Node Exporter);
-$VERSION = sprintf '%d.%02d', '$Revision: 0.03 $' =~ /(\d+)\.(\d+)/;
+$VERSION = '0.06';
 
 # Determine if the filenames are case sensitive.
 use constant CASE_SENSITIVE_PATH => (! File::Spec->case_tolerant);

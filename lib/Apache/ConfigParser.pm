@@ -1,5 +1,10 @@
 # Apache::ConfigParser: Load Apache configuration file.
 #
+# $HeadURL$
+# $LastChangedRevision$
+# $LastChangedDate$
+# $LastChangedBy$
+#
 # Copyright (C) 2001-2005 Blair Zajac.  All rights reserved.
 
 package Apache::ConfigParser;
@@ -141,7 +146,7 @@ use Text::Glob                      0.06 qw(glob_to_regex);
 
 use vars qw(@ISA $VERSION);
 @ISA     = qw(Exporter);
-$VERSION = sprintf '%d.%02d', '$Revision: 0.06 $' =~ /(\d+)\.(\d+)/;
+$VERSION = '0.06';
 
 # This constant is used throughout the module.
 my $INCORRECT_NUMBER_OF_ARGS = "passed incorrect number of arguments.\n";

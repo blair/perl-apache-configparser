@@ -1,4 +1,11 @@
 #!/usr/bin/perl -w
+#
+# $HeadURL$
+# $LastChangedRevision$
+# $LastChangedDate$
+# $LastChangedBy$
+#
+# Copyright (C) 2001-2005 Blair Zajac.  All rights reserved.
 
 $| = 1;
 
