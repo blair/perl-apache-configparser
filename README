@@ -9,15 +9,15 @@ REQUIREMENTS
 
 AVAILABILITY
 
-The latest released version of this package is available from a CPAN
-archive near you in
+The latest released version of this package is available for download
+from a CPAN (Comprehensive Perl Archive Network) archive near you in
 
     http://www.perl.com/CPAN/authors/id/B/BZ/BZAJAC/
 
 The latest beta version of this package is hosted in a Subversion
 repository located at
 
-    http://svn.orcaware.com:8000/repos/trunk/apache_configparser/
+    http://svn.orcaware.com:8000/repos/trunk/perl_apache_configparser/
 
 Subversion is an open-source source code management system designed to
 replace CVS.  To get Subversion, see
