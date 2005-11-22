@@ -656,7 +656,7 @@ sub parse_file {
 
     # If the line begins with <, then it is starting a context.
     if (my ($context, $value) = $_ =~ m#^<\s*(\S+)\s+(.*)>\s*$#) {
-      $context =  lc($context);
+      $context = lc($context);
 
       # Remove any trailing whitespace in the context's value as the
       # above regular expression will match all after the context's
@@ -1040,7 +1040,7 @@ sub _dump {
                            " $type";
   $spaces              .=  $comment;
   $seen_ref->{$object}  =  $comment;
-  $dump_ref_count_stack[-1]  +=  1;
+  $dump_ref_count_stack[-1] += 1;
 
   if (UNIVERSAL::isa($object, 'SCALAR')) {
     return ("$spaces $$object");
