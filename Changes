@@ -10,6 +10,12 @@ http://www.orcaware.com/svn/repos/perl_apache_configparser/trunk/
 
 Blair Zajac
 
+	* Fix the AccessConfig, Include and ResourceConfig directives
+	  which were saving the directives in the specified files as
+	  daughters of the root of the tree, not of the context that
+	  the AccessConfig, Include or ResourceConfig directive
+	  appeared in.  Bug found by Jason Burnett
+	  <jmburnett@gmail.com>.
 
 	* Subversion repository for this package moved to
 	  http://www.orcaware.com/svn/repos/perl_apache_configparser/trunk/
