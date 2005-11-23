@@ -10,6 +10,10 @@ http://www.orcaware.com/svn/repos/perl_apache_configparser/trunk/
 
 Blair Zajac
 
+Tue Nov 22 20:22:35 PST 2005 <blair@orcaware.com> Blair Zajac
+
+	* Release 1.01.
+
 	* Fix the AccessConfig, Include and ResourceConfig directives
 	  which were saving the directives in the specified files as
 	  daughters of the root of the tree, not of the context that
