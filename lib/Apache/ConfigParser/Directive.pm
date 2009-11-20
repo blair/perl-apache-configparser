@@ -678,7 +678,7 @@ sub value_is_path {
 
 =item $d->orig_value_is_path($index_into_value_array)
 
-This has the same behavior as C<$d->value_is_path> except the results
+This has the same behavior as C<< $d->value_is_path >> except the results
 are applicable to C<$d>'s 'original' value array.
 
 =cut
@@ -733,7 +733,7 @@ sub value_is_abs_path {
 
 =item $d->orig_value_is_abs_path($index_into_value_array)
 
-This has the same behavior as C<$d->value_is_abs_path> except the
+This has the same behavior as C<< $d->value_is_abs_path >> except the
 results are applicable to C<$d>'s 'original' value array.
 
 =cut
@@ -788,7 +788,7 @@ sub value_is_rel_path {
 
 =item $d->orig_value_is_rel_path($index_into_value_array)
 
-This has the same behavior as C<$d->value_is_rel_path> except the
+This has the same behavior as C<< $d->value_is_rel_path >> except the
 results are applicable to C<$d>'s 'original' value array.
 
 =cut
@@ -893,7 +893,7 @@ takes only absolute, only relative or both types of paths.
 
 The hash value for the lowercase directive name is a subroutine
 reference.  The subroutine returns 1 if its only argument is a path
-and 0 otherwise.  The /dev/null equivalent (C<File::Spec->devnull>)
+and 0 otherwise.  The /dev/null equivalent (C<< File::Spec->devnull >>)
 for the operating system being used is not counted as a path, since on
 some operating systems the /dev/null equivalent is not a filename,
 such as nul on Windows.
@@ -916,7 +916,7 @@ or a syslog entry of the two forms:
   ErrorLog syslog:local7
 
 The particular subroutine for ErrorLog checks if the value is not
-equal to C<File::Spec->devnull>, does not begin with a | or does not
+equal to C<< File::Spec->devnull >>, does not begin with a | or does not
 match syslog(:[a-zA-Z0-9]+)?.
 
 These subroutines do not remove any "'s before checking on the type of
@@ -970,7 +970,7 @@ between directives that take only filenames, only directories or both.
 
 The hash value for the lowercase directive name is a subroutine
 reference.  The subroutine returns 1 if its only argument is a path
-and 0 otherwise.  The /dev/null equivalent (C<File::Spec->devnull>)
+and 0 otherwise.  The /dev/null equivalent (C<< File::Spec->devnull >>)
 for the operating system being used is not counted as a path, since on
 some operating systems the /dev/null equivalent is not a filename,
 such as nul on Windows.
@@ -993,7 +993,7 @@ or a syslog entry of the two forms:
   ErrorLog syslog:local7
 
 The particular subroutine for ErrorLog checks if the value is not
-equal to C<File::Spec->devnull>, does not begin with a | or does not
+equal to C<< File::Spec->devnull >>, does not begin with a | or does not
 match syslog(:[a-zA-Z0-9]+)?.
 
 These subroutines do not remove any "'s before checking on the type of
