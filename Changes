@@ -1,14 +1,4 @@
-This file lists the major changes made to Apache::ConfigParser.  If
-you want detailed diffs and commit log messages, then you can view the
-ViewCVS interface to the Subversion repository hosting this module at
-
-http://www.orcaware.com/svn/viewcvs.py/orcaware/perl_apache_configparser/trunk/
-
-Or check out a copy of the trunk in the Subversion repository at
-
-http://www.orcaware.com/svn/repos/perl_apache_configparser/trunk/
-
-Blair Zajac
+This file lists the major changes made to Apache::ConfigParser.
 
 Tue Nov 22 20:22:35 PST 2005 <blair@orcaware.com> Blair Zajac
 
