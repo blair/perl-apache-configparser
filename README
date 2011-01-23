@@ -14,19 +14,9 @@ from a CPAN (Comprehensive Perl Archive Network) archive near you in
 
     http://www.perl.com/CPAN/authors/id/B/BZ/BZAJAC/
 
-The latest beta version of this package is hosted in a Subversion
-repository located at
+The package's source code is hosted in a Git repository at
 
-    http://www.orcaware.com/svn/repos/perl_apache_configparser/trunk/
-
-Subversion is an open-source source code management system designed to
-replace CVS.  To get Subversion, see
-
-    http://subversion.tigris.org/
-
-and for an overview of Subversion, see
-
-    http://www.orcaware.com/svn/Subversion-Blair_Zajac.ppt
+    https://github.com/blair/perl-apache-configparser
 
 INSTALLATION
 
