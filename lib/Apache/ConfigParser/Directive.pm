@@ -166,13 +166,14 @@ C<Tree::DAG_Node>, C<Tree::DAG_Node::new> will be used.
 sub _init {
   my $self                  = shift;
   $self->SUPER::_init;
-  $self->{name}             = '';
-  $self->{value}            = '';
-  $self->{value_array}      = [];
-  $self->{orig_value}       = '';
-  $self->{orig_value_array} = [];
-  $self->{filename}         = '';
-  $self->{line_number}      = -1;
+  $self->{name}             ||= '';
+  $self->{orig_name}        ||= '';
+  $self->{value}            ||= '';
+  $self->{value_array}      ||= [];
+  $self->{orig_value}       ||= '';
+  $self->{orig_value_array} ||= [];
+  $self->{filename}         ||= '';
+  $self->{line_number}      ||= -1;
 }
 
 =item $d->name
@@ -198,6 +199,31 @@ sub name {
     return $old;
   } else {
     return $self->{name};
+  }
+}
+
+=item $d->orig_name
+
+=item $d->orig_name($name)
+
+In the first form get the directive or context's name.  In the second
+form set the new name of the directive.
+
+=cut
+
+sub orig_name {
+  unless (@_ < 3) {
+    confess "$0: Apache::ConfigParser::Directive::name ",
+            $INCORRECT_NUMBER_OF_ARGS;
+  }
+
+  my $self = shift;
+  if (@_) {
+    my $old       = $self->{orig_name};
+    $self->{orig_name} = $_[0];
+    return $old;
+  } else {
+    return $self->{orig_name};
   }
 }
 
@@ -674,11 +700,30 @@ sub value_is_path {
                                          $_[1]);
 }
 
+
+=item $d->append 
+
+=item $d->append($name,$value, ...)
+
+Append new directive
+
+=cut
+
+sub append {
+    my ($self,$name,@values) = @_;
+    my $node = $self->new_daughter;
+    $node->name($name);
+    $node->orig_name($name);
+    $node->set_value_array(@values);
+    return $node;
+}
+
+
 =item $d->orig_value_is_path
 
 =item $d->orig_value_is_path($index_into_value_array)
 
-This has the same behavior as C<< $d->value_is_path >> except the results
+This has the same behavior as C<$d->value_is_path> except the results
 are applicable to C<$d>'s 'original' value array.
 
 =cut
@@ -733,7 +778,7 @@ sub value_is_abs_path {
 
 =item $d->orig_value_is_abs_path($index_into_value_array)
 
-This has the same behavior as C<< $d->value_is_abs_path >> except the
+This has the same behavior as C<$d->value_is_abs_path> except the
 results are applicable to C<$d>'s 'original' value array.
 
 =cut
@@ -788,7 +833,7 @@ sub value_is_rel_path {
 
 =item $d->orig_value_is_rel_path($index_into_value_array)
 
-This has the same behavior as C<< $d->value_is_rel_path >> except the
+This has the same behavior as C<$d->value_is_rel_path> except the
 results are applicable to C<$d>'s 'original' value array.
 
 =cut
@@ -893,7 +938,7 @@ takes only absolute, only relative or both types of paths.
 
 The hash value for the lowercase directive name is a subroutine
 reference.  The subroutine returns 1 if its only argument is a path
-and 0 otherwise.  The /dev/null equivalent (C<< File::Spec->devnull >>)
+and 0 otherwise.  The /dev/null equivalent (C<File::Spec->devnull>)
 for the operating system being used is not counted as a path, since on
 some operating systems the /dev/null equivalent is not a filename,
 such as nul on Windows.
@@ -916,7 +961,7 @@ or a syslog entry of the two forms:
   ErrorLog syslog:local7
 
 The particular subroutine for ErrorLog checks if the value is not
-equal to C<< File::Spec->devnull >>, does not begin with a | or does not
+equal to C<File::Spec->devnull>, does not begin with a | or does not
 match syslog(:[a-zA-Z0-9]+)?.
 
 These subroutines do not remove any "'s before checking on the type of
@@ -970,7 +1015,7 @@ between directives that take only filenames, only directories or both.
 
 The hash value for the lowercase directive name is a subroutine
 reference.  The subroutine returns 1 if its only argument is a path
-and 0 otherwise.  The /dev/null equivalent (C<< File::Spec->devnull >>)
+and 0 otherwise.  The /dev/null equivalent (C<File::Spec->devnull>)
 for the operating system being used is not counted as a path, since on
 some operating systems the /dev/null equivalent is not a filename,
 such as nul on Windows.
@@ -993,7 +1038,7 @@ or a syslog entry of the two forms:
   ErrorLog syslog:local7
 
 The particular subroutine for ErrorLog checks if the value is not
-equal to C<< File::Spec->devnull >>, does not begin with a | or does not
+equal to C<File::Spec->devnull>, does not begin with a | or does not
 match syslog(:[a-zA-Z0-9]+)?.
 
 These subroutines do not remove any "'s before checking on the type of
@@ -1075,6 +1120,37 @@ sub directive_value_is_not_dev_null_and_pipe_and_syslog {
 
   return $_[0] !~ /^\s*(?:(?:\|)|(?:syslog(?::[a-zA-Z0-9]+)?))/;
 }
+
+sub dump {
+    my $node = shift;
+    my $level = shift || 0;
+    my $content = '';
+    my @ds = $node->daughters;
+    if( @ds ) {
+        $content .= '  ' x $level;
+        $content .= '<' . ($node->orig_name||$node->name) . ' ' . ($node->orig_value||$node->value) . ">\n";
+        for my $d ( $node->daughters ) {
+            $content .= $d->dump($level+1);
+        }
+        $content .= '  ' x $level . '</' . ($node->orig_name||$node->name) . ">\n";
+    } else {
+        $content .= '  ' x $level;
+        $content .= ($node->orig_name||$node->name) . ' ' .  ($node->orig_value||$node->value) . "\n";
+    }
+    return $content;
+}
+
+sub find_directive_by_name { 
+    my ($self,$name) = @_;
+    return grep { lc($_->name) eq lc($name) } $self->daughters;
+}
+
+sub remove_directive_by_name {
+    my ($self,$name) = @_;
+    my @nodes = $self->find_directive_by_name($name);
+    return $self->remove_daughter(@nodes);
+}
+
 
 # This is a hash keyed by directive name and the value is an array
 # reference.  The array element are
