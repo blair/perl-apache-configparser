@@ -1,6 +1,6 @@
 reference 0 EmptySubclass=HASH with 6 keys
 reference 0 EmptySubclass=HASH key 'current_node'
-  reference 1-0 Apache::ConfigParser::Directive=HASH with 10 keys
+  reference 1-0 Apache::ConfigParser::Directive=HASH with 11 keys
   reference 1-0 Apache::ConfigParser::Directive=HASH key 'attributes'
     reference 1-1-0 HASH with 0 keys
   reference 1-0 Apache::ConfigParser::Directive=HASH key 'daughters'
@@ -13,6 +13,8 @@ reference 0 EmptySubclass=HASH key 'current_node'
      UNDEFINED
   reference 1-0 Apache::ConfigParser::Directive=HASH key 'name'
      'root'
+  reference 1-0 Apache::ConfigParser::Directive=HASH key 'orig_name'
+     ''
   reference 1-0 Apache::ConfigParser::Directive=HASH key 'orig_value'
      ''
   reference 1-0 Apache::ConfigParser::Directive=HASH key 'orig_value_array'
