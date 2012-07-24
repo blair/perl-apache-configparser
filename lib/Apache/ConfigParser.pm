@@ -1,9 +1,9 @@
 # Apache::ConfigParser: Load Apache configuration file.
 #
-# $HeadURL$
-# $LastChangedRevision$
-# $LastChangedDate$
-# $LastChangedBy$
+# $HeadURL: http://www.orcaware.com/svn/repos/perl_apache_configparser/tags/1.01/lib/Apache/ConfigParser.pm $
+# $LastChangedRevision: 511 $
+# $LastChangedDate: 2005-11-22 20:42:24 -0800 (Tue, 22 Nov 2005) $
+# $LastChangedBy: blair@orcaware.com $
 #
 # Copyright (C) 2001-2005 Blair Zajac.  All rights reserved.
 
@@ -206,7 +206,7 @@ the directive name and if you do not want to modify the filename,
 return the subroutine's third argument.
 
 If the subroutine returns an undefined value or a value with 0 length,
-then it is replaced with C<< File::Spec->devnull >> which is the
+then it is replaced with <File::Spec->devnull> which is the
 appropriate 0 length file for the operating system.  This is done to
 keep a value in the directive name since otherwise the directive may
 not work properly.  For example, with the input
@@ -258,7 +258,7 @@ the directive name and if you do not want to modify the filename,
 return the subroutine's third argument.
 
 If the subroutine returns an undefined value or a value with 0 length,
-then it is replaced with C<< File::Spec->devnull >> which is the
+then it is replaced with <File::Spec->devnull> which is the
 appropriate 0 length file for the operating system.  This is done to
 keep a value in the directive name since otherwise the directive may
 not work properly.  For example, with the input
@@ -493,7 +493,7 @@ configuration file did not close all of its contexts, such as
 C<$filename> will be added to the existing context.
 
 If there is a failure in parsing any portion of the configuration
-file, then this method returns undef and C<< $c->errstr >> will contain a
+file, then this method returns undef and C<$c->errstr> will contain a
 string explaining the error.
 
 =cut
@@ -631,9 +631,8 @@ sub parse_file {
       }
 
       # Check that the start and end contexts have the same name.
-      $context               = lc($context);
       my $start_context_name = $self->{current_node}->name; 
-      unless ($start_context_name eq $context) {
+      unless ($start_context_name eq lc $context) {
         $self->{errstr} = "'$file_or_dir_name' line $line_number closes " .
                           "context '$context' that should close context " .
                           "'$start_context_name'";
@@ -653,6 +652,7 @@ sub parse_file {
 
     # If the line begins with <, then it is starting a context.
     if (my ($context, $value) = $_ =~ m#^<\s*(\S+)\s+(.*)>\s*$#) {
+      my $orig_name = $context;
       $context = lc($context);
 
       # Remove any trailing whitespace in the context's value as the
@@ -661,6 +661,7 @@ sub parse_file {
       $value   =~ s/\s+$//;
 
       $new_node->name($context);
+      $new_node->orig_name($orig_name);
       $new_node->value($value);
       $new_node->orig_value($value);
 
@@ -674,9 +675,11 @@ sub parse_file {
     # line into the directive name and a value.  Make sure not to
     # collapse any whitespace in the value.
     my ($directive, $value) = $_ =~ /^(\S+)(?:\s+(.*))?$/;
-    $directive                   = lc($directive);
+    my $orig_name = $directive;
+    $directive    = lc($directive);
 
     $new_node->name($directive);
+    $new_node->orig_name($orig_name);
     $new_node->value($value);
     $new_node->orig_value($value);
 
