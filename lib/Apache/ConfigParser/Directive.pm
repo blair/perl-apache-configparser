@@ -1,10 +1,5 @@
 # Apache::ConfigParser::Directive: A single Apache directive or start context.
 #
-# $HeadURL$
-# $LastChangedRevision$
-# $LastChangedDate$
-# $LastChangedBy$
-#
 # Copyright (C) 2001-2005 Blair Zajac.  All rights reserved.
 
 package Apache::ConfigParser::Directive;
