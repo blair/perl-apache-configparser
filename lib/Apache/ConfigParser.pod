@@ -201,7 +201,7 @@ the directive name and if you do not want to modify the filename,
 return the subroutine's third argument.
 
 If the subroutine returns an undefined value or a value with 0 length,
-then it is replaced with C<< File::Spec->devnull >> which is the
+then it is replaced with <File::Spec->devnull> which is the
 appropriate 0 length file for the operating system.  This is done to
 keep a value in the directive name since otherwise the directive may
 not work properly.  For example, with the input
@@ -253,7 +253,7 @@ the directive name and if you do not want to modify the filename,
 return the subroutine's third argument.
 
 If the subroutine returns an undefined value or a value with 0 length,
-then it is replaced with C<< File::Spec->devnull >> which is the
+then it is replaced with <File::Spec->devnull> which is the
 appropriate 0 length file for the operating system.  This is done to
 keep a value in the directive name since otherwise the directive may
 not work properly.  For example, with the input
@@ -488,7 +488,7 @@ configuration file did not close all of its contexts, such as
 C<$filename> will be added to the existing context.
 
 If there is a failure in parsing any portion of the configuration
-file, then this method returns undef and C<< $c->errstr >> will contain a
+file, then this method returns undef and C<$c->errstr> will contain a
 string explaining the error.
 
 =cut
