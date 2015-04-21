@@ -5,7 +5,7 @@
 $| = 1;
 
 use strict;
-use Test::More tests => 110;
+use Test::More tests => 111;
 
 BEGIN { use_ok('Apache::ConfigParser'); }
 

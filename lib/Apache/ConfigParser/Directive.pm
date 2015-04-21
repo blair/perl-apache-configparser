@@ -920,7 +920,7 @@ value.
 This hash is used by C<value_is_path> and C<orig_value_is_path>.
 
 This is a list of directives and any special values to check for as of
-Apache 1.3.20.
+Apache 1.3.20 with the addition of IncludeOptional from 2.4.x.
 
   AccessConfig
   AgentLog          check for "| prog"
@@ -939,6 +939,7 @@ Apache 1.3.20.
   DocumentRoot
   ErrorLog          check for "| prog", or syslog or syslog:facility
   Include
+  IncludeOptional
   LoadFile
   LoadModule
   LockFile
@@ -998,7 +999,7 @@ This hash is used by C<value_is_rel_path> and
 C<orig_value_is_rel_path>.
 
 This is a list of directives and any special values to check for as of
-Apache 1.3.20.
+Apache 1.3.20 with the addition of IncludeOptional from 2.4.x.
 
   AccessConfig
   AuthGroupFile
@@ -1007,6 +1008,7 @@ Apache 1.3.20.
   CustomLog         check for "| prog"
   ErrorLog          check for "| prog", or syslog or syslog:facility
   Include
+  IncludeOptional
   LoadFile
   LoadModule
   LockFile
@@ -1135,6 +1137,9 @@ my %directive_info = (
                         1,
                         \&directive_value_is_not_dev_null_and_pipe_and_syslog],
   Include           => ['0',
+                        1,
+                        \&directive_value_is_not_dev_null],
+  IncludeOptional   => ['0',
                         1,
                         \&directive_value_is_not_dev_null],
   LoadFile          => ['-0',

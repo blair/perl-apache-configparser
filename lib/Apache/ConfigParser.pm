@@ -39,7 +39,7 @@ Apache::ConfigParser - Load Apache configuration files
   my $d_name = $directives[0]->name;
 
   # This directive appeared in this file, which may be in an Include'd
-  # file.
+  # or IncludeOptional'd file.
   my $d_filename = $directives[0]->filename;
 
   # And it begins on this line number.
@@ -364,11 +364,11 @@ sub path_has_apache_style_glob {
   return $path =~ /[?*]/ || $path =~ /\[.*\]/;
 }
 
-# Handle the AccessConfig, Include or ResourceConfig directives.
-# Support the Apache 1.3.13 behavior where if the path is a directory
-# then Apache will recursively load all of the files in that
-# directory.  Support the Apache 1.3.27 and 2.0.41 behavior where if
-# the path contains any glob characters, then load the files and
+# Handle the AccessConfig, Include, IncludeOptional or ResourceConfig
+# directives.  Support the Apache 1.3.13 behavior where if the path is
+# a directory then Apache will recursively load all of the files in
+# that directory.  Support the Apache 1.3.27 and 2.0.41 behavior where
+# if the path contains any glob characters, then load the files and
 # directories recursively that match the glob.
 sub _handle_include_directive {
   unless (@_ == 5) {
@@ -751,10 +751,12 @@ sub parse_file {
       next;
     }
 
-    # If this directive is AccessConfig, Include or ResourceConfig,
-    # then include the indicated file(s) given by the path.
-    if ($directive eq 'accessconfig' or
-        $directive eq 'include'      or
+    # If this directive is AccessConfig, Include, IncludeOptional or
+    # ResourceConfig, then include the indicated file(s) given by the
+    # path.
+    if ($directive eq 'accessconfig'    or
+        $directive eq 'include'         or
+        $directive eq 'includeoptional' or
         $directive eq 'resourceconfig') {
       unless ($new_node->value_is_path) {
         next;
