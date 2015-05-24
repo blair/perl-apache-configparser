@@ -141,7 +141,7 @@ use Apache::ConfigParser::Directive      qw(DEV_NULL
 
 use vars qw(@ISA $VERSION);
 @ISA     = qw(Exporter);
-$VERSION = '1.01';
+$VERSION = '1.02';
 
 # This constant is used throughout the module.
 my $INCORRECT_NUMBER_OF_ARGS = "passed incorrect number of arguments.\n";

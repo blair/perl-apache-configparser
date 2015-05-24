@@ -14,7 +14,7 @@ use Tree::DAG_Node 1.04;
 
 use vars qw(@EXPORT_OK @ISA $VERSION);
 @ISA     = qw(Tree::DAG_Node Exporter);
-$VERSION = '1.01';
+$VERSION = '1.02';
 
 # Determine if the filenames are case sensitive.
 use constant CASE_SENSITIVE_PATH => (! File::Spec->case_tolerant);

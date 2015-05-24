@@ -1,5 +1,15 @@
 This file lists the major changes made to Apache::ConfigParser.
 
+Sat May 23 18:27:38 PDT 2015 <blair@orcaware.com> Blair Zajac
+
+	* Release 1.02.
+
+	* Add support for Apache 2.4.x's IncludeOptional directive:
+	  http://httpd.apache.org/docs/2.4/mod/core.html#includeoptional
+
+	* The canonical location of the source code for this module is
+	  now at https://github.com/blair/perl-apache-configparser .
+
 Tue Nov 22 20:22:35 PST 2005 <blair@orcaware.com> Blair Zajac
 
 	* Release 1.01.
