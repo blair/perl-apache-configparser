@@ -1001,6 +1001,11 @@ C<orig_value_is_rel_path>.
 This is a list of directives and any special values to check for as of
 Apache 1.3.20 with the addition of IncludeOptional from 2.4.x.
 
+AccessFileName is not a key in the hash because, while its value is
+one or more relative paths, the ServerRoot is never prepended to it as
+the AccessFileName values are looked up in every directory of the path
+to the document being requested.
+
   AccessConfig
   AuthGroupFile
   AuthUserFile
