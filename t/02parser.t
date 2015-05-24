@@ -18,9 +18,9 @@ use vars qw(@ISA);
 @ISA = qw(Apache::ConfigParser);
 package main;
 
-# Find all of the httpd\d+.conf files.
+# Find all of the httpd\d{2}.conf files.
 my @conf_files = glob('httpd[0-9][0-9].conf');
-is(@conf_files, 8, 'eight httpd\d+.conf files found');
+is(@conf_files, 8, 'eight httpd\d{2}.conf files found');
 
 # A parser should be created when no arguments are passed in.  An
 # error should be returned if an non-existent file is passed to
