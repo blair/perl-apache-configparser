@@ -6,6 +6,7 @@ lib/Apache/ConfigParser.pm
 lib/Apache/ConfigParser.pod
 lib/Apache/ConfigParser/Directive.pm
 lib/Apache/ConfigParser/Directive.pod
+t/01directive.t
 t/02parser.t
 t/httpd01.conf
 t/httpd01.answer
@@ -22,5 +23,7 @@ t/httpd06.conf
 t/httpd06.answer
 t/httpd07.conf
 t/httpd07.answer
+t/httpd08.conf
+t/httpd08.answer
 t/subdir/httpd02.conf
 t/subdir/subdir/httpd01.conf
